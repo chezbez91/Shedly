@@ -254,6 +254,10 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 :root[data-theme=dusk]{color-scheme:light;--paper:#EEEAF3;--surface:#F9F6FC;--ink:#2B2640;--on-ink:#F5F2FA;--muted:#675F7F;--line:#DBD3E5;--card:#5F45D6;--lav:#E1D9F6;--dock:#312A4C;--strike:#D2425A}
 :root[data-theme=mono]{color-scheme:light;--paper:#F2F2F0;--surface:#FAFAF8;--ink:#141414;--on-ink:#F7F7F5;--muted:#5E5E5A;--line:#D8D8D4;--card:#141414;--lav:#E2E2DE;--dock:#141414;--strike:#C93B2E}
 
+/* ---------- Forest: dark green with amber ---------- */
+:root[data-theme=forest]{color-scheme:dark;--paper:#12211A;--surface:#1A2E24;--ink:#EEF3EC;--on-ink:#12211A;--muted:#A3B8AA;--line:#2D4A3D;--card:#2F7257;--lav:#21382D;--dock:#1B3127;--strike:#F08A7E;--hl:#E9C46A}
+:root[data-theme=forest] .shred-dim{background:rgba(6,14,10,.7)}
+
 /* ---------- sheets (workshop, import, unlock reveal) ---------- */
 .sheet{position:fixed;inset:0;z-index:30;background:var(--paper);overflow-y:auto;overscroll-behavior:contain;padding:calc(env(safe-area-inset-top) + 14px) 20px calc(env(safe-area-inset-bottom) + 48px);animation:sheetIn .3s cubic-bezier(.2,.8,.2,1)}
 .sheet:focus{outline:none}
@@ -392,6 +396,18 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 .cands .a{font-weight:700;font-variant-numeric:tabular-nums}
 
 /* ---------- update banner ---------- */
+.ask-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 20px}
+.ask-grid b{display:block;font-size:14px;margin-bottom:3px}
+.ask-grid small{display:block;color:var(--muted);font-size:13px;line-height:1.4}
+.readme-sec{margin:0 0 20px}
+.readme-sec h2{margin:0 0 4px;font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.02em}
+.readme-sec p{margin:0;color:var(--muted);line-height:1.5}
+.inst{display:flex;align-items:center;justify-content:space-between;gap:14px;background:var(--lav);border-radius:20px;padding:14px 16px;margin:0 0 22px}
+.inst b{display:block;font-family:var(--display);font-size:17px;letter-spacing:-.02em;line-height:1.2}
+.inst small{display:block;color:var(--muted);font-size:13px;margin-top:2px;line-height:1.35}
+.inst .pill{display:inline-block;width:auto;padding:10px 18px;font-size:14px;white-space:nowrap}
+.inst.done{background:none;padding:0 2px;margin:0 0 14px;font-size:13px;color:var(--muted);justify-content:flex-start}
+.inst .dot{width:8px;height:8px;border-radius:50%;background:#3DBE7A;box-shadow:0 0 0 3px rgba(61,190,122,.2)}
 .update{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom) + 96px);z-index:50;display:flex;gap:12px;align-items:center;background:var(--ink);color:var(--on-ink);border-radius:999px;padding:7px 7px 7px 18px;box-shadow:0 12px 30px -12px rgba(0,0,0,.5);font-size:14px;white-space:nowrap;animation:sheetIn .35s cubic-bezier(.2,.8,.2,1)}
 .update p{margin:0}
 .update button{background:var(--hl);color:#263044;border:0;border-radius:999px;padding:8px 14px;font-weight:700;font-size:13px}
@@ -458,6 +474,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
   "use strict";
 
   var KEY = "shedly.v1";
+  var APP_VERSION = "0.11";
   var FREE_LIMIT = 15;
   var STALE_DAYS = 30;
   var DAY = 86400000;
@@ -525,6 +542,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
     if (P.plus === undefined) P.plus = false;
     if (!P.tips) P.tips = {};
     if (P.analytics === undefined) P.analytics = false;
+    if (P.askedV2 === undefined) P.askedV2 = false;
     if (!P.startedAt) P.startedAt = now();
     s._seed = seedNeeded;
     s.onboarded = !!s.onboarded;
@@ -753,6 +771,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
   var THEMES = [
     { id: "paper", name: "Paper", at: null, sw: ["#EFF0F3", "#263044", "#3347E8"], note: "Follows your phone" },
     { id: "midnight", name: "Midnight", at: null, sw: ["#0E1320", "#E9ECF5", "#4155F0"], note: "Always dark" },
+    { id: "forest", name: "Forest", at: null, sw: ["#12211A", "#E9C46A", "#2F7257"], note: "Dark green, amber marks" },
     { id: "sage", name: "Sage", at: { k: "streak", n: 2 }, sw: ["#E8EDE7", "#1F2E27", "#2D6A55"] },
     { id: "dusk", name: "Dusk", at: { k: "streak", n: 4 }, sw: ["#EEEAF3", "#2B2640", "#5F45D6"] },
     { id: "mono", name: "Ink", at: { k: "streak", n: 8 }, sw: ["#F2F2F0", "#141414", "#141414"] }
@@ -988,7 +1007,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
   var phQueue = [];
   function logEvent(name, props) {
     if (!state || !state.profile || !state.profile.analytics) return;
-    var p = Object.assign({ app_version: "v9", installed: isStandalone(), theme: state.profile.theme, machine: state.profile.shr && state.profile.shr.skin }, props || {});
+    var p = Object.assign({ app_version: APP_VERSION, installed: isStandalone(), theme: state.profile.theme, machine: state.profile.shr && state.profile.shr.skin }, props || {});
     if (!window.posthog) { if (phQueue.length < 50) phQueue.push(["shedly_" + name, p]); return; }   // script still loading: keep the event
     try { window.posthog.capture("shedly_" + name, p); } catch (e) {}
   }
@@ -1007,22 +1026,31 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
     box.addEventListener("change", function () { setAnalytics(box.checked); });
     return h("div", {}, [
       h("label", { class: "toggle" }, [h("span", { text: "Share anonymous usage (testing)" }), box]),
-      h("p", { class: "fine-print", text: "Shares which screens and buttons you use, and records how screens look with all text hidden. Item names, prices, notes and typed text are never sent. Turn it off any time." })
+      h("p", { class: "fine-print", text: "Shares which screens and buttons you use, and records how screens look with all text hidden. Item names, prices, notes and typed text are never sent. Turn it off any time." }),
+      h("button", { class: "chipbtn", id: "notesBtn", type: "button", text: "Read the testing notes", onclick: readmeSheet })
     ]);
   }
 
   // ---- install: Chrome offers a real prompt; iPhone needs a hint instead ----
   var deferredInstall = null;
-  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); deferredInstall = e; logEvent("install_prompt_shown"); if (current === "you") renderYou(); });
+  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); deferredInstall = e; logEvent("install_prompt_shown"); render(); });
   window.addEventListener("appinstalled", function () { deferredInstall = null; logEvent("installed"); toast("Installed. Find Shedly on your home screen.", true); });
   function isStandalone() { return (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true; }
-  function installBlock() {
-    if (isStandalone()) return h("p", { class: "sub", text: "Installed. You're using the app." });
-    if (deferredInstall) return h("button", { class: "pill", id: "installBtn", type: "button", text: "Install Shedly on this phone", onclick: function () {
-      var e = deferredInstall; logEvent("install_clicked"); e.prompt(); e.userChoice.then(function () { deferredInstall = null; renderYou(); }).catch(function () {});
-    } });
-    if (/iphone|ipad|ipod/i.test(navigator.userAgent)) return h("p", { class: "sub", id: "installHint", text: "On iPhone: tap the Share button in Safari, then Add to Home Screen." });
-    return h("p", { class: "sub", id: "installHint", text: "In Chrome, open the menu (⋮) and tap Install app." });
+  function doInstall() {
+    var e = deferredInstall; if (!e) return;
+    logEvent("install_clicked"); e.prompt();
+    e.userChoice.then(function () { deferredInstall = null; render(); }).catch(function () {});
+  }
+  function installCard() {
+    if (isStandalone()) return h("div", { class: "inst done" }, [h("span", { class: "dot", "aria-hidden": "true" }), h("span", { text: "Installed on this phone · Shedly " + APP_VERSION })]);
+    var action;
+    if (deferredInstall) action = h("button", { class: "pill inst-btn", type: "button", text: "Install", onclick: doInstall });
+    else if (/iphone|ipad|ipod/i.test(navigator.userAgent)) action = h("small", { class: "inst-hint", text: "Safari: Share, then Add to Home Screen" });
+    else action = h("small", { class: "inst-hint", text: "Chrome: menu ⋮, then Install app" });
+    return h("div", { class: "inst" }, [
+      h("div", {}, [h("b", { text: "Not installed yet" }), h("small", { text: "Shedly " + APP_VERSION + " · full screen, works offline" })]),
+      action
+    ]);
   }
 
   // ---- one-time tips, shown in the tab where each thing first matters ----
@@ -1050,6 +1078,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 
   function renderReview() {
     var root = $("view-review"); root.textContent = "";
+    root.append(installCard());
     root.append(h("h1", { class: "hello" }, greeting()), subLine(), ticksBlock());
     var q = queue();
 
@@ -1203,7 +1232,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 
   function renderYou() {
     var root = $("view-you"); root.textContent = "";
-    root.append(h("h1", { class: "hello", text: "You." }), h("p", { class: "sub", text: "Everything here stays on this device." }), installBlock());
+    root.append(h("h1", { class: "hello", text: "You." }), h("p", { class: "sub", text: "Everything here stays on this device." }), installCard());
     var name = h("input", { type: "text", maxlength: "40", autocomplete: "given-name", placeholder: "What should we call you?" });
     name.value = state.profile.name || "";
     name.addEventListener("change", function () { state.profile.name = name.value.trim(); save(); });
@@ -1860,6 +1889,42 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
     });
   }
   var pendingUnlocks = null;
+
+  // ---- the testing notes (also published as README.md in the project) ----
+  function readmeSheet() {
+    openSheet("Testing notes", function (inner, close) {
+      var sec = function (t, body) { return h("div", { class: "readme-sec" }, [h("h2", { text: t }), h("p", { text: body })]); };
+      inner.append(sheetHead("Testing notes", close),
+        h("p", { class: "sub", text: "Shedly " + APP_VERSION + " is in testing. These notes say exactly what we see, and what we never see." }),
+        sec("Why we're testing", "Shedly is meant to be a weekly habit. We need to know whether people come back, what they shed, and which screens confuse them. What you do shapes the next version."),
+        sec("What's shared, if you say yes", "The screens you open and the buttons you press (shed, keep, import, the workshop). Your machine, theme and cut choices. Your streak and counts, in ranges. The app version and whether it's installed. Screen recordings with every word hidden, so we see layout and taps only. Crash reports: the type of error and where it happened in the code."),
+        sec("What is never shared", "Item names, prices, dates, notes, your name, your country or anything you type. Your list stays on your phone."),
+        sec("Who sees it and where", "Only the people building Shedly. It's stored by PostHog in the EU. Nothing is sold, and nothing goes to advertisers."),
+        sec("How long we keep it", "Only while testing runs. We delete it when testing ends, or sooner if you ask."),
+        sec("Your choices", "Turn sharing off at any time in You, under Share anonymous usage. Turning it off stops everything from that point. To ask us to delete what we've already got, message Liam directly."),
+        h("button", { class: "pill", type: "button", text: "Got it", onclick: close })
+      );
+    });
+  }
+  function askConsent() {
+    if (state.profile.askedV2 || sheetEl || !state.onboarded) return;
+    openSheet("Help test Shedly", function (inner, close) {
+      function answer(on) { state.profile.askedV2 = true; setAnalytics(on); if (on) toast("Thank you. You're helping us make it better.", true); close(); }
+      inner.append(sheetHead("Help test Shedly", close),
+        h("p", { class: "lede", html: "You're one of the first people to try Shedly. <strong>Sharing anonymous usage is the fastest way to make it better.</strong> It shows us which screens help, which get in the way, and where people get stuck." }),
+        h("div", { class: "ask-grid" }, [
+          h("div", {}, [h("b", { text: "What we see" }), h("small", { text: "Which screens and buttons you use, your streak in ranges, and recordings with all text hidden." })]),
+          h("div", {}, [h("b", { text: "What we never see" }), h("small", { text: "Item names, prices, dates, notes, your name or anything you type." })])
+        ]),
+        h("button", { class: "pill", id: "consentYes", type: "button", text: "Count me in", onclick: function () { answer(true); } }),
+        h("div", { class: "pillrow" }, [
+          h("button", { class: "pill ghost", id: "consentNotes", type: "button", text: "Read the testing notes", onclick: function () { closeSheet(true); readmeSheet(); } }),
+          h("button", { class: "pill ghost", id: "consentNo", type: "button", text: "Not for me", onclick: function () { answer(false); } })
+        ]),
+        h("p", { class: "fine-print", text: "You can change this any time in You." })
+      );
+    });
+  }
   
 
   // ---- nav, keys ----
@@ -2052,7 +2117,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
         state.profile.name = fName.value.trim();
         state.profile.country = fCountry.value;
         state.profile.currency = fCur.value;
-        state.onboarded = true; state.profile.analytics = !!fAn.checked; save();
+        state.onboarded = true; state.profile.analytics = !!fAn.checked; state.profile.askedV2 = true; save();
         if (state.profile.analytics) loadAnalytics();
         logEvent("onboarding_completed", { skipped_to_setup: idx < slides.length - 2 });
       } else logEvent("tour_closed", { at_step: idx });
@@ -2085,6 +2150,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
   if (state.profile.analytics) loadAnalytics();
   render();
   if (!state.onboarded) openTour("first");
+  else setTimeout(askConsent, 700);
   handleLaunch();
 
   if (window.__SHEDLY_TEST__) window.__shedly = { extractDate: extractDate, parseEntry: parseEntry, state: function () { return state; }, SKINS: SKINS, THEMES: THEMES, shredElement: shredElement, openWorkshop: openWorkshop, openImport: openImport, showUnlock: showUnlock, checkUnlocks: checkUnlocks, render: render, save: save, isUnlocked: isUnlocked, metric: metric, nudgeFor: nudgeFor, digestText: digestText, findRecurring: findRecurring, parseTable: parseTable, importCandidates: importCandidates, radarItems: radarItems, chargesText: chargesText, longestStreak: longestStreak };
