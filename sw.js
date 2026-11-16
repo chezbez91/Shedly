@@ -2,7 +2,7 @@
 // Pages are fetched fresh when online (so a new version shows on the next open),
 // and fall back to the stored copy when offline. Other files are cache-first.
 // Bump CACHE whenever files change so phones pick up the new version.
-var CACHE = "shedly-v8";
+var CACHE = "shedly-v9";
 var FILES = ["./", "index.html", "manifest.webmanifest", "icon.svg", "icon-192.png", "icon-512.png", "icon-180.png", "fonts/display.woff2", "fonts/body.woff2"];
 
 // A new version waits until the page asks it to take over (shown as the "New version ready" banner).
@@ -29,6 +29,7 @@ function isPage(req) {
 
 self.addEventListener("fetch", function (e) {
   if (e.request.method !== "GET") return;
+  if (new URL(e.request.url).origin !== self.location.origin) return;
   if (isPage(e.request)) {
     e.respondWith(
       fetch(e.request).then(function (res) {

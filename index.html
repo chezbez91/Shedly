@@ -524,6 +524,8 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
     if (!P.theme) P.theme = "paper";
     if (P.plus === undefined) P.plus = false;
     if (!P.tips) P.tips = {};
+    if (P.analytics === undefined) P.analytics = false;
+    if (!P.startedAt) P.startedAt = now();
     s._seed = seedNeeded;
     s.onboarded = !!s.onboarded;
     delete s.currency; delete s.currencySet;
@@ -782,7 +784,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
     SKINS.concat(THEMES).forEach(function (d) {
       if (d.at && state.profile.unlocked.indexOf(d.id) < 0 && metCond(d.at)) { state.profile.unlocked.push(d.id); fresh.push(d); }
     });
-    if (fresh.length) save();
+    if (fresh.length) { save(); fresh.forEach(function (d) { logEvent("unlocked", { id: d.id }); }); }
     return fresh;
   }
   function nextSkin() {
@@ -802,6 +804,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
   function shed(id) {
     var item = state.items.find(function (i) { return i.id === id; });
     if (!item) return;
+    logEvent("item_shed", { category: item.cat, has_price: !!item.cost, has_date: item.due != null, days_on_list: daysSince(item.createdAt), kept_before: (item.reasons || []).length });
     state.items = state.items.filter(function (i) { return i.id !== id; });
     var rec = { text: item.text, cost: item.cost, cur: item.cur, cat: item.cat, at: now() };
     state.removed.push(rec);
@@ -815,13 +818,14 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
     if (!undoSlot) return;
     state.removed = state.removed.filter(function (r) { return r !== undoSlot.rec; });
     state.items.push(undoSlot.item);
-    undoSlot = null; save(); hideToast(); render();
+    logEvent("shed_undone"); undoSlot = null; save(); hideToast(); render();
   }
   function keep(id, reason) {
     var item = state.items.find(function (i) { return i.id === id; });
     if (!item) return;
     item.lastReviewedAt = now();
     item.reasons = (item.reasons || []).concat([{ text: reason, at: now() }]);
+    logEvent("item_kept", { reason_words: Math.min(reason.trim().split(/\s+/).length, 20) > 6 ? "7+" : "1-6" });
     save(); toast("Kept. We'll ask again later.", true); render();
   }
   function limit() { return state.profile.plus ? 99999 : FREE_LIMIT; }
@@ -831,6 +835,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
   function add(raw) {
     var p = parseEntry(raw);
     if (!p.text || state.items.length >= limit()) return false;
+    logEvent("item_added", { category: p.cat, has_price: !!p.cost, has_date: p.due != null, per: p.per });
     pushItem(p); save(); render(); return true;
   }
 
@@ -902,7 +907,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
   function useBar(item) {
     var n = usesIn(item, 30);
     return h("div", { class: "usebar" }, [
-      h("button", { type: "button", id: "useBtn", text: "I used it today", onclick: function () { item.uses.push(now()); save(); render(); } }),
+      h("button", { type: "button", id: "useBtn", text: "I used it today", onclick: function () { item.uses.push(now()); logEvent("use_logged"); save(); render(); } }),
       h("span", { text: n ? "Used " + (n === 1 ? "once" : n + " times") + " in 30 days" : "Log uses to see what each one costs" })
     ]);
   }
@@ -925,7 +930,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
       try { document.execCommand("copy"); } catch (e) {} ta.remove();
     });
   }
-  function copyDigest() { copyText(digestText()).then(function () { toast("Copied. Paste it anywhere.", true); }); }
+  function copyDigest() { logEvent("digest_copied"); copyText(digestText()).then(function () { toast("Copied. Paste it anywhere.", true); }); }
 
   function radarItems() { return state.items.filter(function (i) { if (i.due == null) return false; var d = dayDiff(i.due); return d >= 0 && d <= 30; }).sort(function (a, b) { return a.due - b.due; }); }
   function chargesText(list) {
@@ -960,15 +965,61 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
     } catch (e) {}
   }
 
+  // ---- analytics (PostHog, EU). Off until the tester opts in. Never sends item names, prices, notes or typed text. ----
+  var POSTHOG_KEY = "phc_BSw6cdaMT2xPi99tpATQf6YSx7GNC2sTLNsgSBnqBHvb", POSTHOG_HOST = "https://eu.i.posthog.com", POSTHOG_ASSETS = "https://eu-assets.i.posthog.com/static/array.js";
+  var phLoaded = false;
+  function band(n) { return n === 0 ? "0" : n < 3 ? "1-2" : n < 10 ? "3-9" : n < 50 ? "10-49" : "50+"; }
+  function loadAnalytics() {
+    if (phLoaded) return; phLoaded = true;
+    var sc = document.createElement("script"); sc.src = POSTHOG_ASSETS; sc.async = true;
+    sc.onload = function () {
+      try {
+        window.posthog.init(POSTHOG_KEY, {
+          api_host: POSTHOG_HOST, person_profiles: "identified_only", autocapture: false,
+          capture_pageview: false, capture_pageleave: false, persistence: "localStorage",
+          disable_session_recording: false, session_recording: { maskAllInputs: true, maskTextSelector: "*" }
+        });
+        logEvent("app_opened", { shreds: band(state.removed.length), items: band(state.items.length), streak: streak(), days_since_start: Math.floor((now() - state.profile.startedAt) / DAY) });
+        phQueue.splice(0).forEach(function (e) { try { window.posthog.capture(e[0], e[1]); } catch (x) {} });
+      } catch (e) {}
+    };
+    document.head.appendChild(sc);
+  }
+  var phQueue = [];
+  function logEvent(name, props) {
+    if (!state || !state.profile || !state.profile.analytics) return;
+    var p = Object.assign({ app_version: "v9", installed: isStandalone(), theme: state.profile.theme, machine: state.profile.shr && state.profile.shr.skin }, props || {});
+    if (!window.posthog) { if (phQueue.length < 50) phQueue.push(["shedly_" + name, p]); return; }   // script still loading: keep the event
+    try { window.posthog.capture("shedly_" + name, p); } catch (e) {}
+  }
+  function setAnalytics(on) {
+    state.profile.analytics = !!on; save();
+    if (on) { loadAnalytics(); try { if (window.posthog) window.posthog.opt_in_capturing(); } catch (e) {} }
+    else if (window.posthog) { try { window.posthog.opt_out_capturing(); if (window.posthog.stopSessionRecording) window.posthog.stopSessionRecording(); } catch (e) {} }
+  }
+  function phReset() { try { if (window.posthog) window.posthog.reset(); } catch (e) {} }
+  window.addEventListener("error", function (e) {
+    if (state && state.profile && state.profile.analytics && window.posthog) { try { window.posthog.captureException(e.error || new Error("script error")); } catch (x) {} }
+  });
+  function analyticsRow() {
+    var box = h("input", { type: "checkbox", id: "setAnalytics", "aria-label": "Share anonymous usage" });
+    box.checked = !!state.profile.analytics;
+    box.addEventListener("change", function () { setAnalytics(box.checked); });
+    return h("div", {}, [
+      h("label", { class: "toggle" }, [h("span", { text: "Share anonymous usage (testing)" }), box]),
+      h("p", { class: "fine-print", text: "Shares which screens and buttons you use, and records how screens look with all text hidden. Item names, prices, notes and typed text are never sent. Turn it off any time." })
+    ]);
+  }
+
   // ---- install: Chrome offers a real prompt; iPhone needs a hint instead ----
   var deferredInstall = null;
-  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); deferredInstall = e; if (current === "you") renderYou(); });
-  window.addEventListener("appinstalled", function () { deferredInstall = null; toast("Installed. Find Shedly on your home screen.", true); });
+  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); deferredInstall = e; logEvent("install_prompt_shown"); if (current === "you") renderYou(); });
+  window.addEventListener("appinstalled", function () { deferredInstall = null; logEvent("installed"); toast("Installed. Find Shedly on your home screen.", true); });
   function isStandalone() { return (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true; }
   function installBlock() {
     if (isStandalone()) return h("p", { class: "sub", text: "Installed. You're using the app." });
     if (deferredInstall) return h("button", { class: "pill", id: "installBtn", type: "button", text: "Install Shedly on this phone", onclick: function () {
-      var e = deferredInstall; e.prompt(); e.userChoice.then(function () { deferredInstall = null; renderYou(); }).catch(function () {});
+      var e = deferredInstall; logEvent("install_clicked"); e.prompt(); e.userChoice.then(function () { deferredInstall = null; renderYou(); }).catch(function () {});
     } });
     if (/iphone|ipad|ipod/i.test(navigator.userAgent)) return h("p", { class: "sub", id: "installHint", text: "On iPhone: tap the Share button in Safari, then Add to Home Screen." });
     return h("p", { class: "sub", id: "installHint", text: "In Chrome, open the menu (⋮) and tap Install app." });
@@ -989,7 +1040,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
     var t = tipCandidate(); if (!t) return;
     var card = h("div", { class: "tip", id: "tipCard", role: "note" }, [
       h("p", { text: t.text }),
-      h("button", { type: "button", text: "Got it", onclick: function () { state.profile.tips[t.key] = true; save(); card.remove(); } })
+      h("button", { type: "button", text: "Got it", onclick: function () { state.profile.tips[t.key] = true; logEvent("tip_dismissed", { tip: t.key }); save(); card.remove(); } })
     ]);
     var view = $("view-" + current); if (view) view.prepend(card);
   }
@@ -1174,7 +1225,8 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
       h("label", { class: "field" }, [h("span", { text: "Name" }), name]),
       h("label", { class: "field" }, [h("span", { text: "Country" }), country]),
       h("label", { class: "field" }, [h("span", { text: "Default currency (you can still type $15 or £12 on any item)" }), cur]),
-      h("label", { class: "toggle" }, [h("span", { text: "Shredder sound and vibration" }), snd])
+      h("label", { class: "toggle" }, [h("span", { text: "Shredder sound and vibration" }), snd]),
+      analyticsRow()
     );
 
     root.append(h("h2", { class: "sec", text: "Look" }));
@@ -1183,7 +1235,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
       var open = isUnlocked(t), on = open && state.profile.theme === t.id;
       var sw = h("div", { class: "sw" }, t.sw.map(function (c) { var i = h("i"); i.style.background = c; return i; }));
       grid.append(h("button", { class: "theme" + (open ? "" : " locked"), type: "button", id: "theme-" + t.id, "aria-pressed": String(on), "aria-label": t.name + (open ? (on ? ", selected" : "") : ", locked. " + reqText(t.at)), onclick: function () {
-        if (!open) return; state.profile.theme = t.id; save(); applyTheme(); renderYou();
+        if (!open) return; state.profile.theme = t.id; logEvent("theme_selected", { id: t.id }); save(); applyTheme(); renderYou();
       } }, [sw, h("b", { text: t.name }), h("small", { text: open ? (t.note || "Earned") : reqText(t.at) })]));
     });
     root.append(grid);
@@ -1199,14 +1251,14 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
       h("h3", { text: "Shedly Plus" }),
       h("p", { text: plus ? "Preview is on. Nothing is charged." : "For when 15 slots isn't enough. Not open yet." }),
       h("ul", {}, ["Unlimited items", "Full graveyard, with search", "Year in review poster", "Import more than 15 at once", "Sync across devices (coming)"].map(function (t) { return h("li", { text: t }); })),
-      h("button", { class: "pill", id: "plusBtn", text: plus ? "Turn the preview off" : "Preview Plus on this device", onclick: function () { state.profile.plus = !plus; save(); render(); } })
+      h("button", { class: "pill", id: "plusBtn", text: plus ? "Turn the preview off" : "Preview Plus on this device", onclick: function () { logEvent("plus_preview_toggled", { on: !plus }); state.profile.plus = !plus; save(); render(); } })
     ]));
 
     root.append(h("div", { class: "fine" }, [
       h("button", { text: "Export my data", onclick: exportData }),
       h("button", { text: "Erase everything", onclick: function () {
         if (confirm("Erase your list, history and profile from this device? This can't be undone.")) {
-          var keepProfile = state.profile; state = { items: [], removed: [], profile: keepProfile, onboarded: true }; undoSlot = null; save(); render();
+          logEvent("data_erased"); phReset(); var keepProfile = state.profile; state = { items: [], removed: [], profile: keepProfile, onboarded: true }; undoSlot = null; save(); render();
         }
       } })
     ]));
@@ -1228,7 +1280,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
     }, "image/png");
   }
   var FD = "Bricolage, 'Arial Narrow', sans-serif", FB = "Hanken, system-ui, sans-serif", FM = "ui-monospace, 'SF Mono', Menlo, Consolas, 'Courier New', monospace";
-  function shareCard() { whenFontsReady(drawCard); }
+  function shareCard() { logEvent("share_card", { kind: "progress" }); whenFontsReady(drawCard); }
   function drawCard() {
     var W = 1080, H = 1350, c = document.createElement("canvas"); c.width = W; c.height = H;
     var g = c.getContext("2d"), D = FD, B = FB;
@@ -1252,7 +1304,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
   }
 
   // a till receipt of the last things you shed
-  function shareReceipt() { whenFontsReady(drawReceipt); }
+  function shareReceipt() { logEvent("share_card", { kind: "receipt" }); whenFontsReady(drawReceipt); }
   function drawReceipt() {
     var W = 1080, H = 1350, c = document.createElement("canvas"); c.width = W; c.height = H;
     var g = c.getContext("2d"), INK = "#263044", x0 = 170, pw = 740, tooth = 22;
@@ -1306,7 +1358,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
   }
 
   // the year, as a poster (Plus)
-  function shareYear() { whenFontsReady(drawYear); }
+  function shareYear() { logEvent("share_card", { kind: "year" }); whenFontsReady(drawYear); }
   function drawYear() {
     var W = 1080, H = 1920, c = document.createElement("canvas"); c.width = W; c.height = H;
     var g = c.getContext("2d"), yr = new Date().getFullYear();
@@ -1342,6 +1394,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
     shareCanvas(c, "shedly-" + yr + ".png");
   }
   function exportData() {
+    logEvent("data_exported");
     var blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
     var a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "shedly-data.json";
     document.body.append(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
@@ -1431,6 +1484,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
     return { kind: "lines", list: list.slice(0, 60) };
   }
   function openImport() {
+    logEvent("import_opened");
     openSheet("Import", function (inner, close) {
       inner.append(sheetHead("Import", close), h("p", { class: "sub", text: "Paste a list, or open a bank statement CSV. It's read on this device and never uploaded." }));
       var ta = h("textarea", { id: "impText", "aria-label": "List or CSV to import", placeholder: "One per line:\nNetflix €15/mo\nGym membership €30/mo\nPassport expires in 3 weeks\n\nor paste rows from your bank's CSV" });
@@ -1455,7 +1509,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
         });
         var addBtn = h("button", { class: "pill", type: "button", id: "impAdd", onclick: function () {
           var n = 0; boxes.forEach(function (b) { if (b.cb.checked && state.items.length < limit()) { pushItem(b.c); n++; } });
-          save(); close(); toast("Added " + plural(n, "item") + ".", true);
+          logEvent("import_added", { count: n }); save(); close(); toast("Added " + plural(n, "item") + ".", true);
         } });
         function sync() { var n = boxes.filter(function (b) { return b.cb.checked; }).length; addBtn.textContent = n ? "Add " + n + " to my list" : "Nothing selected"; addBtn.disabled = !n; }
         out.append(h("p", { class: "hint", text: res.kind === "csv" ? "Things that repeat with about the same amount each month." : "One item per line." }), ul);
@@ -1714,6 +1768,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
   }
 
   function openWorkshop() {
+    logEvent("workshop_opened");
     openSheet("Shredder workshop", function (inner, close) {
       var shr = state.profile.shr;
       inner.append(sheetHead("Workshop", close), h("p", { class: "sub", text: "Every machine is earned by shedding. Make this one yours." }));
@@ -1725,7 +1780,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
         var mc = buildMachine({ sk: currentSkin(), shr: shr, Wm: 232, HEAD: 66, BIN: 110, BASE: 16, stat: true, palette: ["#3347E8", "#3347E8", "rgba(255,255,255,.85)", "rgba(255,255,255,.5)"], pileN: 70 });
         mc.pile.style.transform = "scaleY(.62)"; mc.m.classList.add("sheen"); holder.append(mc.m);
       }
-      var stage = h("div", { class: "rig-stage" }, [paper, holder, h("button", { class: "pill", type: "button", id: "testShred", text: "Test shred", onclick: function () { shredElement(paper, function () {}); } })]);
+      var stage = h("div", { class: "rig-stage" }, [paper, holder, h("button", { class: "pill", type: "button", id: "testShred", text: "Test shred", onclick: function () { logEvent("test_shred"); shredElement(paper, function () {}); } })]);
       inner.append(stage);
       if (reduceMotion) inner.append(h("p", { class: "hint", text: "Your device asks for reduced motion, so shredding is instant." }));
       paintMachine();
@@ -1740,7 +1795,8 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
           var kids = [m, h("b", { text: sk.name }), h("small", { text: open ? sk.note : reqText(sk.at) })];
           if (!open) { var pr = progressOf(sk.at); kids.push(h("div", { class: "meter" }, [h("i", { style: "width:" + Math.max(3, Math.round(pr.frac * 100)) + "%" })]), h("small", { text: pr.text })); }
           var b = h("button", { class: "skin" + (open ? "" : " locked"), type: "button", id: "skin-" + sk.id, "aria-pressed": String(on), "aria-label": sk.name + (open ? (on ? ", selected" : "") : ", locked. " + reqText(sk.at)), onclick: function () {
-            if (!open) return; shr.skin = sk.id; save(); paintMachine(); paintGrid();
+            if (!open) { logEvent("locked_tapped", { id: sk.id }); return; }
+            shr.skin = sk.id; save(); logEvent("skin_selected", { id: sk.id }); paintMachine(); paintGrid();
           } }, kids);
           if (!open) b.setAttribute("aria-disabled", "true");
           grid.append(b);
@@ -1751,6 +1807,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
       inner.append(h("h2", { class: "sec", text: "Make it yours" }));
       var plate = h("input", { type: "text", maxlength: "14", placeholder: "shedly", "aria-label": "Nameplate", id: "plateInput" }); plate.value = shr.plate || "";
       plate.addEventListener("input", function () { shr.plate = plate.value.trim().slice(0, 14); save(); paintMachine(); });
+      plate.addEventListener("change", function () { logEvent("plate_set", { length: (shr.plate || "").length }); });
       inner.append(h("label", { class: "opt" }, [h("span", { text: "Nameplate (engraved on the front)" }), plate]));
 
       var leds = h("div", { class: "leds", role: "group", "aria-label": "Indicator light" });
@@ -1758,7 +1815,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
         leds.textContent = "";
         [["auto", "Match the machine"]].concat(Object.keys(LEDS).map(function (k) { return [k, k]; })).forEach(function (pair) {
           var k = pair[0], c = k === "auto" ? "" : LEDS[k];
-          var sw = h("button", { class: "led-sw" + (k === "auto" ? " auto" : ""), type: "button", "aria-label": "Light: " + pair[1], "aria-pressed": String(shr.led === k), onclick: function () { shr.led = k; save(); paintMachine(); paintLeds(); } });
+          var sw = h("button", { class: "led-sw" + (k === "auto" ? " auto" : ""), type: "button", "aria-label": "Light: " + pair[1], "aria-pressed": String(shr.led === k), onclick: function () { shr.led = k; save(); logEvent("led_selected", { led: k }); paintMachine(); paintLeds(); } });
           if (c) sw.style.setProperty("--c", c); leds.append(sw);
         });
       }
@@ -1772,10 +1829,10 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
         }
         paint(); return h("div", { class: "opt" }, [h("span", { text: label }), wrap]);
       }
-      inner.append(segment("How it cuts", CUTS, function () { return shr.cut; }, function (v) { shr.cut = v; save(); }));
+      inner.append(segment("How it cuts", CUTS, function () { return shr.cut; }, function (v) { shr.cut = v; save(); logEvent("cut_selected", { cut: v }); }));
       inner.append(segment("Sound", MODES, function () { return state.profile.sound ? shr.mode : "off"; }, function (v) {
         if (v === "off") state.profile.sound = false; else { state.profile.sound = true; shr.mode = v; }
-        save();
+        save(); logEvent("sound_selected", { mode: v });
       }));
       var ns = nextSkin();
       if (ns) inner.append(h("p", { class: "hint", text: "Next machine: " + ns.def.name + ". " + reqText(ns.def.at) + " (" + ns.p.text + ")." }));
@@ -1811,7 +1868,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
     current = view;
     document.querySelectorAll(".view").forEach(function (v) { v.classList.toggle("active", v.id === "view-" + view); });
     document.querySelectorAll("#dock button").forEach(function (t) { t.setAttribute("aria-selected", String(t.dataset.view === view)); });
-    window.scrollTo(0, 0); render();
+    logEvent("view_opened", { view: view }); window.scrollTo(0, 0); render();
   }
   document.querySelectorAll("#dock button").forEach(function (t) { t.addEventListener("click", function () { go(t.dataset.view); }); });
   document.addEventListener("keydown", function (e) {
@@ -1944,11 +2001,14 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
       fCur = h("select", { id: "obCur" });
       optionList(fCur, CURRENCIES, function (c) { return c + " · " + currencyName(c); }, currencyOf(detected) || "EUR");
       fCountry.addEventListener("change", function () { var c = currencyOf(fCountry.value); if (c) fCur.value = c; });
+      var fAn = h("input", { type: "checkbox", id: "obAnalytics", "aria-label": "Help test Shedly" });
       var form = h("div", { class: "setup" }, [
         h("label", { class: "field" }, [h("span", { text: "Name" }), fName]),
         h("label", { class: "field" }, [h("span", { text: "Country" }), fCountry]),
         h("label", { class: "field" }, [h("span", { text: "Currency" }), fCur]),
-        h("p", { class: "fine-print", text: "You can still type $15 or £12 on any item. Prices in different currencies stay separate." })
+        h("p", { class: "fine-print", text: "You can still type $15 or £12 on any item. Prices in different currencies stay separate." }),
+        h("label", { class: "toggle", style: "margin-top:14px" }, [h("span", { text: "Help test Shedly: share anonymous usage" }), fAn]),
+        h("p", { class: "fine-print", text: "Records which screens and buttons you use, with all text hidden. Item names, prices and notes are never sent. Change this any time in You." })
       ]);
       var setup = h("section", { class: "slide" }, [h("div", { class: "slide-in" }, [
         h("h2", { text: "Before we start." }),
@@ -1960,7 +2020,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
     }
 
     var track = h("div", { class: "track", id: "tourTrack" }, slides);
-    var skip = h("button", { type: "button", id: "tourSkip", text: mode === "first" ? "Skip the tour" : "Close", onclick: function () { if (mode === "first") goTo(slides.length - 1); else closeTour(); } });
+    var skip = h("button", { type: "button", id: "tourSkip", text: mode === "first" ? "Skip the tour" : "Close", onclick: function () { logEvent("tour_skipped", { at_step: idx }); if (mode === "first") goTo(slides.length - 1); else closeTour(); } });
     var top = h("div", { class: "tour-top" }, [h("span", { class: "brand", html: '<svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#3347E8"/><rect x="12" y="15" width="40" height="8" rx="4" fill="#fff"/><rect x="12" y="28" width="30" height="8" rx="4" fill="#fff"/><rect x="12" y="41" width="18" height="8" rx="4" fill="#F5DF7B"/></svg>shedly' }), skip]);
     var dots = h("div", { class: "dots" });
     slides.forEach(function (_, i) { dots.append(h("button", { type: "button", "aria-label": "Go to step " + (i + 1), onclick: function () { goTo(i); } })); });
@@ -1992,8 +2052,10 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
         state.profile.name = fName.value.trim();
         state.profile.country = fCountry.value;
         state.profile.currency = fCur.value;
-        state.onboarded = true; save();
-      }
+        state.onboarded = true; state.profile.analytics = !!fAn.checked; save();
+        if (state.profile.analytics) loadAnalytics();
+        logEvent("onboarding_completed", { skipped_to_setup: idx < slides.length - 2 });
+      } else logEvent("tour_closed", { at_step: idx });
       closeTour();
     }
     setLive(0);
@@ -2020,6 +2082,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
   state = load();
   if (state._seed) { SKINS.concat(THEMES).forEach(function (d) { if (d.at && metCond(d.at)) state.profile.unlocked.push(d.id); }); delete state._seed; save(); }
   applyTheme();
+  if (state.profile.analytics) loadAnalytics();
   render();
   if (!state.onboarded) openTour("first");
   handleLaunch();
