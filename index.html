@@ -391,6 +391,11 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 .cands small{display:block;color:var(--muted);font-weight:400;font-size:12.5px}
 .cands .a{font-weight:700;font-variant-numeric:tabular-nums}
 
+/* ---------- update banner ---------- */
+.update{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom) + 96px);z-index:50;display:flex;gap:12px;align-items:center;background:var(--ink);color:var(--on-ink);border-radius:999px;padding:7px 7px 7px 18px;box-shadow:0 12px 30px -12px rgba(0,0,0,.5);font-size:14px;white-space:nowrap;animation:sheetIn .35s cubic-bezier(.2,.8,.2,1)}
+.update p{margin:0}
+.update button{background:var(--hl);color:#263044;border:0;border-radius:999px;padding:8px 14px;font-weight:700;font-size:13px}
+
 /* ---------- tour visuals, tips, install ---------- */
 .shelf{display:flex;gap:10px;align-items:flex-end;justify-content:center}
 .mini-nudge{background:var(--card);color:#fff;border-radius:24px;padding:18px 20px;width:min(300px,86%);box-shadow:0 18px 30px -18px rgba(0,0,0,.5)}
@@ -2021,8 +2026,27 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 
   if (window.__SHEDLY_TEST__) window.__shedly = { extractDate: extractDate, parseEntry: parseEntry, state: function () { return state; }, SKINS: SKINS, THEMES: THEMES, shredElement: shredElement, openWorkshop: openWorkshop, openImport: openImport, showUnlock: showUnlock, checkUnlocks: checkUnlocks, render: render, save: save, isUnlocked: isUnlocked, metric: metric, nudgeFor: nudgeFor, digestText: digestText, findRecurring: findRecurring, parseTable: parseTable, importCandidates: importCandidates, radarItems: radarItems, chargesText: chargesText, longestStreak: longestStreak };
 
+  // ---- updates: when a new version is ready, offer a refresh instead of changing things under the user ----
+  function showUpdate(worker) {
+    if ($("updateCard")) return;
+    var card = h("div", { class: "update", id: "updateCard", role: "status" }, [
+      h("p", { text: "New version ready." }),
+      h("button", { type: "button", text: "Refresh", onclick: function () { worker.postMessage("SKIP_WAITING"); } })
+    ]);
+    document.body.append(card);
+  }
   if ("serviceWorker" in navigator && /^https?:$/.test(location.protocol)) {
-    navigator.serviceWorker.register("sw.js").catch(function () {});
+    var reloaded = false;
+    navigator.serviceWorker.addEventListener("controllerchange", function () { if (!reloaded) { reloaded = true; location.reload(); } });
+    navigator.serviceWorker.register("sw.js").then(function (reg) {
+      function offer() { if (reg.waiting && navigator.serviceWorker.controller) showUpdate(reg.waiting); }
+      reg.addEventListener("updatefound", function () {
+        var nw = reg.installing; if (!nw) return;
+        nw.addEventListener("statechange", function () { if (nw.state === "installed") offer(); });
+      });
+      offer();
+      document.addEventListener("visibilitychange", function () { if (!document.hidden) reg.update().catch(function () {}); });
+    }).catch(function () {});
   }
 })();
 </script>
