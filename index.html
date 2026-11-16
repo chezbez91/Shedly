@@ -391,6 +391,16 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 .cands small{display:block;color:var(--muted);font-weight:400;font-size:12.5px}
 .cands .a{font-weight:700;font-variant-numeric:tabular-nums}
 
+/* ---------- tour visuals, tips, install ---------- */
+.shelf{display:flex;gap:10px;align-items:flex-end;justify-content:center}
+.mini-nudge{background:var(--card);color:#fff;border-radius:24px;padding:18px 20px;width:min(300px,86%);box-shadow:0 18px 30px -18px rgba(0,0,0,.5)}
+.mini-nudge small{font-size:12px;font-weight:700;color:var(--hl)}
+.mini-nudge b{display:block;font-family:var(--display);font-size:30px;letter-spacing:-.04em;line-height:1;margin:4px 0 0}
+.mini-nudge .nd{margin:12px 0 0;background:rgba(255,255,255,.16);border-radius:12px;padding:8px 12px;font-size:14px;line-height:1.35}
+.mini-nudge .mr{display:flex;justify-content:space-between;border-top:1.5px solid rgba(255,255,255,.3);margin-top:12px;padding-top:10px;font-size:14px}
+.tip{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--lav);border-radius:18px;padding:12px 14px;margin:0 0 16px;font-size:14px}
+.tip p{margin:0;color:var(--ink);line-height:1.4}
+.tip button{background:var(--ink);color:var(--on-ink);border:0;border-radius:999px;padding:8px 14px;font-weight:700;font-size:13px;white-space:nowrap}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition:none!important;animation:none!important}
   .track{scroll-behavior:auto}
@@ -508,6 +518,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
     if (seedNeeded) P.unlocked = [];
     if (!P.theme) P.theme = "paper";
     if (P.plus === undefined) P.plus = false;
+    if (!P.tips) P.tips = {};
     s._seed = seedNeeded;
     s.onboarded = !!s.onboarded;
     delete s.currency; delete s.currencySet;
@@ -944,6 +955,40 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
     } catch (e) {}
   }
 
+  // ---- install: Chrome offers a real prompt; iPhone needs a hint instead ----
+  var deferredInstall = null;
+  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); deferredInstall = e; if (current === "you") renderYou(); });
+  window.addEventListener("appinstalled", function () { deferredInstall = null; toast("Installed. Find Shedly on your home screen.", true); });
+  function isStandalone() { return (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true; }
+  function installBlock() {
+    if (isStandalone()) return h("p", { class: "sub", text: "Installed. You're using the app." });
+    if (deferredInstall) return h("button", { class: "pill", id: "installBtn", type: "button", text: "Install Shedly on this phone", onclick: function () {
+      var e = deferredInstall; e.prompt(); e.userChoice.then(function () { deferredInstall = null; renderYou(); }).catch(function () {});
+    } });
+    if (/iphone|ipad|ipod/i.test(navigator.userAgent)) return h("p", { class: "sub", id: "installHint", text: "On iPhone: tap the Share button in Safari, then Add to Home Screen." });
+    return h("p", { class: "sub", id: "installHint", text: "In Chrome, open the menu (⋮) and tap Install app." });
+  }
+
+  // ---- one-time tips, shown in the tab where each thing first matters ----
+  function tipCandidate() {
+    var seen = state.profile.tips, c = [];
+    if (current === "list" && state.items.length >= limit()) c.push(["full", "Your list is full. Shed one to make room, or bring a bank statement in under You → Import."]);
+    if (current === "list" && radarItems().length) c.push(["radar", "Anything with a date in the next 30 days lands here, with what it will cost you."]);
+    if (current === "review" && queue().length && nudgeFor(queue()[0])) c.push(["nudge", "That line under the title is Shedly noticing something. It's a nudge, never a rule."]);
+    if (current === "progress" && state.removed.length >= 3) c.push(["workshop", "Every shredder is earned. Tap yours to change the nameplate, light, cut and sound."]);
+    for (var i = 0; i < c.length; i++) if (!seen[c[i][0]]) return { key: c[i][0], text: c[i][1] };
+    return null;
+  }
+  function showTip() {
+    var old = $("tipCard"); if (old) old.remove();
+    var t = tipCandidate(); if (!t) return;
+    var card = h("div", { class: "tip", id: "tipCard", role: "note" }, [
+      h("p", { text: t.text }),
+      h("button", { type: "button", text: "Got it", onclick: function () { state.profile.tips[t.key] = true; save(); card.remove(); } })
+    ]);
+    var view = $("view-" + current); if (view) view.prepend(card);
+  }
+
   // ---- views ----
   var EXAMPLES = ["Gym membership €30/mo", "Weekly status meeting", "Streaming plan nobody watches €12/mo", "Reorganise the garage"];
 
@@ -1102,7 +1147,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 
   function renderYou() {
     var root = $("view-you"); root.textContent = "";
-    root.append(h("h1", { class: "hello", text: "You." }), h("p", { class: "sub", text: "Everything here stays on this device." }));
+    root.append(h("h1", { class: "hello", text: "You." }), h("p", { class: "sub", text: "Everything here stays on this device." }), installBlock());
     var name = h("input", { type: "text", maxlength: "40", autocomplete: "given-name", placeholder: "What should we call you?" });
     name.value = state.profile.name || "";
     name.addEventListener("change", function () { state.profile.name = name.value.trim(); save(); });
@@ -1789,6 +1834,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
   function render() {
     if (current === "review") renderReview(); else if (current === "list") renderList(); else if (current === "you") renderYou(); else renderProgress();
     updateBadge();
+    showTip();
   }
 
   // =====================================================================
@@ -1825,6 +1871,18 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
     return h("div", { class: "mini mini-ticket" }, [
       h("div", { class: "mt-top" }, [h("small", { text: "Untouched for 41 days" }), h("b", { text: "Gym membership" }), h("span", {}, [h("mark", { text: "€360 a year" })])]),
       h("div", { class: "mt-stub" }, [h("i", { class: "a", text: "Shed it" }), h("i", { class: "b", text: "Keep it" })])
+    ]);
+  }
+  function visualShelf() {
+    var row = h("div", { class: "shelf" });
+    ["graphite", "porcelain", "brass"].forEach(function (id) { row.append(buildMachine({ sk: skinById(id), shr: state.profile.shr, Wm: 92, HEAD: 40, stat: true, mini: true }).m); });
+    return row;
+  }
+  function visualNudge() {
+    return h("div", { class: "mini-nudge" }, [
+      h("small", { text: "Renews tomorrow" }), h("b", { text: "Prime" }),
+      h("p", { class: "nd", text: "Decide before it charges you €8.99." }),
+      h("div", { class: "mr" }, [h("span", { text: "Insurance" }), h("span", { text: "€300/yr" })])
     ]);
   }
   var counterTimers = [];
@@ -1866,6 +1924,8 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
       slide("y", visualList(), "A to-do list that gets shorter.", "Every other app helps you add things. Shedly helps you let go of one. <strong>Once a week.</strong> That's the whole trick."),
       slide("l", visualTyped(), "Type it like you'd say it.", "Add anything you've said yes to: tasks, meetings, subscriptions. Put a price on it and Shedly does the sums. <strong>Yes, even that one you forgot about.</strong>"),
       slide("y", visualTicket(), "Once a week, one question.", "Is this still a yes? Shed it, or keep it with one line on why. We'll quote you next time. <strong>“Just in case” is allowed.</strong> It reads worse the second time."),
+      slide("y", visualShelf(), "Earn your shredder.", "Shedding unlocks new machines: at 3, 10, 25 things, and then streaks. Then make it yours with a nameplate, a light and a cut style. <strong>Brass is for the long haul.</strong>"),
+      slide("l", visualNudge(), "It notices things.", "Renewals coming up, what each use really costs, and a line when you've kept something again and again. <strong>Never a rule. Always your call.</strong>"),
       slide("l", visualTotal(), "Watch the number go up.", "Every shed adds to your total, and to what you've freed up if it had a price. Miss a week and nothing explodes. <strong>Miss a month and we'll mention it.</strong>")
     ];
 

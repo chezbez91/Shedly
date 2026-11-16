@@ -1,5 +1,5 @@
 // Cache-first offline support. Bump CACHE when files change.
-var CACHE = "shedly-v6";
+var CACHE = "shedly-v7";
 var FILES = ["./", "index.html", "manifest.webmanifest", "icon.svg", "icon-192.png", "icon-512.png", "icon-180.png", "fonts/display.woff2", "fonts/body.woff2"];
 
 self.addEventListener("install", function (e) {
