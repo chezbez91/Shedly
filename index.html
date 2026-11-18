@@ -153,8 +153,8 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 .fine button{background:none;border:0;padding:0;color:var(--muted);font-size:14px;text-decoration:underline;text-underline-offset:3px}
 
 /* floating dock */
-.dock{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 16px);transform:translateX(-50%);background:var(--dock);border-radius:999px;padding:6px;display:flex;gap:4px;z-index:4;box-shadow:0 10px 30px -10px rgba(11,16,32,.5)}
-.dock button{background:none;border:0;border-radius:999px;padding:11px 17px;font-weight:700;font-size:15px;color:rgba(244,245,250,.65)}
+.dock{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 16px);transform:translateX(-50%);background:var(--dock);border-radius:999px;padding:6px;display:flex;gap:4px;width:max-content;max-width:calc(100vw - 16px);z-index:4;box-shadow:0 10px 30px -10px rgba(11,16,32,.5)}
+.dock button{background:none;border:0;border-radius:999px;padding:11px 17px;font-weight:700;font-size:15px;white-space:nowrap;color:rgba(244,245,250,.65)}
 .dock button[aria-selected="true"]{background:var(--hl);color:#263044}
 
 /* toast */
@@ -836,7 +836,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.20";
+  var APP_VERSION = "0.21";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -853,10 +853,11 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   var weekOf = function (t) { return Math.floor((t + 3 * DAY) / (7 * DAY)); };   // Monday-based
 
   // ---- language: strings are looked up by their English text; anything not translated stays English ----
-  var LANGS = [["en-GB", "English (UK)"], ["en-US", "English (US)"], ["es", "Espa\u00f1ol"], ["fr", "Fran\u00e7ais"], ["de", "Deutsch"], ["it", "Italiano"], ["pt", "Portugu\u00eas"], ["nl", "Nederlands"]];
+  function dnLoc() { return LANG === "en-GB" ? "en" : LANG === "tl" ? "fil" : LANG === "zh" ? "zh-Hans" : LANG === "ceb" ? "fil" : LANG; }
+  var LANGS = [["en-GB", "English (UK)"], ["en-US", "English (US)"], ["es", "Espa\u00f1ol"], ["fr", "Fran\u00e7ais"], ["de", "Deutsch"], ["it", "Italiano"], ["pt", "Portugu\u00eas"], ["nl", "Nederlands"], ["pl", "Polski"], ["zh", "\u4e2d\u6587\uff08\u666e\u901a\u8bdd\uff09"], ["tl", "Tagalog"], ["ceb", "Bisaya (Cebuano)"]];
   var LANG = "en-GB"; try { LANG = localStorage.getItem("shedly.lang") || "en-GB"; } catch (e) {}
   if (!LANGS.some(function (l) { return l[0] === LANG; })) LANG = "en-GB";
-  try { document.documentElement.lang = LANG.slice(0, 2); } catch (e) {}
+  try { document.documentElement.lang = LANG === "zh" ? "zh-Hans" : LANG === "ceb" ? "ceb" : LANG.slice(0, 2); } catch (e) {}
   var PATS = {};
   function T(s) {
     if (typeof s !== "string" || !s) return s;
@@ -914,12 +915,12 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   ];
   var CURRENCIES = COUNTRIES.map(function (c) { return c[2]; }).filter(function (c, i, a) { return a.indexOf(c) === i; }).sort();
   var currencyName = function (code) {
-    try { return new Intl.DisplayNames([LANG === "en-GB" ? "en" : LANG], { type: "currency" }).of(code); } catch (e) { return code; }
+    try { return new Intl.DisplayNames([dnLoc()], { type: "currency" }).of(code); } catch (e) { return code; }
   };
   var countryName = function (c) {
     var en = COUNTRIES.find(function (x) { return x[0] === c; })[1];
     if (LANG === "en-GB" || LANG === "en-US") return en;
-    try { return new Intl.DisplayNames([LANG], { type: "region" }).of(c) || en; } catch (e) { return en; }
+    try { return new Intl.DisplayNames([dnLoc()], { type: "region" }).of(c) || en; } catch (e) { return en; }
   };
   var currencyOf = function (country) { var c = COUNTRIES.find(function (x) { return x[0] === country; }); return c ? c[2] : null; };
   function detectCountry() {
