@@ -258,6 +258,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 
 /* ---------- themes (earned through streaks; Paper and Midnight are free from the start) ---------- */
 :root[data-theme=midnight]{color-scheme:dark;--paper:#0E1320;--surface:#171E31;--ink:#E9ECF5;--on-ink:#121828;--muted:#98A2BD;--line:#27304A;--card:#4155F0;--lav:#212A4D;--dock:#1F2842;--strike:#FF7A6E}
+:root[data-theme=white]{color-scheme:light;--paper:#FFFFFF;--surface:#F5F6F8;--ink:#111827;--on-ink:#FFFFFF;--muted:#5B6474;--line:#E3E6EB;--card:#2F45FF;--lav:#EEF0F4;--dock:#111827;--strike:#D8483B}
 :root[data-theme=sage]{color-scheme:light;--paper:#E8EDE7;--surface:#F4F7F3;--ink:#1F2E27;--on-ink:#F1F6F0;--muted:#58695F;--line:#CBD6CA;--card:#2D6A55;--lav:#D3E3D8;--dock:#25372F;--strike:#C0463A}
 :root[data-theme=dusk]{color-scheme:light;--paper:#EEEAF3;--surface:#F9F6FC;--ink:#2B2640;--on-ink:#F5F2FA;--muted:#675F7F;--line:#DBD3E5;--card:#5F45D6;--lav:#E1D9F6;--dock:#312A4C;--strike:#D2425A}
 :root[data-theme=mono]{color-scheme:light;--paper:#F2F2F0;--surface:#FAFAF8;--ink:#141414;--on-ink:#F7F7F5;--muted:#5E5E5A;--line:#D8D8D4;--card:#141414;--lav:#E2E2DE;--dock:#141414;--strike:#C93B2E}
@@ -536,6 +537,7 @@ h1.hello.big{font-size:clamp(46px,14.5vw,64px);line-height:.98;margin:14px 0 8px
 .shred-wx .glow{position:absolute;right:-40px;top:-40px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(255,220,100,.55),transparent 68%);animation:sunPulse2 3s ease-in-out infinite}
 @keyframes sunPulse2{50%{opacity:.6;transform:scale(1.08)}}
 .hello.big .scribble{padding-bottom:0}
+.hello .scribble{background:none;padding:0}
 .sky .sun{position:absolute;right:26px;top:20px;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#FFF6B0,#FFD23F 70%);box-shadow:0 0 30px 10px rgba(255,214,64,.55);animation:sunPulse 3.5s ease-in-out infinite}
 .sky .sun::before{content:"";position:absolute;inset:-26px;border-radius:50%;background:repeating-conic-gradient(rgba(255,236,150,.55) 0 7deg,transparent 7deg 22deg);-webkit-mask:radial-gradient(circle,transparent 34%,#000 36%,transparent 70%);mask:radial-gradient(circle,transparent 34%,#000 36%,transparent 70%);animation:spin 28s linear infinite}
 .sky .moon.small{right:auto;left:46%;top:14px;width:34px;height:34px;opacity:.6}
@@ -1035,6 +1037,7 @@ h1.hello.big{margin:6px 0 0}
   ];
   var THEMES = [
     { id: "night", name: "Night", at: null, sw: ["#0A0F1F", "#F2F4FA", "#FFE45C"], note: "Navy and yellow" },
+    { id: "white", name: "White", at: null, sw: ["#FFFFFF", "#111827", "#2F45FF"], note: "Plain white" },
     { id: "paper", name: "Paper", at: null, sw: ["#EFF0F3", "#263044", "#3347E8"], note: "Follows your phone" },
     { id: "midnight", name: "Midnight", at: null, sw: ["#0E1320", "#E9ECF5", "#4155F0"], note: "Always dark" },
     { id: "forest", name: "Forest", at: null, sw: ["#12211A", "#E9C46A", "#2F7257"], note: "Dark green, amber marks" },
@@ -2786,6 +2789,15 @@ h1.hello.big{margin:6px 0 0}
     }, function () { done(false, "Location is off for Shedly, so there's no weather to show. You can allow it in your phone or browser settings."); }, { timeout: 10000, maximumAge: 3600000 });
   }
   function disableWeather() { state.profile.skyWeather = false; delete state.profile.skyLoc; save(); try { localStorage.removeItem("shedly.wx"); } catch (e) {} }
+  function autoWeather() {
+    var P = state.profile; if (!state.onboarded || P.skyWeather !== undefined) return;
+    try { if (localStorage.getItem("shedly.wxAsk")) return; } catch (e) { return; }
+    setTimeout(function () {
+      if (state.profile.skyWeather !== undefined) return;
+      try { localStorage.setItem("shedly.wxAsk", "1"); } catch (e) {}
+      enableWeather(function (okk) { if (okk) render(); else { state.profile.skyWeather = false; save(); } });
+    }, 1500);
+  }
 
   // =====================================================================
   //  Weather engine: a small canvas renderer (rain with depth and splashes, soft snow, shaded clouds,
@@ -3383,7 +3395,7 @@ h1.hello.big{margin:6px 0 0}
   if (state._seed) { SKINS.concat(THEMES).forEach(function (d) { if (d.at && metCond(d.at)) state.profile.unlocked.push(d.id); }); delete state._seed; save(); }
   applyTheme();
   if (state.profile.analytics) loadAnalytics();
-  render();
+  render(); autoWeather();
   if (!state.onboarded) openTour("first");
   else setTimeout(askConsent, 700);
   handleLaunch();
