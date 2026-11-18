@@ -230,6 +230,16 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 .inst-pop .pill{width:100%;margin:6px 0 4px}
 .inst-pop .linkbtn{display:block;margin:6px auto 0;padding:10px}
 .inst-steps{text-align:left;margin:0 0 12px;padding:14px 16px 14px 34px;background:var(--surface);border-radius:16px;font-size:15px;line-height:1.5}
+.langs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 10px}
+.lang{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:13px 14px;border:1.5px solid var(--line);border-radius:16px;background:none;color:var(--ink);font-size:16px;font-weight:600;text-align:left}
+.lang.on{border-color:var(--hl);background:var(--surface)}
+.lang i{font-style:normal;color:var(--hl)}
+.globe{font-size:74px;line-height:1}
+.resetbox{padding:6px 2px}
+.resetbox h2{font-family:var(--display);font-weight:800;font-size:28px;letter-spacing:-.03em;margin:6px 0 8px}
+.resetbox p{color:var(--muted);line-height:1.45;margin:0 0 16px}
+.pill.danger{background:#E5484D;color:#fff;width:100%}
+.resetbox .linkbtn{display:block;margin:10px auto 0;padding:10px}
 .stage.short{height:clamp(120px,17vh,150px)}
 .rev{position:relative;width:210px;height:150px}
 .rev .strips{position:absolute;left:0;right:0;top:0;height:112px;display:flex}
@@ -820,12 +830,13 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
 <div class="toast" id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button id="toastUndo" type="button">Undo</button></div>
 <div id="onboard" role="dialog" aria-modal="true" aria-label="How Shedly works" hidden></div>
 
+<script src="i18n.js"></script>
 <script>
 (function () {
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.19";
+  var APP_VERSION = "0.20";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -836,21 +847,55 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   var $ = function (id) { return document.getElementById(id); };
   var now = function () { return Date.now(); };
   var daysSince = function (t) { return Math.floor((now() - t) / DAY); };
-  var plural = function (n, w) { return n + " " + w + (n === 1 ? "" : "s"); };
+  var plural = function (n, w) { return T(n + " " + w + (n === 1 ? "" : "s")); };
   var ago = function (t) { var d = daysSince(t); return d === 0 ? "today" : d === 1 ? "yesterday" : d + " days ago"; };
   var clip = function (s) { return s.length > 26 ? s.slice(0, 25) + "…" : s; };
   var weekOf = function (t) { return Math.floor((t + 3 * DAY) / (7 * DAY)); };   // Monday-based
 
+  // ---- language: strings are looked up by their English text; anything not translated stays English ----
+  var LANGS = [["en-GB", "English (UK)"], ["en-US", "English (US)"], ["es", "Espa\u00f1ol"], ["fr", "Fran\u00e7ais"], ["de", "Deutsch"], ["it", "Italiano"], ["pt", "Portugu\u00eas"], ["nl", "Nederlands"]];
+  var LANG = "en-GB"; try { LANG = localStorage.getItem("shedly.lang") || "en-GB"; } catch (e) {}
+  if (!LANGS.some(function (l) { return l[0] === LANG; })) LANG = "en-GB";
+  try { document.documentElement.lang = LANG.slice(0, 2); } catch (e) {}
+  var PATS = {};
+  function T(s) {
+    if (typeof s !== "string" || !s) return s;
+    var d = window.I18N && window.I18N[LANG], r = d && d[s];
+    if (r !== undefined) return r;
+    if (d) {
+      var ps = PATS[LANG];
+      if (!ps) {
+        ps = PATS[LANG] = [];
+        Object.keys(d).forEach(function (k) {
+          if (!/\{\d\}/.test(k)) return;
+          var re = new RegExp("^" + k.replace(/[.*+?^$()|[\]\\]/g, "\\$&").replace(/\{\d\}/g, "(.+?)") + "$");
+          ps.push([re, d[k], k.length]);
+        });
+        ps.sort(function (a, b) { return b[2] - a[2]; });
+      }
+      for (var i = 0; i < ps.length; i++) {
+        var m = ps[i][0].exec(s);
+        if (m) return ps[i][1].replace(/\{(\d)\}/g, function (x, j) { return T(m[+j + 1]); });
+      }
+    }
+    if (window.__missT && LANG !== "en-GB") window.__missT[s] = 1;
+    return s;
+  }
+  function chooseLang(code) {
+    try { localStorage.setItem("shedly.lang", code); } catch (e) {}
+    try { var raw = localStorage.getItem("shedly.v1"); if (raw) { var o = JSON.parse(raw); if (o.profile) { o.profile.lang = code; localStorage.setItem("shedly.v1", JSON.stringify(o)); } } } catch (e) {}
+    location.reload();
+  }
   function h(tag, attrs, kids) {
     var el = document.createElement(tag);
     if (attrs) Object.keys(attrs).forEach(function (k) {
       if (k === "class") el.className = attrs[k];
-      else if (k === "text") el.textContent = attrs[k];
-      else if (k === "html") el.innerHTML = attrs[k];          // only ever used with static strings below
+      else if (k === "text") el.textContent = T(attrs[k]);
+      else if (k === "html") el.innerHTML = T(attrs[k]);          // only ever used with static strings below
       else if (k.indexOf("on") === 0) el.addEventListener(k.slice(2), attrs[k]);
-      else el.setAttribute(k, attrs[k]);
+      else el.setAttribute(k, (k === "aria-label" || k === "placeholder" || k === "title") ? T(attrs[k]) : attrs[k]);
     });
-    (kids || []).forEach(function (c) { if (c) el.append(c); });
+    (kids || []).forEach(function (c) { if (c) el.append(typeof c === "string" ? T(c) : c); });
     return el;
   }
 
@@ -869,7 +914,12 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   ];
   var CURRENCIES = COUNTRIES.map(function (c) { return c[2]; }).filter(function (c, i, a) { return a.indexOf(c) === i; }).sort();
   var currencyName = function (code) {
-    try { return new Intl.DisplayNames(["en"], { type: "currency" }).of(code); } catch (e) { return code; }
+    try { return new Intl.DisplayNames([LANG === "en-GB" ? "en" : LANG], { type: "currency" }).of(code); } catch (e) { return code; }
+  };
+  var countryName = function (c) {
+    var en = COUNTRIES.find(function (x) { return x[0] === c; })[1];
+    if (LANG === "en-GB" || LANG === "en-US") return en;
+    try { return new Intl.DisplayNames([LANG], { type: "region" }).of(c) || en; } catch (e) { return en; }
   };
   var currencyOf = function (country) { var c = COUNTRIES.find(function (x) { return x[0] === country; }); return c ? c[2] : null; };
   function detectCountry() {
@@ -1261,7 +1311,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   }
 
   function toast(msg, noUndo) {
-    $("toastMsg").textContent = msg;
+    $("toastMsg").textContent = T(msg);
     $("toastUndo").style.display = noUndo ? "none" : "";
     $("toast").classList.add("show");
     clearTimeout(toastTimer); toastTimer = setTimeout(hideToast, 6000);
@@ -1285,13 +1335,13 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     var hr = new Date().getHours();
     var part = hr < 5 ? "Up late" : hr < 12 ? "Good morning" : hr < 18 ? "Good afternoon" : "Good evening";
     var n = (state.profile.name || "").trim();
-    return n ? [part + ", ", h("span", { class: "scribble", text: n }), "."] : [part + "."];
+    return n ? [part + ", ", h("span", { class: "scribble", text: n }), "."] : [T(part) + "."];
   }
   function subLine() {
     var f = freedText(1), bits = [];
     if (f) bits.push([h("b", { text: f }), "/month freed"]);
     var p = h("p", { class: "sub" });
-    if (!bits.length) { p.textContent = "One thing to shed this week."; return p; }
+    if (!bits.length) { p.textContent = T("One thing to shed this week."); return p; }
     bits.forEach(function (b, i) { if (i) p.append(" · "); b.forEach(function (x) { p.append(x); }); });
     return p;
   }
@@ -1601,7 +1651,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   }
 
   function renderList() {
-    $("listSub").textContent = state.items.length ? "Everything you've said yes to, costliest and most ignored first." : "Nothing yet. What are you paying attention to right now?";
+    $("listSub").textContent = T(state.items.length ? "Everything you've said yes to, costliest and most ignored first." : "Nothing yet. What are you paying attention to right now?");
     renderRadar();
     var t = $("ticks"); t.textContent = ""; t.append(ticksBlock());
     var rows = $("rows"); rows.textContent = "";
@@ -1718,7 +1768,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   function notifySummary() {
     var n = state.profile.notify, on = NOTIFY_TYPES.filter(function (t) { return n[t[0]]; }).length;
     var items = state.items.filter(function (i) { return i.due != null && remindOn(i); }).length;
-    return (state.profile.remindOn ? "" : "Off \u00b7 ") + on + " on" + (items ? " · " + plural(items, "item") + " with a date" : "");
+    return T((state.profile.remindOn ? "" : "Off \u00b7 ") + on + " on" + (items ? " \u00b7 " + items + (items === 1 ? " item" : " items") + " with a date" : ""));
   }
   function toggleRow(label, checked, onChange, note, id) {
     var attrs = { type: "checkbox", "aria-label": label }; if (id) attrs.id = id;
@@ -1747,7 +1797,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     fieldSheet("Country", "Picking a country also sets your currency. You can change it separately.", function (inner) {
       var country = h("select", { id: "setCountry", "aria-label": "Country" });
       country.append(h("option", { value: "", text: "Somewhere else" }));
-      optionList(country, COUNTRIES.map(function (c) { return c[0]; }), function (c) { return COUNTRIES.find(function (x) { return x[0] === c; })[1]; }, state.profile.country || "");
+      optionList(country, COUNTRIES.map(function (c) { return c[0]; }), countryName, state.profile.country || "");
       country.addEventListener("change", function () {
         state.profile.country = country.value;
         var c = currencyOf(country.value); if (c) state.profile.currency = c;
@@ -1787,7 +1837,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     var wxRow = toggleRow("Show today's weather", !!state.profile.skyWeather, function (on) {
       var box = wxRow.querySelector("input");
       if (!on) { disableWeather(); return; }
-      enableWeather(function (ok, msg) { if (!ok) { box.checked = false; wxNote.textContent = msg; } else wxNote.textContent = "On. Location rounded to about 10 km."; });
+      enableWeather(function (ok, msg) { if (!ok) { box.checked = false; wxNote.textContent = msg; } else wxNote.textContent = T("On. Location rounded to about 10 km."); });
     }, null, "setWeather");
     inner.append(wxRow, wxNote);
   }
@@ -1874,6 +1924,36 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
       inner.append(analyticsRow());
     });
   }
+  function langChips(onPick) {
+    var wrap = h("div", { class: "langs", role: "group", "aria-label": "Language" });
+    LANGS.forEach(function (l) {
+      wrap.append(h("button", { class: "lang" + (l[0] === LANG ? " on" : ""), type: "button", id: "lang-" + l[0], "aria-pressed": String(l[0] === LANG), onclick: function () { if (l[0] === LANG) { if (onPick) onPick(false); return; } chooseLang(l[0]); } }, [h("span", { text: l[1] }), l[0] === LANG ? h("i", { text: "\u2713" }) : null]));
+    });
+    return wrap;
+  }
+  function langSheet() {
+    openSheet("Language", function (inner, close) {
+      inner.append(sheetHead("Language", close));
+      inner.append(langChips(close));
+      inner.append(h("p", { class: "fine-print", text: "The app reloads in the language you pick. Anything not translated yet stays in English." }));
+    });
+  }
+  function resetSheet() {
+    openSheet("Reset and start over", function (inner, close) {
+      inner.append(sheetHead("Reset and start over", close));
+      inner.append(h("div", { class: "resetbox" }, [
+        h("h2", { text: "Wipe everything?" }),
+        h("p", { text: "This deletes your list, history, machines, streak, name, country and settings from this device, then restarts Shedly as if you'd just installed it. It can't be undone." }),
+        h("button", { class: "pill danger", type: "button", id: "resetConfirm", text: "Reset everything", onclick: function () {
+          logEvent("app_reset"); phReset();
+          try { Object.keys(localStorage).filter(function (k) { return k.indexOf("shedly.") === 0; }).forEach(function (k) { localStorage.removeItem(k); }); } catch (e) {}
+          try { if (window.caches) caches.keys().then(function (ks) { /* keep the offline copy */ }); } catch (e) {}
+          location.reload();
+        } }),
+        h("button", { class: "linkbtn", type: "button", id: "resetCancel", text: "Keep my stuff", onclick: close })
+      ]));
+    });
+  }
   function dataSheet() {
     openSheet("Your data", function (inner, close) {
       inner.append(sheetHead("Your data", close));
@@ -1905,7 +1985,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     var p = state.profile, c = COUNTRIES.find(function (x) { return x[0] === p.country; });
     root.append(h("button", { class: "you-name", type: "button", id: "tile-name", text: p.name || "Add your name", onclick: nameSheet }));
     root.append(h("p", { class: "you-line" }, [
-      h("button", { type: "button", id: "tile-country", text: c ? c[1] : "Somewhere else", onclick: countrySheet }), ", ",
+      h("button", { type: "button", id: "tile-country", text: c ? countryName(c[0]) : "Somewhere else", onclick: countrySheet }), ", ",
       h("button", { type: "button", id: "tile-cur", text: p.currency ? currencyName(p.currency) : "no currency", onclick: currencySheet })
     ]));
     root.append(h("h2", { class: "you-h", text: "Look" }));
@@ -1920,6 +2000,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     });
     root.append(circ);
     var rows = [
+      { id: "tile-lang", label: "Language", value: (LANGS.filter(function (l) { return l[0] === LANG; })[0] || LANGS[0])[1], open: langSheet },
       { id: "tile-look", label: "Look and sound", value: "Sound, seasons, weather", open: lookSheet },
       { id: "tile-notify", label: "Notifications", value: notifySummary(), open: notifySheet },
       { id: "workshopBtn", label: "Shredder workshop", value: "", open: openWorkshop },
@@ -1927,7 +2008,8 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
       { id: "importBtn", label: "Import a list", value: "", open: openImport },
       { id: "tile-sharing", label: "Sharing and testing", value: p.analytics ? "On" : "Off", open: sharingSheet },
       { id: "tile-data", label: "Your data", value: "", open: dataSheet },
-      { id: "plusBtn", label: "Shedly Plus", value: p.plus ? "Preview on" : "Not open yet", open: plusSheet }
+      { id: "plusBtn", label: "Shedly Plus", value: p.plus ? "Preview on" : "Not open yet", open: plusSheet },
+      { id: "resetBtn", label: "Reset and start over", value: "", open: resetSheet }
     ];
     var list = h("div", { class: "rows" });
     rows.forEach(function (r) {
@@ -2185,7 +2267,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
           var n = 0; boxes.forEach(function (b) { if (b.cb.checked && state.items.length < limit()) { pushItem(b.c); n++; } });
           logEvent("import_added", { count: n }); save(); close(); toast("Added " + plural(n, "item") + ".", true);
         } });
-        function sync() { var n = boxes.filter(function (b) { return b.cb.checked; }).length; addBtn.textContent = n ? "Add " + n + " to my list" : "Nothing selected"; addBtn.disabled = !n; }
+        function sync() { var n = boxes.filter(function (b) { return b.cb.checked; }).length; addBtn.textContent = T(n ? "Add " + n + " to my list" : "Nothing selected"); addBtn.disabled = !n; }
         out.append(h("p", { class: "hint", text: res.kind === "csv" ? "Things that repeat with about the same amount each month." : "One item per line." }), ul);
         if (res.list.length > taken && room < res.list.length) out.append(h("p", { class: "hint", id: "impCap", text: "Your list has room for " + room + " more. Plus has no limit." }));
         out.append(addBtn); sync();
@@ -3506,11 +3588,12 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
       fName = h("input", { type: "text", maxlength: "40", autocomplete: "given-name", placeholder: "What should we call you?", id: "obName" });
       fCountry = h("select", { id: "obCountry" });
       fCountry.append(h("option", { value: "", text: "Somewhere else" }));
-      optionList(fCountry, COUNTRIES.map(function (c) { return c[0]; }), function (c) { return COUNTRIES.find(function (x) { return x[0] === c; })[1]; }, detected);
+      optionList(fCountry, COUNTRIES.map(function (c) { return c[0]; }), countryName, detected);
       fCur = h("select", { id: "obCur" });
       optionList(fCur, CURRENCIES, function (c) { return c + " · " + currencyName(c); }, currencyOf(detected) || "EUR");
       fCountry.addEventListener("change", function () { var c = currencyOf(fCountry.value); if (c) fCur.value = c; });
       var fAn = h("input", { type: "checkbox", id: "obAnalytics", "aria-label": "Help test Shedly" }); fAn.checked = mode === "update" && !!state.profile.analytics;
+      var langSlide = slide("l opt", h("div", { class: "globe", "aria-hidden": "true", html: "\ud83c\udf0d" }), "Choose your language.", "", h("div", { class: "optctl" }, [langChips()]));
       var founder = slide("y short", visualReverse(), "A note from Liam.", "", h("div", { class: "note" }, [
         h("p", { text: "Hi, I'm Liam, the founder of Shedly." }),
         h("p", { text: "Most to-do apps help you add things. Shedly helps you let go of them. Once a week it asks one question about one thing: is this still a yes?" }),
@@ -3553,7 +3636,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
       var optSwipe = optSlide("l opt", visualSwipe(), "Tap, or just swipe.", "Flick left or right to go from Review to List, Shed and You. <strong>The tabs at the bottom still work either way.</strong>", tg("Swipe between screens", fSwipe), "Turn it off any time in You.");
       var optData = optSlide("y opt", visualOwn(), "Your data.", "Your list stays on this phone. No account, no email. <strong>Help us test Shedly if you like.</strong>", tg("Share anonymous usage", fAn), "Records which screens and buttons you use, with all text hidden. Item names, prices and notes are never sent. Export or erase everything any time in You.");
       var opts = [optLook, optWx, optRem, optSwipe, optData];
-      if (mode === "update") { slides = [founder].concat(opts); introCount = slides.length; } else { slides = [founder, setup].concat(opts, tutorial); introCount = 2 + opts.length; }
+      if (mode === "update") { slides = [langSlide, founder].concat(opts); introCount = slides.length; } else { slides = [langSlide, founder, setup].concat(opts, tutorial); introCount = 3 + opts.length; }
       fName.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); goTo(2); } });
     }
 
@@ -3573,7 +3656,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
       slides.forEach(function (s, k) { s.classList.toggle("live", k === i); });
       Array.prototype.forEach.call(dots.children, function (d, k) { if (k === i) d.setAttribute("aria-current", "true"); else d.removeAttribute("aria-current"); });
       var last = i === slides.length - 1;
-      next.textContent = last ? (mode === "first" ? "Start shedding" : mode === "update" ? "Done" : "Got it") : "Next";
+      next.textContent = T(last ? (mode === "first" ? "Start shedding" : mode === "update" ? "Done" : "Got it") : "Next");
       skip.style.visibility = (mode === "update" || (mode === "first" && (last || i < introCount))) ? "hidden" : "visible";
       if (slides[i].querySelector("#tourN")) runCounter();
     }
@@ -3625,6 +3708,14 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   }
   $("howBtn").addEventListener("click", function () { openTour("replay"); });
 
+  function translateStatic() {
+    if (LANG === "en-GB" && !window.__missT) return;
+    var w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null), n, list = [];
+    while ((n = w.nextNode())) { if (n.parentNode && !/^(SCRIPT|STYLE)$/.test(n.parentNode.nodeName) && n.nodeValue.trim()) list.push(n); }
+    list.forEach(function (t) { var v = t.nodeValue, k = v.trim(), r = T(k); if (r !== k) t.nodeValue = v.replace(k, r); });
+    document.querySelectorAll("[aria-label],[placeholder],[title]").forEach(function (e) { ["aria-label", "placeholder", "title"].forEach(function (a) { var v = e.getAttribute(a); if (v) e.setAttribute(a, T(v)); }); });
+  }
+  translateStatic();
   state = load();
   if (state._seed) { SKINS.concat(THEMES).forEach(function (d) { if (d.at && metCond(d.at)) state.profile.unlocked.push(d.id); }); delete state._seed; save(); }
   applyTheme();
