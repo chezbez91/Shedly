@@ -447,16 +447,129 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
   *,*::before,*::after{transition:none!important;animation:none!important}
   .track{scroll-behavior:auto}
 }
+
+/* quotes, dictation, reward moments */
+.regret{margin:12px 0 4px;padding:14px 14px 6px;border:2px solid var(--ink);border-radius:22px}
+.regret .kick{margin:0 0 4px;font-size:13px;font-weight:700;color:var(--muted)}
+.regret h3{margin:0 0 14px;font-family:var(--display);font-weight:800;font-size:19px;letter-spacing:-.03em;line-height:1.15;text-wrap:balance}
+.regret-btns{display:grid;grid-template-columns:1fr .8fr 1.3fr;gap:6px}
+.regret .pill{padding:11px 4px;font-size:14px}
+.linkbtn{display:block;margin:8px auto 0;background:none;border:0;color:var(--muted);font-size:13px;text-decoration:underline;text-underline-offset:3px;padding:6px}
+.quote{margin:0 0 2px;min-height:42px;transition:opacity .6s ease}
+.quote.out{opacity:0}
+.quote blockquote{margin:0;font-weight:600;font-size:13.5px;line-height:1.35;white-space:nowrap;overflow:hidden}
+.quote blockquote span{display:inline-block}
+.quote blockquote span.run{animation:qscroll 12s ease-in-out forwards}
+@keyframes qscroll{0%,18%{transform:translateX(0)}82%,100%{transform:translateX(calc(-1px * var(--ov)))}}
+.quote figcaption{margin-top:2px;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (prefers-reduced-motion:reduce){.quote blockquote{text-overflow:ellipsis}.quote blockquote span.run{animation:none}}
+.add button.mic{width:50px;padding:0;background:none;color:var(--ink);border:2px solid var(--ink);display:grid;place-items:center;flex:none}
+.add button.mic[hidden]{display:none}
+.add button.mic.on{background:var(--hl);color:#263044;border-color:var(--hl);animation:micPulse 1.2s ease-in-out infinite}
+@keyframes micPulse{50%{box-shadow:0 0 0 6px rgba(255,214,64,.35)}}
+.shred-count{position:absolute;left:0;right:0;bottom:calc(env(safe-area-inset-bottom) + 104px);text-align:center;z-index:5;color:#fff;pointer-events:none;text-shadow:0 2px 14px rgba(0,0,0,.5)}
+.shred-count small{display:block;font-size:14px;font-weight:600;opacity:.8}
+.shred-count b{display:block;font-family:var(--display);font-weight:800;font-size:clamp(46px,15vw,72px);letter-spacing:-.05em;line-height:1;color:#F5DF7B;font-variant-numeric:tabular-nums}
+.sm.gold .sm-plate{color:#3A2A08;background:linear-gradient(135deg,#F7E19A,#C9993F);text-shadow:none;border-radius:4px;padding:1px 0}
+.result{padding-top:26px}
+.result .kick,.reveal .kick{margin:0 0 6px;font-size:14px;font-weight:700;color:var(--ink)}
+.result h1{margin:0;font-family:var(--display);font-weight:800;font-size:clamp(58px,20vw,86px);letter-spacing:-.055em;line-height:.95}
+.result .struck{margin:8px 0 0;font-size:19px;color:var(--muted);text-decoration:line-through;text-wrap:balance}
+.rrows{margin:22px 0 0;border-top:2px solid var(--ink)}
+.rrows div{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1.5px dashed var(--line);font-size:16px}
+.rrows dt{color:var(--muted)}
+.rrows dd{margin:0;font-weight:800}
+.rwd{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1.5px solid var(--line)}
+.rwd .ic{flex:none;width:42px;height:42px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--ink);display:grid;place-items:center}
+.rwd .ic svg{width:22px;height:22px}
+.rwd b{display:block;font-size:16px}
+.rwd small{display:block;margin-top:2px;font-size:13px;color:var(--muted)}
+.rwd .bar{margin-top:8px;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.rwd .bar i{display:block;height:100%;background:var(--ink)}
+.result.gold .kick,.result.gold h1{color:#B58A12}
+:root[data-theme=midnight] .result.gold h1,:root[data-theme=forest] .result.gold h1,:root[data-theme=midnight] .result.gold .kick,:root[data-theme=forest] .result.gold .kick{color:#F5DF7B}
+.result .btns{display:grid;grid-template-columns:1.5fr 1fr;gap:10px;margin-top:22px}
+.reveal{position:relative;overflow:hidden}
+.reveal .kick{font-size:15px}
+.reveal .rcard h3{font-size:clamp(40px,13vw,54px)}
+.reveal .teaser{max-width:300px;margin:4px auto 26px;text-align:left}
+.reveal .teaser div{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin:0}
+.reveal .teaser .bar{margin-top:8px;height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.reveal .teaser .bar i{display:block;height:100%;background:var(--ink)}
+.confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.confetti i{position:absolute;top:-24px;width:6px;height:26px;border-radius:3px;opacity:0;animation:confDrop 2.4s ease-out forwards}
+@keyframes confDrop{0%{opacity:0;transform:translateY(0) rotate(0)}10%{opacity:1}100%{opacity:0;transform:translateY(420px) rotate(300deg)}}
+@media (prefers-reduced-motion:reduce){.confetti{display:none}.add button.mic.on{animation:none}.quote{transition:none}}
+
+.hdr-r{display:flex;align-items:center;gap:10px}
+.how{width:36px;height:36px;padding:0;justify-content:center;font-family:var(--display);font-weight:800;font-size:17px;color:var(--ink)}
+.streak-chip{font-size:14px;font-weight:700;padding:6px 12px;border-radius:999px;background:var(--ink);color:var(--on-ink);white-space:nowrap}
+#quoteSlot{padding-top:calc(env(safe-area-inset-top) + 12px)}
+#quoteSlot:empty{display:none}
+#quoteSlot + header{padding-top:10px}
+h1.hello.big{font-size:clamp(46px,14.5vw,64px);line-height:.98;margin:14px 0 8px}
+.sky{position:relative;height:112px;border-radius:24px;overflow:hidden;margin:8px 0 2px;color:#fff;background:linear-gradient(160deg,#0B1030,#1B2A66)}
+.sky.dawn{background:linear-gradient(160deg,#3B3A7A,#F0A27A)}
+.sky.day{background:linear-gradient(160deg,#4C86F0,#9CC8FF)}
+.sky.dusk{background:linear-gradient(160deg,#2B2466,#E0735A)}
+.sky .moon{position:absolute;right:20px;top:16px;width:68px;height:68px;filter:drop-shadow(0 0 14px rgba(244,241,222,.55));animation:moonFloat 7s ease-in-out infinite}
+.sky .moon.rise{animation:moonRise 1.8s cubic-bezier(.2,.8,.2,1) both,moonFloat 7s ease-in-out 1.8s infinite}
+.sky.day .moon{filter:drop-shadow(0 0 8px rgba(255,255,255,.5));opacity:.92}
+.sky.spooky .moon{filter:sepia(1) saturate(4) hue-rotate(-12deg) drop-shadow(0 0 16px rgba(255,140,40,.6))}
+@keyframes moonRise{from{transform:translateY(70px);opacity:0}to{transform:none;opacity:1}}
+@keyframes moonFloat{50%{transform:translateY(-4px)}}
+.shred-wx{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:1}
+.shred-wx i{position:absolute;top:-30px;left:var(--x);opacity:0;animation:wxfall var(--d) linear var(--dl) infinite}
+.shred-wx i.rain{width:1.5px;height:18px;background:rgba(200,225,255,.7);transform:rotate(10deg)}
+.shred-wx i.snow{width:6px;height:6px;border-radius:50%;background:#fff}
+@keyframes wxfall{0%{opacity:0;transform:translate(0,0)}8%{opacity:1}100%{opacity:.9;transform:translate(var(--sw),110vh)}}
+.shred-wx .flash{position:absolute;inset:0;background:#fff;opacity:0;animation:wxflash 2.6s linear infinite}
+@keyframes wxflash{0%,40%,100%{opacity:0}42%{opacity:.5}44%{opacity:.08}46%{opacity:.4}50%{opacity:0}}
+.shred-wx .glow{position:absolute;right:-40px;top:-40px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(255,220,100,.55),transparent 68%);animation:sunPulse2 3s ease-in-out infinite}
+@keyframes sunPulse2{50%{opacity:.6;transform:scale(1.08)}}
+.hello.big .scribble{padding-bottom:0}
+.sky .sun{position:absolute;right:26px;top:20px;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#FFF6B0,#FFD23F 70%);box-shadow:0 0 30px 10px rgba(255,214,64,.55);animation:sunPulse 3.5s ease-in-out infinite}
+.sky .sun::before{content:"";position:absolute;inset:-26px;border-radius:50%;background:repeating-conic-gradient(rgba(255,236,150,.55) 0 7deg,transparent 7deg 22deg);-webkit-mask:radial-gradient(circle,transparent 34%,#000 36%,transparent 70%);mask:radial-gradient(circle,transparent 34%,#000 36%,transparent 70%);animation:spin 28s linear infinite}
+.sky .moon.small{right:auto;left:46%;top:14px;width:34px;height:34px;opacity:.6}
+@keyframes sunPulse{50%{box-shadow:0 0 40px 16px rgba(255,214,64,.7)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sky .cap,.sky .tag{z-index:3}
+.sky .wxc{position:absolute;inset:0;z-index:1;pointer-events:none}
+.shred-wx canvas{position:absolute;inset:0}
+.sky .cap{position:absolute;left:18px;bottom:12px;font-size:13px;font-weight:600;line-height:1.3;text-shadow:0 1px 6px rgba(0,0,0,.35)}
+.sky .cap small{display:block;font-weight:500;opacity:.85;font-size:12px}
+.sky .tag{position:absolute;left:16px;top:12px;font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.2);backdrop-filter:blur(4px)}
+.sky .star{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;animation:twinkle 3s ease-in-out infinite}
+@keyframes twinkle{50%{opacity:.2}}
+.sky .cloud{position:absolute;top:var(--t);left:-90px;width:84px;height:26px;border-radius:26px;background:rgba(255,255,255,.55);animation:drift var(--d) linear var(--dl) infinite}
+.sky .cloud::before{content:"";position:absolute;left:14px;top:-12px;width:36px;height:30px;border-radius:50%;background:inherit}
+.sky .cloud.dark{background:rgba(70,80,100,.7)}
+@keyframes drift{to{transform:translateX(560px)}}
+.sky .pt{position:absolute;top:-16px;left:var(--x);animation:fall var(--d) linear var(--dl) infinite;opacity:0}
+.pt.snow{width:5px;height:5px;border-radius:50%;background:#fff}
+.pt.rain{width:1.5px;height:14px;background:rgba(200,225,255,.75);transform:rotate(12deg)}
+.pt.leaf{width:8px;height:5px;border-radius:5px 0;background:#E07B2B}
+.pt.petal{width:7px;height:5px;border-radius:7px 0;background:#F9B6CC}
+.pt.heart{font-size:12px;color:#FF6B8B;font-family:sans-serif;font-variant-emoji:text;line-height:1}
+.pt.spark{width:3px;height:3px;background:#FFE45C;border-radius:50%;box-shadow:0 0 6px #FFE45C}
+@keyframes fall{0%{opacity:0;transform:translate(0,0)}10%{opacity:1}100%{opacity:.9;transform:translate(var(--sw),140px) rotate(160deg)}}
+.sky .lights{position:absolute;left:0;right:0;top:0;height:14px;display:flex;justify-content:space-around;align-items:flex-end;border-top:1.5px solid rgba(255,255,255,.35)}
+.sky .lights i{display:block;width:7px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c);animation:twinkle 1.6s ease-in-out var(--dl) infinite}
+.sky .flash{position:absolute;inset:0;background:#fff;opacity:0;animation:flash 7s linear infinite}
+@keyframes flash{0%,93%,97%,100%{opacity:0}94%{opacity:.5}95.5%{opacity:.1}96%{opacity:.4}}
+.sky .fog{position:absolute;left:0;right:0;bottom:0;height:60px;background:linear-gradient(transparent,rgba(255,255,255,.35))}
+@media (prefers-reduced-motion:reduce){.sky *{animation:none!important}.sky .pt{opacity:.8;top:30px}}
 </style>
 </head>
 <body>
 <div class="app" id="app">
+  <div id="quoteSlot"></div>
   <header>
     <div class="brand">
       <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#3347E8"/><rect x="12" y="15" width="40" height="8" rx="4" fill="#fff"/><rect x="12" y="28" width="30" height="8" rx="4" fill="#fff"/><rect x="12" y="41" width="18" height="8" rx="4" fill="#F5DF7B"/></svg>
       shedly
     </div>
-    <button class="how" id="howBtn" type="button"><span class="q" aria-hidden="true">?</span>How it works</button>
+    <div class="hdr-r"><span class="streak-chip" id="streakChip" hidden></span><button class="how" id="howBtn" type="button" aria-label="How it works" title="How it works">?</button></div>
   </header>
 
   <main>
@@ -466,6 +579,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
       <p class="sub" id="listSub"></p>
       <form class="add" id="addForm">
         <input id="newItem" type="text" maxlength="120" autocomplete="off" aria-label="New item">
+        <button id="micBtn" class="mic" type="button" hidden aria-label="Dictate an item" aria-pressed="false"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg></button>
         <button id="addBtn" type="submit">Add</button>
       </form>
       <p class="hint" id="addHint">Type it naturally: &ldquo;Netflix &euro;15/mo&rdquo;, &ldquo;Amazon ends middle of next month&rdquo;, &ldquo;Passport expires in 3 weeks&rdquo;.</p>
@@ -495,7 +609,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.14";
+  var APP_VERSION = "0.15";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -750,11 +864,20 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
   }
   function queue() { return state.items.slice().sort(function (a, b) { return priority(b) - priority(a); }); }
   function shedThisWeek() { var w = weekOf(now()); return state.removed.some(function (r) { return weekOf(r.at) === w; }); }
-  function streak() {
-    var weeks = {}; state.removed.forEach(function (r) { weeks[weekOf(r.at)] = 1; });
-    var w = weekOf(now()); if (!weeks[w]) w--;
-    var n = 0; while (weeks[w]) { n++; w--; } return n;
+  // Streak with one shield: a 4-week run earns a shield (hold one at most) that quietly covers one missed week.
+  function streakInfo() {
+    var weeks = {}, min = null; state.removed.forEach(function (r) { var w = weekOf(r.at); weeks[w] = 1; if (min === null || w < min) min = w; });
+    var cur = weekOf(now()), run = 0, best = 0, shield = 0, used = 0;
+    if (min === null) return { run: 0, best: 0, shield: 0, used: 0 };
+    for (var w = min; w <= cur; w++) {
+      if (weeks[w]) { run++; if (run > best) best = run; if (run % 4 === 0 && shield < 1) shield++; }
+      else if (w === cur) { /* this week is still open */ }
+      else if (shield > 0) { shield--; used++; }
+      else run = 0;
+    }
+    return { run: run, best: best, shield: shield, used: used };
   }
+  function streak() { return streakInfo().run; }
   // monthly amounts freed, kept per currency (we never guess exchange rates)
   function freedByCur() {
     var t = {}; state.removed.forEach(function (r) { if (r.cost) t[r.cur] = (t[r.cur] || 0) + r.cost; }); return t;
@@ -804,12 +927,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
   var CUTS = [["strip", "Fine strips"], ["wide", "Ribbons"], ["cross", "Cross-cut"]];
   var MODES = [["office", "Office"], ["soft", "Soft"], ["industrial", "Heavy"], ["off", "Silent"]];
 
-  function longestStreak() {
-    var ws = {}; state.removed.forEach(function (r) { ws[weekOf(r.at)] = 1; });
-    var keys = Object.keys(ws).map(Number).sort(function (a, b) { return a - b; }), best = 0, run = 0, prev = null;
-    keys.forEach(function (k) { run = prev !== null && k === prev + 1 ? run + 1 : 1; prev = k; if (run > best) best = run; });
-    return best;
-  }
+  function longestStreak() { return streakInfo().best; }
   function freedYearMax() { var t = freedByCur(), m = 0; Object.keys(t).forEach(function (c) { if (t[c] * 12 > m) m = t[c] * 12; }); return m; }
   function metric(k) { return k === "shed" ? state.removed.length : k === "streak" ? Math.max(streak(), longestStreak()) : freedYearMax(); }
   function metCond(at) { return !at || metric(at.k) >= at.n; }
@@ -844,23 +962,64 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 
   var reviewAnother = false, undoSlot = null, toastTimer = null;
 
-  function shed(id) {
+  function rollGolden() {
+    if (window.__SHEDLY_TEST__ && window.__forceGolden != null) return !!window.__forceGolden;
+    return state.removed.length >= 2 && Math.random() < 1 / 12;
+  }
+  function shed(id, opts) {
+    opts = opts || {};
     var item = state.items.find(function (i) { return i.id === id; });
     if (!item) return;
-    logEvent("item_shed", { category: item.cat, has_price: !!item.cost, has_date: item.due != null, days_on_list: daysSince(item.createdAt), kept_before: (item.reasons || []).length });
+    logEvent("item_shed", { category: item.cat, has_price: !!item.cost, has_date: item.due != null, days_on_list: daysSince(item.createdAt), kept_before: (item.reasons || []).length, golden: !!opts.golden });
+    var before = streakInfo();
     state.items = state.items.filter(function (i) { return i.id !== id; });
     var rec = { text: item.text, cost: item.cost, cur: item.cur, cat: item.cat, at: now() };
+    var newGold = false;
+    if (opts.golden) { rec.golden = true; if (!state.profile.shr.gold) { state.profile.shr.gold = true; newGold = true; } }
     state.removed.push(rec);
-    undoSlot = { item: item, rec: rec };
+    undoSlot = { item: item, rec: rec, newGold: newGold };
     save(); reviewAnother = false; render();
-    toast(item.cost ? "Shed “" + clip(item.text) + "”. " + money(item.cost, item.cur) + "/month freed." : "Shed “" + clip(item.text) + "”.");
+    if (opts.review) resultSheet(item, rec, before, !!opts.golden, newGold);
+    else toast(item.cost ? "Shed \u201c" + clip(item.text) + "\u201d. " + money(item.cost, item.cur) + "/month freed." : "Shed \u201c" + clip(item.text) + "\u201d.");
     var fresh = checkUnlocks();
-    if (fresh.length) setTimeout(function () { showUnlock(fresh); }, 900);
+    if (fresh.length) setTimeout(function () { showUnlock(fresh); }, opts.review ? 0 : 900);
+  }
+  var SHIELD_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/></svg>';
+  var LOCK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="11" width="12" height="9" rx="2"/><path d="M9 11V8a3 3 0 016 0v3"/></svg>';
+  var STAR_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z"/></svg>';
+  function resultSheet(item, rec, before, golden, newGold) {
+    var after = streakInfo(), ns = nextSkin(), total = freedText(12), q = queue();
+    openSheet("Shed", function (inner, close) {
+      var wrap = h("div", { class: "result" + (golden ? " gold" : ""), id: "resultCard" });
+      if (golden) wrap.append(h("p", { class: "kick", text: "Rare shred. Gold ones turn up now and then." }));
+      wrap.append(h("h1", { text: golden ? "A golden one." : "Shed." }), h("p", { class: "struck", text: item.text }));
+      var rows = h("dl", { class: "rrows" }), row = function (k, v) { rows.append(h("div", {}, [h("dt", { text: k }), h("dd", { text: v })])); };
+      if (rec.cost) row("Freed a year", "+" + money(rec.cost * 12, rec.cur));
+      if (total) row("Total freed a year", total);
+      row("Things shed", String(state.removed.length));
+      row("Weeks in a row", String(after.run));
+      wrap.append(rows);
+      var rwd = function (icon, t, d, frac) {
+        var box = h("div", { class: "rwd" }), ic = h("span", { class: "ic", html: icon }), tx = h("div", { style: "flex:1" }, [h("b", { text: t }), h("small", { text: d })]);
+        if (frac != null) tx.append(h("div", { class: "bar" }, [h("i", { style: "width:" + Math.round(frac * 100) + "%" })]));
+        box.append(ic, tx); wrap.append(box);
+      };
+      if (newGold) rwd(STAR_SVG, "Golden nameplate", "Now engraved on your machine. It's yours to keep.");
+      if (after.shield > before.shield) rwd(SHIELD_SVG, "Streak shield earned", "It will quietly save one missed week.");
+      else if (after.shield) rwd(SHIELD_SVG, "Streak shield ready", "One missed week won't break your streak.");
+      if (ns) rwd(LOCK_SVG, "Next machine: " + ns.def.name, ns.p.text, ns.p.frac);
+      wrap.append(h("div", { class: "btns" }, [
+        h("button", { class: "pill", type: "button", id: "resultNext", text: "Continue", onclick: close }),
+        h("button", { class: "pill ghost", type: "button", id: "resultUndo", text: "Undo", onclick: function () { undo(); close(); } })
+      ]));
+      inner.append(wrap);
+    });
   }
   function undo() {
     if (!undoSlot) return;
     state.removed = state.removed.filter(function (r) { return r !== undoSlot.rec; });
     state.items.push(undoSlot.item);
+    if (undoSlot.newGold) delete state.profile.shr.gold;
     logEvent("shed_undone"); undoSlot = null; save(); hideToast(); render();
   }
   function keep(id, reason) {
@@ -905,13 +1064,12 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
   }
   function greeting() {
     var hr = new Date().getHours();
-    var part = hr < 5 ? "Late one" : hr < 12 ? "Morning" : hr < 18 ? "Afternoon" : "Evening";
+    var part = hr < 5 ? "Up late" : hr < 12 ? "Good morning" : hr < 18 ? "Good afternoon" : "Good evening";
     var n = (state.profile.name || "").trim();
     return n ? [part + ", ", h("span", { class: "scribble", text: n }), "."] : [part + "."];
   }
   function subLine() {
-    var s = streak(), f = freedText(1), bits = [];
-    if (s > 0) bits.push([h("b", { text: plural(s, "week") }), " streak"]);
+    var f = freedText(1), bits = [];
     if (f) bits.push([h("b", { text: f }), "/month freed"]);
     var p = h("p", { class: "sub" });
     if (!bits.length) { p.textContent = "One thing to shed this week."; return p; }
@@ -1106,8 +1264,11 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 
   function renderReview() {
     var root = $("view-review"); root.textContent = "";
+    var slot = $("quoteSlot"); slot.textContent = ""; slot.append(quoteBlock()); scheduleQuote();
     root.append(installCard());
-    root.append(h("h1", { class: "hello" }, greeting()), subLine());
+    root.append(skyBlock());
+    root.append(h("h1", { class: "hello big" }, greeting()), subLine());
+    var rc0 = regretCard(); if (rc0) root.append(rc0);
     var q = queue();
 
     if (!q.length) {
@@ -1169,7 +1330,8 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 
     var shedBtn = h("button", { class: "b-shed", id: "shedBtn", text: "Shed it", onclick: function () {
       shedBtn.disabled = true; keepBtn.disabled = true;
-      shredElement(ticket, function () { shed(item.id); });
+      var golden = rollGolden();
+      shredElement(ticket, function () { shed(item.id, { review: true, golden: golden }); }, { amount: item.cost ? item.cost * 12 : 0, cur: item.cur, golden: golden });
     } });
     var keepBtn = h("button", { class: "b-keep", id: "keepBtn", text: "Keep it", onclick: function () { keepBox.classList.add("open"); reason.focus(); keepBtn.disabled = true; } });
     var stub = h("div", { class: "stub" }, [h("p", { class: "q", text: "Is this still a yes?" }), h("div", { class: "acts" }, [shedBtn, keepBtn])]);
@@ -1198,7 +1360,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
         h("div", { class: "t", text: it.text }),
         h("div", { class: "p", text: it.cost ? money(it.cost, it.cur) + "/mo" : "" }),
         h("div", { class: "m" + (since >= STALE_DAYS || (dd !== null && dd <= 7) ? " stale" : "") }, [h("span", { class: "tag", text: it.cat }), (dd !== null ? dueLabel(it) + " \u00b7 " : "") + "added " + ago(it.createdAt) + (it.lastReviewedAt ? ", kept " + ago(it.lastReviewedAt) : "")]),
-        h("button", { class: "x", text: "Shed", "aria-label": "Shed " + it.text, onclick: function () { shredElement(rowEl, function () { shed(it.id); }); } })
+        h("button", { class: "x", text: "Shed", "aria-label": "Shed " + it.text, onclick: function () { shredElement(rowEl, function () { shed(it.id); }, { amount: it.cost ? it.cost * 12 : 0, cur: it.cur }); } })
       ]);
       rows.append(rowEl);
     });
@@ -1225,6 +1387,8 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
       h("div", {}, [h("dt", { text: "Current streak" }), h("dd", { text: plural(streak(), "week") })]),
       h("div", {}, [h("dt", { text: "You shed most" }), h("dd", { text: mostShedCat() })])
     ]));
+    var rg = regretStats();
+    if (rg.asked >= 3) root.append(h("p", { class: "freed", id: "noRegrets" }, [h("mark", { text: Math.round(rg.no / rg.asked * 100) + "% no regrets" }), " (" + rg.no + " of " + rg.asked + " things you were asked about)"]));
     if (n) {
       root.append(h("button", { class: "pill share", id: "shareBtn", text: "Share my progress", onclick: shareCard }));
       root.append(h("div", { class: "pillrow" }, [
@@ -1336,6 +1500,14 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
     inner.append(toggleRow("Shredder sound and vibration", state.profile.sound !== false, function (on) {
       state.profile.sound = on; save(); if (on) shredSound(0, 700);
     }, null, "setSound"));
+    inner.append(toggleRow("Seasonal touches in the sky", state.profile.skySeason !== false, function (on) { state.profile.skySeason = on; save(); }, "Snow at Christmas, hearts on Valentine's, falling leaves in autumn, and so on.", "setSeason"));
+    var wxNote = h("p", { class: "fine-print", id: "wxNote", text: "Shows today's weather in the sky. Asks for your approximate location once, then sends it rounded to about 10 km to Open-Meteo to look up the weather. Nothing else is sent." });
+    var wxRow = toggleRow("Show today's weather", !!state.profile.skyWeather, function (on) {
+      var box = wxRow.querySelector("input");
+      if (!on) { disableWeather(); return; }
+      enableWeather(function (ok, msg) { if (!ok) { box.checked = false; wxNote.textContent = msg; } else wxNote.textContent = "On. Location rounded to about 10 km."; });
+    }, null, "setWeather");
+    inner.append(wxRow, wxNote);
   }
 
   // ---- reminders: the browser makes a push subscription; the reminder service gets only dates and choices ----
@@ -1790,7 +1962,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
   }
   function buildMachine(o) {
     var HEAD = o.HEAD || 66, BIN = o.BIN || 0, BASE = o.BASE || 0, shr = o.shr || state.profile.shr;
-    var m = h("div", { class: "sm" + (o.stat ? " stat" : "") + (o.mini ? " mini" : "") });
+    var m = h("div", { class: "sm" + (o.stat ? " stat" : "") + (o.mini ? " mini" : "") + (shr.gold ? " gold" : "") });
     m.style.cssText = machineVars(o.sk, shr) + (o.Wm ? "width:" + o.Wm + "px;" : "width:100%;") + "height:" + (HEAD + BIN + BASE) + "px;";
     var parts = { m: m };
     if (BIN) {
@@ -1813,7 +1985,8 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
     return { kind: "strip", cols: Math.max(12, Math.min(34, Math.round(pw / 8))), rows: 1 };
   }
 
-  function shredElement(el, onDone) {
+  function shredElement(el, onDone, opts) {
+    opts = opts || {};
     if (reduceMotion || !el || !el.getBoundingClientRect) { onDone(); return; }
     var r = el.getBoundingClientRect();
     if (r.width < 10 || r.height < 10) { onDone(); return; }
@@ -1828,6 +2001,11 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
     var cs = getComputedStyle(el), bg = cs.backgroundColor, transparent = !bg || bg === "rgba(0, 0, 0, 0)" || bg === "transparent";
     var paperColor = transparent ? getComputedStyle(document.body).backgroundColor : bg;
     var palette = [paperColor, paperColor, paperColor, "rgba(255,255,255,.88)", "rgba(255,255,255,.55)"];
+    var world = shredWorld();
+    if (world.season === "xmas") palette = palette.concat(["#E5484D", "#2F9E5A"]);
+    else if (world.season === "autumn") palette = palette.concat(["#E07B2B", "#C2571A"]);
+    else if (world.season === "valentine") palette = palette.concat(["#FF6B8B"]);
+    if (opts.golden) { paperColor = "#F5DF7B"; palette = ["#F5DF7B", "#FFE45C", "#FFF3B0", "#E6B93C", "#FFFFFF"]; }
 
     function cloneOf() {
       var c = el.cloneNode(true);
@@ -1835,7 +2013,8 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
       c.style.position = "absolute"; c.style.left = "0"; c.style.top = "0"; c.style.margin = "0";
       c.style.width = W + "px"; c.style.height = H + "px"; c.style.boxSizing = "border-box";
       c.style.transformOrigin = "0 0"; c.style.pointerEvents = "none"; c.style.visibility = "visible"; c.style.animation = "none";
-      if (transparent) { c.style.background = paperColor; c.style.borderRadius = "12px"; }
+      if (transparent || opts.golden) { c.style.background = paperColor; c.style.borderRadius = "12px"; }
+      if (opts.golden) c.style.color = "#2A2208";
       return c;
     }
 
@@ -1860,8 +2039,18 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
       var mag = cross ? 10 + rnd() * 50 : spec.kind === "wide" ? 3 + rnd() * 8 : 2 + rnd() * 9;
       pieces.push({ el: n, cxs: ((cc + 0.5) / COLS) * pw, ry: rr * pph, j: cross ? 0 : (rnd() - 0.5) * 0.06, ang: (rnd() < 0.5 ? -1 : 1) * mag, dx: (rnd() - 0.5) * (cross ? 30 : 22), off: rnd() * 18 - 9, rel: null, yrel: 0 });
     }
-    ov.append(dim, machine, clipBox);
+    var wxl = h("div", { class: "shred-wx", "aria-hidden": "true" }), wk = world.k, wxc = null;
+    var wkind = wk === "storm" || wk === "rain" || wk === "snow" || wk === "fog" ? wk : "";
+    var fsun = world.day && (wk === "clear" || wk === "partly"), flurry = !wk && world.season === "xmas";
+    if (wkind || fsun || flurry) { wxc = h("canvas"); wxl.append(wxc); }
+    ov.append(dim, wxl, machine, clipBox);
+    var cntB = null;
+    if (opts.amount || opts.golden) {
+      cntB = h("b", { text: opts.amount ? "+" + money(0, opts.cur) : "Gold" });
+      ov.append(h("div", { class: "shred-count" }, [h("small", { text: opts.golden ? "A golden one" : "Freed a year" }), cntB]));
+    }
     document.body.append(ov);
+    if (wxc) WxFX(wxc, wkind || "none", { full: true, sun: fsun, flurry: flurry, wind: world.wind });
     el.style.visibility = "hidden";
     machine.style.opacity = "0";
     requestAnimationFrame(function () { dim.classList.add("on"); });
@@ -1927,6 +2116,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
         }
         var k = clamp((t - T_IN) / T_FEED, 0, 1), f = F * easeIO(k);
         applyFeed(f, t);
+        if (cntB && opts.amount) cntB.textContent = "+" + money(Math.round(opts.amount * easeIO(k)), opts.cur);
         if (k < 1) {
           machine.style.transform = "translate(" + (Math.sin(t / 15) * 0.9) + "px," + (Math.cos(t / 9) * 0.6) + "px)";
           if (t - lastBit > 55) { lastBit = t; spawnBit(t); if (rnd() < (cross ? 0.9 : 0.5)) spawnBit(t); }
@@ -2050,7 +2240,14 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
     if (!list.length || sheetEl) { pendingUnlocks = (pendingUnlocks || []).concat(list); return; }
     openSheet("New unlock", function (inner, close) {
       var wrap = h("div", { class: "reveal" });
-      wrap.append(h("h1", { text: list.length > 1 ? "New things unlocked." : "Unlocked." }), h("p", { text: "Earned by shedding, not bought." }));
+      if (!reduceMotion) {
+        var conf = h("div", { class: "confetti", "aria-hidden": "true" }), cols = ["#F5DF7B", "#3347E8", "#FFFFFF", "#F5DF7B", "#7DD3FC"];
+        for (var ci = 0; ci < 22; ci++) { var piece = h("i"); piece.style.cssText = "left:" + (ci * 4.6 + (ci % 3)) + "%;background:" + cols[ci % cols.length] + ";animation-delay:" + ((ci * 90) % 900) + "ms;height:" + (16 + (ci * 7) % 18) + "px"; conf.append(piece); }
+        wrap.append(conf);
+      }
+      var firstSkin = SKINS.indexOf(list[0]) >= 0;
+      wrap.append(h("p", { class: "kick", text: list.length > 1 ? "Several unlocked at once" : firstSkin ? "Machine " + SKINS.filter(isUnlocked).length + " of " + SKINS.length + " unlocked" : "New look unlocked" }),
+        h("h1", { text: list.length > 1 ? "New things unlocked." : "Unlocked." }), h("p", { text: "Earned by shedding, not bought." }));
       list.forEach(function (d) {
         var isSkin = SKINS.indexOf(d) >= 0, card = h("div", { class: "rcard" });
         if (isSkin) { var mc = buildMachine({ sk: d, shr: state.profile.shr, Wm: 236, HEAD: 66, stat: true }); mc.m.classList.add("sheen"); card.append(mc.m); }
@@ -2062,6 +2259,8 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
         } }));
         wrap.append(card);
       });
+      var nx = nextSkin();
+      if (nx) wrap.append(h("div", { class: "teaser" }, [h("div", {}, [h("span", { text: "Next: " + nx.def.name }), h("span", { text: nx.p.text })]), h("div", { class: "bar" }, [h("i", { style: "width:" + Math.round(nx.p.frac * 100) + "%" })])]));
       wrap.append(h("button", { class: "pill ghost", type: "button", text: "Maybe later", onclick: close }));
       inner.append(wrap);
     });
@@ -2105,6 +2304,433 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
   }
   
 
+
+
+  // =====================================================================
+  //  The sky: today's moon (worked out here, no network), the season, and optionally today's weather
+  // =====================================================================
+  var SYNODIC = 29.530588853, skyShown = false;
+  function moonAge(d) { var a = ((d.getTime() - Date.UTC(2000, 0, 6, 18, 14)) / 86400000) % SYNODIC; return a < 0 ? a + SYNODIC : a; }
+  function moonName(f) {
+    return f < 0.03 || f > 0.97 ? "New moon" : f < 0.22 ? "Waxing crescent" : f < 0.28 ? "First quarter" : f < 0.47 ? "Waxing gibbous" : f < 0.53 ? "Full moon" : f < 0.72 ? "Waning gibbous" : f < 0.78 ? "Last quarter" : "Waning crescent";
+  }
+  function moonSvg(f) {
+    var r = 32, k = Math.cos(2 * Math.PI * f), waxing = f < 0.5, g = waxing ? f : 1 - f;
+    k = Math.cos(2 * Math.PI * g);
+    var rx = Math.abs(k) * r, sweep = k > 0 ? 0 : 1;
+    var lit = "M" + r + " 0A" + r + " " + r + " 0 0 1 " + r + " " + 2 * r + "A" + rx.toFixed(2) + " " + r + " 0 0 " + sweep + " " + r + " 0Z";
+    var cls = skyShown ? "moon" : "moon rise"; skyShown = true;
+    return '<svg class="' + cls + '" viewBox="0 0 64 64" role="img" aria-label="' + moonName(f) + '"><circle cx="32" cy="32" r="32" fill="rgba(255,255,255,.14)"/>' +
+      '<g' + (waxing ? '' : ' transform="translate(64 0) scale(-1 1)"') + '><path d="' + lit + '" fill="#F4F1DE"/></g></svg>';
+  }
+  function seasonNow() {
+    var d = new Date(), m = d.getMonth() + 1, day = d.getDate(), south = ["AU", "NZ", "ZA", "AR", "CL", "BR", "UY", "PY", "BO", "PE"].indexOf(state.profile.country) >= 0;
+    if (m === 12 && day >= 1 && day <= 26) return { id: "xmas", tag: "Merry Christmas" };
+    if ((m === 12 && day >= 30) || (m === 1 && day <= 2)) return { id: "newyear", tag: "Happy New Year" };
+    if (m === 2 && day >= 13 && day <= 14) return { id: "valentine", tag: "Happy Valentine's" };
+    if (m === 10 && day >= 24) return { id: "spooky", tag: "Spooky season" };
+    if (m === 11 && day <= 2 && day >= 1) return { id: "spooky", tag: "Spooky season" };
+    var mm = south ? (m + 6 - 1) % 12 + 1 : m;
+    var id = mm >= 3 && mm <= 5 ? "spring" : mm >= 6 && mm <= 8 ? "summer" : mm >= 9 && mm <= 11 ? "autumn" : "winter";
+    return { id: id, tag: "" };
+  }
+  var WX_CODES = function (c) {
+    if (c === 0) return { t: "Clear", k: "clear" };
+    if (c <= 2) return { t: "Partly cloudy", k: "partly" };
+    if (c === 3) return { t: "Overcast", k: "cloud" };
+    if (c === 45 || c === 48) return { t: "Fog", k: "fog" };
+    if (c >= 51 && c <= 57) return { t: "Drizzle", k: "rain" };
+    if (c >= 61 && c <= 67) return { t: "Rain", k: "rain" };
+    if ((c >= 71 && c <= 77) || c === 85 || c === 86) return { t: "Snow", k: "snow" };
+    if (c >= 80 && c <= 82) return { t: "Showers", k: "rain" };
+    if (c >= 95) return { t: "Thunderstorm", k: "storm" };
+    return { t: "", k: "partly" };
+  };
+  function cachedWeather() { try { var w = JSON.parse(localStorage.getItem("shedly.wx") || "null"); return w && Date.now() - w.at < 3 * 3600000 ? w : null; } catch (e) { return null; } }
+  var wxBusy = false;
+  function refreshWeather() {
+    var P = state.profile; if (!P.skyWeather || !P.skyLoc || wxBusy) return;
+    var c = cachedWeather(); if (c && Date.now() - c.at < 3600000) return;
+    wxBusy = true;
+    fetch("https://api.open-meteo.com/v1/forecast?latitude=" + P.skyLoc[0] + "&longitude=" + P.skyLoc[1] + "&current=temperature_2m,weather_code,is_day,wind_speed_10m&timezone=auto")
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (j && j.current) { try { localStorage.setItem("shedly.wx", JSON.stringify({ at: Date.now(), t: j.current.temperature_2m, c: j.current.weather_code, d: j.current.is_day, wd: j.current.wind_speed_10m })); } catch (e) {} if (current === "review" && !sheetEl) render(); }
+      }).catch(function () {}).then(function () { wxBusy = false; });
+  }
+  function enableWeather(done) {
+    if (!navigator.geolocation) { done(false, "This browser can't share a location."); return; }
+    navigator.geolocation.getCurrentPosition(function (pos) {
+      state.profile.skyLoc = [Math.round(pos.coords.latitude * 10) / 10, Math.round(pos.coords.longitude * 10) / 10];
+      state.profile.skyWeather = true; save(); try { localStorage.removeItem("shedly.wx"); } catch (e) {}
+      refreshWeather(); done(true);
+    }, function () { done(false, "Location is off for Shedly, so there's no weather to show. You can allow it in your phone or browser settings."); }, { timeout: 10000, maximumAge: 3600000 });
+  }
+  function disableWeather() { state.profile.skyWeather = false; delete state.profile.skyLoc; save(); try { localStorage.removeItem("shedly.wx"); } catch (e) {} }
+
+  // =====================================================================
+  //  Weather engine: a small canvas renderer (rain with depth and splashes, soft snow, shaded clouds,
+  //  forked lightning, light rays, fog). Used by the sky strip and the shredder. Stops itself when removed.
+  // =====================================================================
+  var WX_SPRITES = {};
+  function softDot() {
+    if (WX_SPRITES.dot) return WX_SPRITES.dot;
+    var c = document.createElement("canvas"); c.width = c.height = 32; var x = c.getContext("2d"), g = x.createRadialGradient(16, 16, 0, 16, 16, 16);
+    g.addColorStop(0, "rgba(255,255,255,1)"); g.addColorStop(.45, "rgba(255,255,255,.7)"); g.addColorStop(1, "rgba(255,255,255,0)"); x.fillStyle = g; x.fillRect(0, 0, 32, 32);
+    return (WX_SPRITES.dot = c);
+  }
+  function cloudSprite(dark, seed) {
+    var key = "c" + (dark ? 1 : 0) + seed; if (WX_SPRITES[key]) return WX_SPRITES[key];
+    var c = document.createElement("canvas"); c.width = 200; c.height = 90; var x = c.getContext("2d"), r = function (i, n) { var v = Math.sin((i + seed * 7) * 12.9898) * 43758.5453; return (v - Math.floor(v)) * n; };
+    var top = dark ? [112, 122, 140] : [255, 255, 255], bot = dark ? [52, 59, 74] : [178, 194, 218];
+    for (var i = 0; i < 22; i++) {
+      var cx = 100 + (r(i, 1) + r(i + 9, 1) - 1) * 78, px = cx, py = 46 - Math.abs(cx - 100) * .12 + r(i + 40, 14) - 7, pr = 11 + r(i + 80, 12) * (1 - Math.abs(cx - 100) / 130);
+      x.save(); x.translate(px, py); x.scale(1.5, .85);
+      var g = x.createRadialGradient(-pr * .25, -pr * .4, pr * .05, 0, 0, pr);
+      g.addColorStop(0, "rgba(" + top.join(",") + ",.55)");
+      g.addColorStop(.55, "rgba(" + [0, 1, 2].map(function (k) { return Math.round((top[k] * .45 + bot[k] * .55)); }).join(",") + ",.38)");
+      g.addColorStop(1, "rgba(" + bot.join(",") + ",0)");
+      x.fillStyle = g; x.beginPath(); x.arc(0, 0, pr, 0, 7); x.fill(); x.restore();
+    }
+    return (WX_SPRITES[key] = c);
+  }
+  function WxFX(canvas, kind, o) {
+    o = o || {};
+    var ctx = canvas.getContext("2d"), dpr = Math.min(2, window.devicePixelRatio || 1), W = 0, H = 0, miss = 0, last = 0, t = 0;
+    var wind = Math.max(0, Math.min(1, (o.wind || 8) / 45)), lean = 0.06 + wind * 0.5, parts = [], clouds = [], splashes = [], bolt = null, nextBolt = 2 + Math.random() * 3, flash = 0;
+    var raining = kind === "rain" || kind === "storm", snowing = kind === "snow", cloudy = raining || snowing || kind === "cloud" || kind === "partly";
+    var rnd = Math.random;
+    function setup() {
+      var p = canvas.parentNode.getBoundingClientRect(); W = Math.round(p.width); H = Math.round(p.height); if (W < 20 || H < 20) return false;
+      canvas.width = W * dpr; canvas.height = H * dpr; canvas.style.width = W + "px"; canvas.style.height = H + "px"; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var area = W * H, big = o.full;
+      if (raining) [[.00007, 16, 7, 520, .22, .8, .74], [.00005, 11, 13, 820, .38, 1, .84], [.00003, 7, 21, 1180, .55, 1.4, .94]].forEach(function (L) {
+        var n = Math.max(L[1], Math.round(area * L[0] * (big ? 1.3 : 1))); for (var i = 0; i < n; i++) parts.push({ L: L, x: rnd() * (W + 80) - 40, y: rnd() * H, v: L[3] * (.85 + rnd() * .3), g: L[6] * H * (.9 + rnd() * .1) });
+      });
+      if (snowing || o.flurry) [[.00005, 10, 1.4, 22, .5], [.00003, 8, 2.6, 40, .75], [.000018, 5, 4.4, 70, .95]].forEach(function (L) {
+        var n = Math.max(L[1], Math.round(area * L[0] * (o.flurry ? .5 : 1))); for (var i = 0; i < n; i++) parts.push({ S: L, x: rnd() * W, y: rnd() * H, ph: rnd() * 6, v: L[3] * (.8 + rnd() * .4) });
+      });
+      if (cloudy) { var cn = big ? 3 : kind === "partly" ? 2 : kind === "cloud" ? 4 : 5; for (var i = 0; i < cn; i++) clouds.push({ s: cloudSprite(kind !== "cloud" && kind !== "partly", i % 4), x: (i / cn) * (W + 240) - 120, y: (big ? -6 : 2) + i % 3 * (big ? 34 : 24), k: (big ? 1.7 : 0.72) + (i % 3) * .12, v: 5 + (i % 3) * 4 + wind * 14 }); }
+      return true;
+    }
+    function bolt0() {
+      var x = W * (.15 + rnd() * .7), y = 0, pts = [[x, y]], seg = H / 11;
+      while (y < H * .86) { y += seg * (.6 + rnd() * .8); x += (rnd() - .5) * seg * 1.6; pts.push([x, y]); }
+      var br = []; for (var b = 0; b < 2; b++) { var s = pts[2 + ((rnd() * (pts.length - 4)) | 0)], bx = s[0], by = s[1], bp = [[bx, by]], dir = rnd() < .5 ? -1 : 1; for (var j = 0; j < 4; j++) { bx += dir * seg * (.5 + rnd() * .6); by += seg * (.5 + rnd() * .5); bp.push([bx, by]); } br.push(bp); }
+      return { pts: pts, br: br, life: 0 };
+    }
+    function stroke(pts, w, a) { ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]); for (var i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]); ctx.lineWidth = w; ctx.strokeStyle = "rgba(235,242,255," + a + ")"; ctx.stroke(); }
+    function frame(ts) {
+      if (!canvas.isConnected) { if (++miss > 40) return; requestAnimationFrame(frame); return; }
+      if (!W && !setup()) { requestAnimationFrame(frame); return; }
+      var dt = last ? Math.min(.05, (ts - last) / 1000) : .016; last = ts; t += dt;
+      if (document.hidden) { requestAnimationFrame(frame); return; }
+      ctx.clearRect(0, 0, W, H);
+      // sun: soft glow, drifting light rays, a faint lens flare
+      if (o.sun) {
+        var sx = W * (o.full ? .9 : .84), sy = o.full ? H * .04 : H * .3, gl = ctx.createRadialGradient(sx, sy, 0, sx, sy, H * (o.full ? .5 : 1.1));
+        gl.addColorStop(0, "rgba(255,236,160,.55)"); gl.addColorStop(.35, "rgba(255,214,110,.16)"); gl.addColorStop(1, "rgba(255,214,110,0)"); ctx.fillStyle = gl; ctx.fillRect(0, 0, W, H);
+        ctx.globalCompositeOperation = "lighter";
+        for (var r = 0; r < 7; r++) {
+          var a0 = 1.78 + r * .14 + Math.sin(t * .25 + r * 1.7) * .035, len = Math.max(W, H) * 1.3, a1 = a0 + .05 + (r % 3) * .02;
+          var rg = ctx.createLinearGradient(sx, sy, sx + Math.cos(a0) * len, sy + Math.sin(a0) * len); rg.addColorStop(0, "rgba(255,240,180," + (.2 + .06 * Math.sin(t * .6 + r)) + ")"); rg.addColorStop(1, "rgba(255,240,180,0)");
+          ctx.fillStyle = rg; ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(sx + Math.cos(a0) * len, sy + Math.sin(a0) * len); ctx.lineTo(sx + Math.cos(a1) * len, sy + Math.sin(a1) * len); ctx.fill();
+        }
+        [[.3, 10, .07], [.55, 17, .05], [.8, 7, .08]].forEach(function (f) { var fx = sx + (W / 2 - sx) * f[0] * 2, fy = sy + (H / 2 - sy) * f[0] * 2; ctx.fillStyle = "rgba(255,225,160," + f[2] + ")"; ctx.beginPath(); ctx.arc(fx, fy, f[1], 0, 7); ctx.fill(); });
+        ctx.globalCompositeOperation = "source-over";
+      }
+      if (kind === "fog") for (var b = 0; b < 4; b++) { var fx2 = ((t * (6 + b * 3) + b * 140) % (W + 320)) - 160, fy2 = H * (.3 + b * .2), fg = ctx.createRadialGradient(fx2, fy2, 0, fx2, fy2, W * .55); fg.addColorStop(0, "rgba(225,232,240,.34)"); fg.addColorStop(1, "rgba(225,232,240,0)"); ctx.fillStyle = fg; ctx.save(); ctx.translate(0, fy2); ctx.scale(1, .35); ctx.translate(0, -fy2); ctx.fillRect(fx2 - W, fy2 - W, W * 2, W * 2); ctx.restore(); }
+      clouds.forEach(function (c) { c.x += c.v * dt; if (c.x > W + 60) c.x = -220 * c.k; ctx.globalAlpha = o.full ? .5 : kind === "cloud" || kind === "partly" ? .9 : .95; ctx.drawImage(c.s, c.x, c.y, 200 * c.k, 90 * c.k); });
+      ctx.globalAlpha = 1;
+      if (raining) { ctx.lineCap = "round"; }
+      var dot = softDot();
+      for (var i = 0; i < parts.length; i++) {
+        var p = parts[i];
+        if (p.L) {
+          var L = p.L; p.y += p.v * dt; p.x += p.v * Math.sin(lean) * dt;
+          if (p.y > p.g) { if (L[6] > .8 && splashes.length < 40) splashes.push({ x: p.x, y: p.g, t: 0, r: 2 + L[5] * 3 }); p.y = -L[2] - rnd() * 30; p.x = rnd() * (W + 80) - 40; p.g = L[6] * H * (.9 + rnd() * .1); }
+          ctx.strokeStyle = "rgba(208,226,255," + L[4] + ")"; ctx.lineWidth = L[5]; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x - Math.sin(lean) * L[2], p.y - Math.cos(lean) * L[2]); ctx.stroke();
+        } else {
+          var S = p.S; p.y += p.v * dt; p.x += (Math.sin(t * .9 + p.ph) * 14 + wind * 30) * dt; if (p.y > H + 8) { p.y = -8; p.x = rnd() * W; } if (p.x > W + 8) p.x = -8;
+          ctx.globalAlpha = S[4]; var sz = S[2] * 2.6; ctx.drawImage(dot, p.x - sz / 2, p.y - sz / 2, sz, sz);
+        }
+      }
+      ctx.globalAlpha = 1;
+      for (var s = splashes.length - 1; s >= 0; s--) { var sp = splashes[s]; sp.t += dt * 3.2; if (sp.t >= 1) { splashes.splice(s, 1); continue; } ctx.strokeStyle = "rgba(220,235,255," + (.45 * (1 - sp.t)) + ")"; ctx.lineWidth = 1; ctx.beginPath(); ctx.ellipse(sp.x, sp.y, sp.r * sp.t * 1.6, sp.r * sp.t * .5, 0, 0, 7); ctx.stroke(); }
+      if (raining) { var mg = ctx.createLinearGradient(0, H * .75, 0, H); mg.addColorStop(0, "rgba(200,215,235,0)"); mg.addColorStop(1, "rgba(200,215,235,.16)"); ctx.fillStyle = mg; ctx.fillRect(0, H * .75, W, H * .25); }
+      if (kind === "storm") {
+        nextBolt -= dt; if (nextBolt <= 0 && !bolt) { bolt = bolt0(); nextBolt = 4 + rnd() * 5; }
+        if (bolt) {
+          bolt.life += dt; var ph = bolt.life / .45, al = ph < .15 ? 1 : ph < .3 ? .25 : ph < .45 ? .9 : ph < 1 ? (1 - ph) * .6 : 0;
+          if (ph >= 1) bolt = null; else {
+            ctx.save(); ctx.shadowColor = "rgba(170,200,255,.9)"; ctx.shadowBlur = 14; stroke(bolt.pts, 2.2, al); bolt.br.forEach(function (bp) { stroke(bp, 1.2, al * .8); }); ctx.restore();
+            flash = al * .38;
+          }
+        }
+        if (flash > .01) { ctx.fillStyle = "rgba(235,240,255," + flash + ")"; ctx.fillRect(0, 0, W, H); flash *= .86; }
+      }
+      requestAnimationFrame(frame);
+    }
+    if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) { requestAnimationFrame(function (ts) { frame(ts); }); return; }
+    requestAnimationFrame(frame);
+  }
+
+  // what the shredder should look like today: weather (only if switched on), time of day and season
+  function shredWorld() {
+    var P = state.profile, wx = P.skyWeather ? cachedWeather() : null, w = wx ? WX_CODES(wx.c) : null, sea = P.skySeason === false ? { id: "" } : seasonNow();
+    var hr = new Date().getHours(), isDay = wx && wx.d != null ? !!wx.d : (hr >= 6 && hr < 19);
+    return { k: w ? w.k : "", day: isDay, season: sea.id, wind: wx ? wx.wd : 0 };
+  }
+  function skyBlock() {
+    var d = new Date(), hr = d.getHours(), f = moonAge(d) / SYNODIC, P = state.profile, sea = P.skySeason === false ? { id: "", tag: "" } : seasonNow();
+    var phase = hr >= 5 && hr < 8 ? "dawn" : hr >= 8 && hr < 17 ? "day" : hr >= 17 && hr < 20 ? "dusk" : "night";
+    var wx = P.skyWeather ? cachedWeather() : null, w = wx ? WX_CODES(wx.c) : null;
+    var isDay = wx && wx.d != null ? !!wx.d : (hr >= 6 && hr < 19);   // with weather on, the sun's real position where you are decides
+    if (isDay && phase === "night") phase = "day"; else if (!isDay && (phase === "day" || phase === "dawn")) phase = "night";
+    var box = h("div", { class: "sky " + phase + (sea.id === "spooky" ? " spooky" : ""), id: "sky" });
+    var rnd = function (i, n) { var x = Math.sin(i * 12.9898 + 78.233) * 43758.5453; return (x - Math.floor(x)) * n; };
+    var layer = function (kind, n, dmin, dspan, extra) {
+      for (var i = 0; i < n; i++) {
+        var el = h("i", { class: "pt " + kind }); if (kind === "heart") el.textContent = "♥";
+        el.style.cssText = "--x:" + Math.round(rnd(i + n, 96)) + "%;--d:" + (dmin + rnd(i + 3, dspan)).toFixed(1) + "s;--dl:-" + rnd(i + 7, dmin + dspan).toFixed(1) + "s;--sw:" + Math.round(rnd(i + 11, 40) - 20) + "px";
+        box.append(el);
+      }
+    };
+    if (!isDay) for (var i = 0; i < 16; i++) { var st = h("i", { class: "star" }); st.style.cssText = "left:" + Math.round(rnd(i, 60)) + "%;top:" + Math.round(rnd(i + 20, 80)) + "%;animation-delay:-" + rnd(i + 5, 3).toFixed(1) + "s"; box.append(st); }
+    if (!isDay) box.append(h("div", { html: moonSvg(f) }).firstChild);                       // the moon only comes out at night
+    else if (!w || w.k === "clear" || w.k === "partly") box.append(h("div", { class: "sun", "aria-hidden": "true" }));
+    var cloud = function (t, dur, dl, dark) { var c = h("i", { class: "cloud" + (dark ? " dark" : "") }); c.style.cssText = "--t:" + t + "px;--d:" + dur + "s;--dl:-" + dl + "s"; box.append(c); };
+    if (w) {
+    }
+    var canvasKind = w && /^(rain|storm|snow|fog|cloud|partly)$/.test(w.k) ? w.k : "";
+    var raySun = isDay && (!w || w.k === "clear" || w.k === "partly");
+    if (canvasKind || raySun) { var wc = h("canvas", { class: "wxc", "aria-hidden": "true" }); box.append(wc); setTimeout(function () { WxFX(wc, canvasKind || "none", { sun: raySun, wind: wx ? wx.wd : 0 }); }, 0); }
+    var sid = sea.id;
+    if (sid === "xmas") { layer("snow", w && w.k === "snow" ? 0 : 14, 5, 4); var lt = h("div", { class: "lights", "aria-hidden": "true" }); ["#FF5A5F", "#FFE45C", "#4ADE80", "#7DD3FC"].forEach(function (c, ci) { for (var j = 0; j < 4; j++) { var li = h("i"); li.style.cssText = "--c:" + c + ";--dl:-" + (ci * .4 + j * .2) + "s"; lt.append(li); } }); box.append(lt); }
+    else if (sid === "newyear") layer("spark", 18, 1.6, 1.6);
+    else if (sid === "valentine") layer("heart", 10, 5, 3);
+    else if (sid === "winter" && !(w && w.k === "snow")) layer("snow", 8, 6, 4);
+    else if (sid === "autumn" && !(w && /rain|snow|storm/.test(w.k))) layer("leaf", 8, 6, 4);
+    else if (sid === "spring" && !(w && /rain|snow|storm/.test(w.k))) layer("petal", 8, 6, 4);
+    if (sea.tag) box.append(h("span", { class: "tag", text: sea.tag }));
+    if (w) box.append(h("div", { class: "cap" }, [h("span", { text: Math.round(wx.t) + "\u00b0C" }), h("small", { text: w.t })]));
+    box.setAttribute("role", "img"); box.setAttribute("aria-label", (isDay ? "Daytime" : moonName(f)) + (w ? ", " + Math.round(wx.t) + " degrees, " + w.t.toLowerCase() : "") + (sea.tag ? ". " + sea.tag : ""));
+    refreshWeather();
+    return box;
+  }
+
+
+  // =====================================================================
+  //  Regret check: two weeks after you shed something, ask once whether you miss it
+  // =====================================================================
+  var REGRET_AFTER = 14 * DAY, REGRET_WINDOW = 75 * DAY;
+  function regretDue() {
+    var t = now(), best = null;
+    state.removed.forEach(function (r) {
+      if (r.regret || r.regretSkip) return;
+      var age = t - r.at; if (age < REGRET_AFTER || age > REGRET_WINDOW) return;
+      if (!best || r.at < best.at) best = r;
+    });
+    return best;
+  }
+  function regretStats() {
+    var a = state.removed.filter(function (r) { return r.regret; }), no = a.filter(function (r) { return r.regret === "no"; }).length;
+    return { asked: a.length, no: no };
+  }
+  function answerRegret(rec, ans) {
+    rec.regret = ans; logEvent("regret_answered", { answer: ans, had_price: !!rec.cost });
+    if (ans === "yes" && state.items.length < limit()) {
+      pushItem({ text: rec.text, cost: rec.cost, cur: rec.cur, cat: rec.cat || "Task", per: "mo" });
+      toast("Brought “" + clip(rec.text) + "” back to your list.", true);
+    } else if (ans === "yes") toast("Your list is full, so it couldn't come back. Shed something first.", true);
+    save(); render();
+  }
+  function regretCard() {
+    var rec = regretDue(); if (!rec) return null;
+    var days = Math.round((now() - rec.at) / DAY);
+    var btn = function (id, label, ans, cls) { return h("button", { class: "pill " + (cls || ""), type: "button", id: id, text: label, onclick: function () { answerRegret(rec, ans); } }); };
+    return h("div", { class: "regret", id: "regretCard" }, [
+      h("p", { class: "kick", text: "Looking back" }),
+      h("h3", {}, ["You shed ", h("mark", { text: "\u201c" + clip(rec.text) + "\u201d" }), " " + days + " days ago. Do you miss it?"]),
+      h("div", { class: "regret-btns" }, [btn("regretNo", "Not at all", "no"), btn("regretBit", "A bit", "bit", "ghost"), btn("regretYes", "Yes, bring back", "yes", "ghost")]),
+      h("button", { class: "linkbtn", type: "button", id: "regretSkip", text: "Don't ask about this one", onclick: function () { rec.regretSkip = true; save(); render(); } })
+    ]);
+  }
+
+  // =====================================================================
+  //  Quotes at the top of Review: a hundred, one at a time, no repeats until all are seen
+  // =====================================================================
+  var QUOTES = [
+    ["The things you own end up owning you.", "Chuck Palahniuk, Fight Club"],
+    ["Perfection is achieved, not when there is nothing more to add, but when there is nothing left to take away.", "Antoine de Saint-Exupéry"],
+    ["It is not that we have a short time to live, but that we waste a lot of it.", "Seneca"],
+    ["It is not the man who has too little, but the man who craves more, that is poor.", "Seneca"],
+    ["While we are postponing, life speeds by.", "Seneca"],
+    ["Begin at once to live, and count each separate day as a separate life.", "Seneca"],
+    ["Waste no more time arguing about what a good man should be. Be one.", "Marcus Aurelius"],
+    ["Very little is needed to make a happy life.", "Marcus Aurelius"],
+    ["Confine yourself to the present.", "Marcus Aurelius"],
+    ["The price of anything is the amount of life you exchange for it.", "Henry David Thoreau, Walden"],
+    ["A man is rich in proportion to the number of things he can afford to let alone.", "Henry David Thoreau, Walden"],
+    ["Our life is frittered away by detail. Simplify, simplify.", "Henry David Thoreau, Walden"],
+    ["That man is richest whose pleasures are cheapest.", "Henry David Thoreau"],
+    ["Time is what we want most, but what we use worst.", "William Penn"],
+    ["Lost time is never found again.", "Benjamin Franklin"],
+    ["Beware of little expenses. A small leak will sink a great ship.", "Benjamin Franklin"],
+    ["Nothing is enough for the man to whom enough is too little.", "Epicurus"],
+    ["Nothing is less productive than to make more efficient what should not be done at all.", "Peter Drucker"],
+    ["The essence of strategy is choosing what not to do.", "Michael Porter"],
+    ["Deciding what not to do is as important as deciding what to do.", "Steve Jobs"],
+    ["Your time is limited, so don't waste it living someone else's life.", "Steve Jobs"],
+    ["The bad news is time flies. The good news is you're the pilot.", "Michael Altshuler"],
+    ["You can do anything, but not everything.", "David Allen"],
+    ["Your mind is for having ideas, not holding them.", "David Allen"],
+    ["Clutter is nothing more than postponed decisions.", "Barbara Hemphill"],
+    ["The ability to simplify means to eliminate the unnecessary so that the necessary may speak.", "Hans Hofmann"],
+    ["Have nothing in your houses that you do not know to be useful, or believe to be beautiful.", "William Morris"],
+    ["Time is the most valuable thing a man can spend.", "Theophrastus"],
+    ["We are what we repeatedly do.", "Will Durant"],
+    ["How we spend our days is, of course, how we spend our lives.", "Annie Dillard"],
+    ["Don't count the days, make the days count.", "Muhammad Ali"],
+    ["Perfect is the enemy of good.", "Voltaire"],
+    ["The best time to plant a tree was twenty years ago. The second best time is now.", "Proverb"],
+    ["Procrastination is the thief of time.", "Edward Young"],
+    ["One of these days is none of these days.", "Proverb"],
+    ["Habit is a cable. We weave a thread of it each day.", "Horace Mann"],
+    ["Small deeds done are better than great deeds planned.", "Peter Marshall"],
+    ["Almost everything will work again if you unplug it for a few minutes, including you.", "Anne Lamott"],
+    ["If, in our heart, we still cling to anything, we cannot be free.", "Thich Nhat Hanh"],
+    ["The art of being wise is the art of knowing what to overlook.", "William James"],
+    ["The unexamined life is not worth living.", "Socrates"],
+    ["Every moment is a fresh beginning.", "T. S. Eliot"],
+    ["The only way to do great work is to love what you do.", "Steve Jobs"],
+    ["If you chase two rabbits, you will catch neither.", "Proverb"],
+    ["Being busy is a form of laziness: lazy thinking and indiscriminate action.", "Tim Ferriss, The 4-Hour Workweek"],
+    ["Lack of direction, not lack of time, is the problem.", "Zig Ziglar"],
+    ["You must ruthlessly eliminate hurry from your life.", "Dallas Willard"],
+    ["The best things in life aren't things.", "Art Buchwald"],
+    ["Money often costs too much.", "Ralph Waldo Emerson"],
+    ["Things are in the saddle, and ride mankind.", "Ralph Waldo Emerson"],
+    ["Price is what you pay. Value is what you get.", "Warren Buffett"],
+    ["Make each day your masterpiece.", "John Wooden"],
+    ["Enough is as good as a feast.", "Proverb"],
+    ["The space in which we live should be for the person we are becoming now, not for the person we were in the past.", "Marie Kondo"],
+    ["Keep only those things that speak to your heart.", "Marie Kondo"],
+    ["Love people, use things, because the opposite never works.", "Joshua Fields Millburn"],
+    ["If you don't prioritize your life, someone else will.", "Greg McKeown"],
+    ["The disciplined pursuit of less.", "Greg McKeown, Essentialism"],
+    ["Clarity about what matters provides clarity about what does not.", "Cal Newport"],
+    ["If it's not a hell yeah, it's a no.", "Derek Sivers"],
+    ["Time is all you have. And you may find one day that you have less than you think.", "Randy Pausch, The Last Lecture"],
+    ["Time equals life. Waste your time and waste your life, or master your time and master your life.", "Alan Lakein"],
+    ["He who knows he has enough is rich.", "Lao Tzu, Tao Te Ching"],
+    ["To attain wisdom, remove things every day.", "Lao Tzu, Tao Te Ching"],
+    ["It is not a daily increase but a daily decrease. Hack away at the unessential.", "Bruce Lee"],
+    ["The key is not to prioritize what's on your schedule, but to schedule your priorities.", "Stephen Covey"],
+    ["What is important is seldom urgent, and what is urgent is seldom important.", "Dwight D. Eisenhower"],
+    ["Work expands so as to fill the time available for its completion.", "C. Northcote Parkinson"],
+    ["The more you know, the less you need.", "Yvon Chouinard"],
+    ["Less, but better.", "Dieter Rams"],
+    ["Besides the noble art of getting things done, there is the noble art of leaving things undone.", "Lin Yutang"],
+    ["Health is the greatest gift, contentment the greatest wealth.", "The Dhammapada"],
+    ["Either you run the day or the day runs you.", "Jim Rohn"],
+    ["Less is more.", "Ludwig Mies van der Rohe"],
+    ["Happiness is not in the mere possession of money. It lies in the joy of achievement.", "Franklin D. Roosevelt"],
+    ["The mass of men lead lives of quiet desperation.", "Henry David Thoreau, Walden"],
+    ["A year from now you may wish you had started today.", "Karen Lamb"],
+    ["Nothing will work unless you do.", "Maya Angelou"],
+    ["I don't need time. What I need is a deadline.", "Duke Ellington"],
+    ["It is preoccupation with possessions, more than anything else, that prevents us from living freely and nobly.", "Bertrand Russell"],
+    ["He who has a why to live can bear almost any how.", "Friedrich Nietzsche"],
+    ["Do not spoil what you have by desiring what you have not.", "Epicurus"],
+    ["Life is long if you know how to use it.", "Seneca"],
+    ["Fear not that your life will come to an end, but that it will never have a beginning.", "John Henry Newman"],
+    ["Ordinary riches can be stolen. Real riches cannot.", "Oscar Wilde, De Profundis"],
+    ["No man is free who is not master of himself.", "Epictetus"],
+    ["The secret of change is to focus all of your energy not on fighting the old, but on building the new.", "Dan Millman"],
+    ["To do two things at once is to do neither.", "Publilius Syrus"],
+    ["Time is the coin of your life.", "Carl Sandburg"],
+    ["All that really belongs to us is time.", "Baltasar Gracián"],
+    ["Planning is bringing the future into the present so that you can do something about it now.", "Alan Lakein"],
+    ["What is the best use of my time right now?", "Alan Lakein"],
+    ["Lack of time is actually lack of priorities.", "Tim Ferriss"],
+    ["Days are expensive. When you spend a day you have one less day to spend.", "Jim Rohn"],
+    ["Time is a sacred gift, and each day is a little life.", "John Lubbock"],
+    ["Most things make no difference.", "Tim Ferriss, The 4-Hour Workweek"],
+    ["Anything you cannot relinquish when it has outlived its usefulness possesses you.", "Peace Pilgrim"],
+    ["There must be more to life than having everything.", "Maurice Sendak"],
+    ["Owning less is far more beneficial than organizing more.", "Joshua Fields Millburn"],
+    ["Find your creative time and defend it ruthlessly.", "Randy Pausch"]
+  ];
+  var quoteIdx = -1, quoteTimer = 0;
+  function nextQuote() {
+    var seen = []; try { seen = JSON.parse(localStorage.getItem("shedly.q") || "[]").filter(function (n) { return n >= 0 && n < QUOTES.length; }); } catch (e) {}
+    if (seen.length >= QUOTES.length) seen = [];
+    var pool = []; for (var i = 0; i < QUOTES.length; i++) if (seen.indexOf(i) < 0 && i !== quoteIdx) pool.push(i);
+    var pick = pool[(Math.random() * pool.length) | 0]; seen.push(pick);
+    try { localStorage.setItem("shedly.q", JSON.stringify(seen)); } catch (e) {}
+    return pick;
+  }
+  function quoteBlock() {
+    if (quoteIdx < 0) quoteIdx = nextQuote();
+    var q = QUOTES[quoteIdx];
+    var fig = h("figure", { class: "quote", id: "quote" }, [h("blockquote", {}, [h("span", { text: "\u201c" + q[0] + "\u201d" })]), h("figcaption", { text: q[1] })]);
+    setTimeout(function () { fitQuote(fig); }, 0);
+    return fig;
+  }
+  function fitQuote(box) {
+    var bq = box.firstChild, sp = bq.firstChild; sp.classList.remove("run");
+    var ov = sp.offsetWidth - bq.clientWidth;
+    if (ov > 2) { sp.style.setProperty("--ov", String(Math.ceil(ov) + 4)); void sp.offsetWidth; sp.classList.add("run"); }
+  }
+  function scheduleQuote() { clearTimeout(quoteTimer); quoteTimer = setTimeout(rotateQuote, 15000 + Math.random() * 5000); }
+  function rotateQuote() {
+    var box = $("quote");
+    if (!box || current !== "review" || sheetEl || document.hidden || !$("onboard").hidden) { scheduleQuote(); return; }
+    var swap = function () {
+      quoteIdx = nextQuote(); var q = QUOTES[quoteIdx];
+      box.firstChild.firstChild.textContent = "\u201c" + q[0] + "\u201d"; box.lastChild.textContent = q[1];
+      box.classList.remove("out"); fitQuote(box); scheduleQuote();
+    };
+    if (reduceMotion) { swap(); return; }
+    box.classList.add("out"); setTimeout(swap, 650);
+  }
+
+  // =====================================================================
+  //  Dictation: say it, don't type it (the phone's own speech service does the listening)
+  // =====================================================================
+  var SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition, dictRec = null;
+  function startDictation() {
+    var mic = $("micBtn"), inp = $("newItem"); if (!SpeechRec || inp.disabled) return;
+    var base = inp.value.trim() ? inp.value.trim() + " " : "";
+    try { dictRec = new SpeechRec(); } catch (e) { return; }
+    dictRec.lang = navigator.language || "en-GB"; dictRec.interimResults = true; dictRec.continuous = false; dictRec.maxAlternatives = 1;
+    dictRec.onresult = function (e) {
+      var t = ""; for (var i = 0; i < e.results.length; i++) t += e.results[i][0].transcript;
+      inp.value = (base + t).slice(0, 120); updatePreview();
+    };
+    dictRec.onerror = function (e) {
+      if (e && (e.error === "not-allowed" || e.error === "service-not-allowed")) toast("Microphone is off for Shedly. Turn it on in your phone or browser settings.", true);
+    };
+    dictRec.onend = function () { mic.classList.remove("on"); mic.setAttribute("aria-pressed", "false"); dictRec = null; inp.focus(); };
+    mic.classList.add("on"); mic.setAttribute("aria-pressed", "true");
+    logEvent("dictation_used");
+    try { dictRec.start(); } catch (e) { mic.classList.remove("on"); mic.setAttribute("aria-pressed", "false"); dictRec = null; }
+  }
+  if (SpeechRec) {
+    $("micBtn").hidden = false;
+    $("micBtn").addEventListener("click", function () {
+      if (dictRec) { try { dictRec.stop(); } catch (e) {} return; }
+      var ok = false; try { ok = localStorage.getItem("shedly.mic") === "1"; } catch (e) {}
+      if (ok) { startDictation(); return; }
+      openSheet("Dictation", function (inner, close) {
+        inner.append(sheetHead("Dictation", close),
+          h("p", { class: "lede", text: "Dictation uses your phone's own speech service. On most phones that means your voice is sent to Apple or Google to be turned into text. Shedly never receives or keeps the audio." }),
+          h("button", { class: "pill", type: "button", id: "micOk", text: "Got it, start listening", onclick: function () { try { localStorage.setItem("shedly.mic", "1"); } catch (e) {} close(); startDictation(); } }));
+      });
+    });
+  }
+
   // ---- nav, keys ----
   var current = "review";
   function go(view) {
@@ -2139,6 +2765,10 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
   function render() {
     if (current === "review") renderReview(); else if (current === "list") renderList(); else if (current === "you") renderYou(); else renderProgress();
     updateBadge();
+    var hb = $("howBtn"); if (hb) hb.style.visibility = (current === "review" || current === "you") ? "" : "hidden";
+    if (current !== "review") $("quoteSlot").textContent = "";
+    var chip = $("streakChip"), sn = streak();
+    if (current === "review" && sn > 0) { chip.textContent = sn + "-week streak"; chip.hidden = false; } else chip.hidden = true;
     showTip();
   }
 
