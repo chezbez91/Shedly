@@ -181,6 +181,39 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 .dots button[aria-current="true"]{width:28px;border-radius:6px;background:var(--ink)}
 .next{background:var(--ink);color:var(--on-ink);border:0;border-radius:999px;padding:15px 28px;font-weight:700;font-size:16px;min-width:130px}
 
+
+/* founder note + reverse shredder */
+.stage.short{height:clamp(150px,22vh,180px)}
+.rev{position:relative;width:210px;height:150px}
+.rev .strips{position:absolute;left:0;right:0;top:0;height:112px;display:flex}
+.rev .strips i{flex:1;background-color:#fff;background-image:repeating-linear-gradient(transparent 0 15px,#C9D1E6 15px 16px);background-size:210px 112px;box-shadow:inset -1px 0 0 rgba(0,0,0,.06)}
+.rev .strips i:nth-child(odd){background-color:#F6F7FB}
+.live .rev .strips i{animation:unshred 1.5s calc(var(--i) * .07s + .3s) cubic-bezier(.2,.9,.3,1) both}
+@keyframes unshred{from{transform:translateY(64px) rotate(var(--r,0deg)) scaleY(.5);opacity:0}60%{opacity:1}}
+.rev .lip{position:absolute;left:-14px;right:-14px;top:104px;height:18px;border-radius:9px;background:#0B1020;box-shadow:0 10px 20px -8px rgba(0,0,0,.5)}
+.rev .lip::after{content:"";position:absolute;left:14px;right:14px;top:6px;height:5px;border-radius:3px;background:#000}
+.rev .led{position:absolute;right:6px;top:-6px;width:9px;height:9px;border-radius:50%;background:#FFE45C}
+.live .rev .led{animation:blink 1s .2s 3}
+@keyframes blink{50%{opacity:.25}}
+.note{margin-top:14px;font-size:17px;line-height:1.45;max-width:36ch}
+.note p{margin:0 0 10px}
+.note .sig{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.02em;margin-top:6px}
+.note .sig small{display:block;font-family:var(--body);font-weight:600;font-size:14px;color:var(--muted);letter-spacing:0}
+.optgroup{margin:0 0 20px}
+.optgroup h3{font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:-.02em;margin:0 0 6px}
+.optgroup .circles{margin:8px 0 4px}
+.dots.many{gap:5px}.dots.many button{width:6px;height:6px}.dots.many button[aria-current="true"]{width:18px}
+.tabs4{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap}
+.tabs4 span{background:#263044;color:#fff;border-radius:999px;padding:9px 16px;font-weight:700;font-size:15px}
+.tabs4 span.on{background:#FFE45C;color:#0A0F1F}
+.tabs4 em{font-style:normal;color:#263044;font-weight:800;font-size:20px}
+.live .tabs4 span.on{animation:hop 3s 1s infinite}
+@keyframes hop{0%,60%,100%{transform:none}70%{transform:translateX(8px)}}
+@media (prefers-reduced-motion:reduce){.live .rev .strips i,.live .rev .led,.live .tabs4 span.on{animation:none}}
+.swipe-in-l{animation:swl .22s ease-out}.swipe-in-r{animation:swr .22s ease-out}
+@keyframes swl{from{transform:translateX(26px);opacity:.3}}
+@keyframes swr{from{transform:translateX(-26px);opacity:.3}}
+@media (prefers-reduced-motion:reduce){.swipe-in-l,.swipe-in-r{animation:none}}
 .stage{border-radius:30px;height:clamp(230px,40vh,340px);display:flex;align-items:center;justify-content:center;overflow:hidden;padding:22px;position:relative}
 .stage.y{background-color:#F6EAB4;background-image:linear-gradient(90deg,transparent 44px,rgba(214,80,80,.5) 44px,rgba(214,80,80,.5) 46px,transparent 46px),repeating-linear-gradient(transparent 0 29px,rgba(70,105,200,.26) 29px 30px)}
 .stage.l{background:var(--lav)}
@@ -729,7 +762,7 @@ h1.hello.big{margin:6px 0 0}
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.16";
+  var APP_VERSION = "0.17";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -1804,7 +1837,9 @@ h1.hello.big{margin:6px 0 0}
     rows.forEach(function (r) {
       list.append(h("button", { class: "rowbtn", type: "button", id: r.id, onclick: r.open }, [h("span", { text: r.label }), h("span", { class: "rv" }, [r.value ? h("em", { text: r.value }) : null, h("i", { class: "chev", "aria-hidden": "true" })])]));
     });
-    root.append(list, installCard());
+    root.append(list);
+    root.append(h("div", { class: "swiperow" }, [toggleRow("Swipe between screens", !!p.swipeNav, function (on) { p.swipeNav = on; save(); logEvent("swipe_setting", { on: on }); toast(on ? "Swipe left or right to change screen." : "Swipe is off.", true); }, "Swipe left or right anywhere on Review, List, Shed or You to move to the next screen.", "setSwipe")]));
+    root.append(installCard());
   }
 
   // ---- share cards (drawn on the device, nothing is uploaded) ----
@@ -2790,7 +2825,7 @@ h1.hello.big{margin:6px 0 0}
   }
   function disableWeather() { state.profile.skyWeather = false; delete state.profile.skyLoc; save(); try { localStorage.removeItem("shedly.wx"); } catch (e) {} }
   function autoWeather() {
-    var P = state.profile; if (!state.onboarded || P.skyWeather !== undefined) return;
+    var P = state.profile; if (!state.onboarded || !P.introV2 || P.skyWeather !== undefined) return;
     try { if (localStorage.getItem("shedly.wxAsk")) return; } catch (e) { return; }
     setTimeout(function () {
       if (state.profile.skyWeather !== undefined) return;
@@ -3170,6 +3205,30 @@ h1.hello.big{margin:6px 0 0}
     document.querySelectorAll("#dock button").forEach(function (t) { t.setAttribute("aria-selected", String(t.dataset.view === view)); });
     logEvent("view_opened", { view: view }); window.scrollTo(0, 0); render();
   }
+
+  // ---- swipe between screens (opt-in) ----
+  (function () {
+    var order = ["review", "list", "progress", "you"], x0 = 0, y0 = 0, t0 = 0, live = false;
+    function blocked(el) {
+      for (var n = el; n && n !== document.body; n = n.parentElement) {
+        if (n.matches && n.matches("input,textarea,select,.sheet,.shred-ov,#onboard,canvas,.minigrid")) return true;
+        if (n.scrollWidth > n.clientWidth + 4 && /auto|scroll/.test(getComputedStyle(n).overflowX)) return true;
+      }
+      return false;
+    }
+    document.addEventListener("touchstart", function (e) {
+      live = false; if (!state.profile.swipeNav || e.touches.length !== 1 || sheetEl || !$("onboard").hidden || blocked(e.target)) return;
+      x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; t0 = Date.now(); live = true;
+    }, { passive: true });
+    document.addEventListener("touchend", function (e) {
+      if (!live) return; live = false;
+      var t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0;
+      if (Math.abs(dx) < 70 || Math.abs(dx) < Math.abs(dy) * 2 || Date.now() - t0 > 700) return;
+      var i = order.indexOf(current) + (dx < 0 ? 1 : -1); if (i < 0 || i >= order.length) return;
+      go(order[i]); logEvent("swipe_nav", { to: order[i] });
+      var v = $("view-" + order[i]); if (v) { v.classList.remove("swipe-in-l", "swipe-in-r"); void v.offsetWidth; v.classList.add(dx < 0 ? "swipe-in-l" : "swipe-in-r"); }
+    }, { passive: true });
+  })();
   document.querySelectorAll("#dock button").forEach(function (t) { t.addEventListener("click", function () { go(t.dataset.view); }); });
   document.addEventListener("keydown", function (e) {
     if (!$("onboard").hidden || current !== "review" || e.metaKey || e.ctrlKey || e.altKey) return;
@@ -3258,6 +3317,18 @@ h1.hello.big{margin:6px 0 0}
       h("div", { class: "rt" }, [h("span", { class: "on", text: "7 days" }), h("span", { class: "on", text: "3 days" }), h("span", { text: "1 day" })])
     ]);
   }
+  function visualReverse() {
+    var w = h("div", { class: "rev" }), st = h("div", { class: "strips" });
+    for (var i = 0; i < 14; i++) { var b = h("i"); b.style.setProperty("--i", i); b.style.setProperty("--r", ((i * 37) % 11 - 5) * 3 + "deg"); b.style.backgroundPosition = "-" + (i * 15) + "px 0"; st.append(b); }
+    w.append(st, h("div", { class: "lip" }, [h("span", { class: "led" })]));
+    return w;
+  }
+  function visualTabs() {
+    return h("div", { class: "tabs4" }, [h("span", { class: "on", text: "Review" }), h("em", { text: "\u203a" }), h("span", { text: "List" }), h("em", { text: "\u203a" }), h("span", { text: "Shed" }), h("em", { text: "\u203a" }), h("span", { text: "You" })]);
+  }
+  function visualOwn() {
+    return h("div", { class: "mini-nudge" }, [h("small", { text: "Stored on this phone" }), h("b", { text: "Your list" }), h("p", { class: "nd", text: "No account. No email. Export or erase it any time under You." })]);
+  }
   var counterTimers = [];
   function visualTotal() {
     var cur = state.profile.currency;
@@ -3293,18 +3364,21 @@ h1.hello.big{margin:6px 0 0}
     tourMode = mode;
     var root = $("onboard"); root.textContent = ""; root.hidden = false; setInert(true);
 
-    var slides = [
+    var tutorial = [
       slide("y", visualList(), "A to-do list that gets shorter.", "Every other app helps you add things. Shedly helps you let go of one. <strong>Once a week.</strong> That's the whole trick."),
       slide("l", visualTyped(), "Type it like you'd say it.", "Add anything you've said yes to: tasks, meetings, subscriptions. Put a price on it and Shedly does the sums. <strong>Yes, even that one you forgot about.</strong>"),
       slide("y", visualTicket(), "Once a week, one question.", "Is this still a yes? Shed it, or keep it with one line on why. We'll quote you next time. <strong>“Just in case” is allowed.</strong> It reads worse the second time."),
       slide("y", visualShelf(), "Earn your shredder.", "Shedding unlocks new machines: at 3, 10, 25 things, and then streaks. Then make it yours with a nameplate, a light and a cut style. <strong>Brass is for the long haul.</strong>"),
       slide("l", visualNudge(), "It notices things.", "Renewals coming up, what each use really costs, and a line when you've kept something again and again. <strong>Never a rule. Always your call.</strong>"),
       slide("y", visualRemind(), "Hear about it before it ends.", "Turn on reminders in You, under Notifications. Pick the deadlines you want: a week, three days and one day before. <strong>Quiet after 9 pm, and never more than one a day.</strong>"),
-      slide("l", visualTotal(), "Watch the number go up.", "Every shed adds to your total, and to what you've freed up if it had a price. Miss a week and nothing explodes. <strong>Miss a month and we'll mention it.</strong>")
+      slide("l", visualTotal(), "Watch the number go up.", "Every shed adds to your total, and to what you've freed up if it had a price. Miss a week and nothing explodes. <strong>Miss a month and we'll mention it.</strong>"),
+      slide("y", visualTabs(), "Four screens. One swipe.", "Review is your weekly question, List is everything you've said yes to, Shed is your total and your machines, You is settings. <strong>Switch on swiping in You and flick between them.</strong>"),
+      slide("l", visualOwn(), "It stays yours.", "Your list lives on this phone. No account, nothing sold, nothing shared unless you choose to. <strong>Export it or erase it whenever you like.</strong>")
     ];
+    var slides = tutorial.slice(), introCount = 0;
 
     var fName, fCountry, fCur;
-    if (mode === "first") {
+    if (mode === "first" || mode === "update") {
       var detected = detectCountry();
       fName = h("input", { type: "text", maxlength: "40", autocomplete: "given-name", placeholder: "What should we call you?", id: "obName" });
       fCountry = h("select", { id: "obCountry" });
@@ -3313,28 +3387,61 @@ h1.hello.big{margin:6px 0 0}
       fCur = h("select", { id: "obCur" });
       optionList(fCur, CURRENCIES, function (c) { return c + " · " + currencyName(c); }, currencyOf(detected) || "EUR");
       fCountry.addEventListener("change", function () { var c = currencyOf(fCountry.value); if (c) fCur.value = c; });
-      var fAn = h("input", { type: "checkbox", id: "obAnalytics", "aria-label": "Help test Shedly" });
-      var form = h("div", { class: "setup" }, [
-        h("label", { class: "field" }, [h("span", { text: "Name" }), fName]),
-        h("label", { class: "field" }, [h("span", { text: "Country" }), fCountry]),
-        h("label", { class: "field" }, [h("span", { text: "Currency" }), fCur]),
-        h("p", { class: "fine-print", text: "You can still type $15 or £12 on any item. Prices in different currencies stay separate." }),
-        h("label", { class: "toggle", style: "margin-top:14px" }, [h("span", { text: "Help test Shedly: share anonymous usage" }), fAn]),
-        h("p", { class: "fine-print", text: "Records which screens and buttons you use, with all text hidden. Item names, prices and notes are never sent. Change this any time in You." })
-      ]);
+      var fAn = h("input", { type: "checkbox", id: "obAnalytics", "aria-label": "Help test Shedly" }); fAn.checked = mode === "update" && !!state.profile.analytics;
+      var founder = slide("y short", visualReverse(), "A note from Liam.", "", h("div", { class: "note" }, [
+        h("p", { text: "Hi, I'm Liam, the founder of Shedly." }),
+        h("p", { text: "Most to-do apps help you add things. Shedly helps you let go of them. Once a week it asks one question about one thing: is this still a yes?" }),
+        h("p", { text: "Shed it and it goes through the shredder. Keep it and say why. That's the whole app." }),
+        h("p", { text: "No account, no email. Your list stays on this phone." }),
+        h("div", { class: "sig" }, ["Liam", h("small", { text: "Founder, Shedly" })])
+      ]));
       var setup = h("section", { class: "slide" }, [h("div", { class: "slide-in" }, [
-        h("h2", { text: "Before we start." }),
-        h("p", { class: "lede", html: "Tell us who's shedding and where you are, so prices come out right. <strong>No account, no email.</strong> Your list never leaves this device." }),
-        h("div", { style: "height:22px" }), form
+        h("h2", { text: "Who's shedding?" }),
+        h("p", { class: "lede", html: "So names and prices come out right. <strong>No account, no email.</strong>" }),
+        h("div", { style: "height:18px" }),
+        h("div", { class: "setup" }, [
+          h("label", { class: "field" }, [h("span", { text: "Name" }), fName]),
+          h("label", { class: "field" }, [h("span", { text: "Country" }), fCountry]),
+          h("label", { class: "field" }, [h("span", { text: "Currency" }), fCur]),
+          h("p", { class: "fine-print", text: "You can still type $15 or \u00a312 on any item. Prices in different currencies stay separate." })
+        ])
       ])]);
-      slides.push(setup);
-      fName.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); finish(); } });
+      // opt-ins
+      var P0 = state.profile;
+      var fWx = h("input", { type: "checkbox", id: "obWeather", "aria-label": "Show today's weather" }); fWx.checked = P0.skyWeather !== false;
+      var fRem = h("input", { type: "checkbox", id: "obRemind", "aria-label": "Remind me before things end" }); fRem.checked = !!P0.remindOn;
+      var fSwipe = h("input", { type: "checkbox", id: "obSwipe", "aria-label": "Swipe between screens", checked: "" }); fSwipe.checked = true;
+      var tg = function (t, box) { return h("label", { class: "toggle" }, [h("span", { text: t }), box]); };
+      var circs = h("div", { class: "circles", role: "group", "aria-label": "Look" });
+      THEMES.filter(function (t) { return !t.at; }).forEach(function (t) {
+        var dot = h("i"); dot.style.background = "linear-gradient(135deg," + t.sw[0] + " 50%," + t.sw[2] + " 50%)";
+        circs.append(h("button", { class: "circ" + ((P0.theme || (mode === "first" ? "night" : "paper")) === t.id ? " on" : ""), type: "button", id: "ob-circle-" + t.id, "aria-pressed": String((P0.theme || (mode === "first" ? "night" : "paper")) === t.id), onclick: function () {
+          P0.theme = t.id; save(); applyTheme();
+          Array.prototype.forEach.call(circs.children, function (c) { var on = c.id === "ob-circle-" + t.id; c.classList.toggle("on", on); c.setAttribute("aria-pressed", String(on)); });
+        } }, [dot, h("span", { text: t.name })]));
+      });
+      var opts = h("section", { class: "slide" }, [h("div", { class: "slide-in" }, [
+        h("h2", { text: "Make it yours." }),
+        h("p", { class: "lede", html: "Everything here is optional and <strong>you can change it later in You.</strong>" }),
+        h("div", { style: "height:18px" }),
+        h("div", { class: "optgroup" }, [h("h3", { text: "Look" }), circs]),
+        h("div", { class: "optgroup" }, [h("h3", { text: "Weather and location" }), tg("Show today's weather in the sky", fWx),
+          h("p", { class: "fine-print", text: "Asks for your approximate location once, then sends it rounded to about 10 km to Open-Meteo to look up the weather. Nothing else is sent." })]),
+        h("div", { class: "optgroup" }, [h("h3", { text: "Notifications" }), tg("Remind me before things end", fRem),
+          h("p", { class: "fine-print", text: "Picks up dates on your items. Quiet after 9 pm, never more than one a day. Your phone will ask for permission." })]),
+        h("div", { class: "optgroup" }, [h("h3", { text: "Swiping" }), tg("Swipe between screens", fSwipe),
+          h("p", { class: "fine-print", text: "Flick left or right to go from Review to List, Shed and You." })]),
+        h("div", { class: "optgroup" }, [h("h3", { text: "Your data" }), tg("Help test Shedly: share anonymous usage", fAn),
+          h("p", { class: "fine-print", text: "Records which screens and buttons you use, with all text hidden. Item names, prices and notes are never sent. Your list stays on this device." })])
+      ])]);
+      if (mode === "update") { slides = [founder, opts]; introCount = 2; } else { slides = [founder, setup, opts].concat(tutorial); introCount = 3; }
+      fName.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); goTo(2); } });
     }
 
     var track = h("div", { class: "track", id: "tourTrack" }, slides);
-    var skip = h("button", { type: "button", id: "tourSkip", text: mode === "first" ? "Skip the tour" : "Close", onclick: function () { logEvent("tour_skipped", { at_step: idx }); if (mode === "first") goTo(slides.length - 1); else closeTour(); } });
+    var skip = h("button", { type: "button", id: "tourSkip", text: mode === "first" ? "Skip the tour" : "Close", onclick: function () { logEvent("tour_skipped", { at_step: idx }); if (mode === "first") finish(); else closeTour(); } });
     var top = h("div", { class: "tour-top" }, [h("span", { class: "brand", html: '<svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#3347E8"/><rect x="12" y="15" width="40" height="8" rx="4" fill="#fff"/><rect x="12" y="28" width="30" height="8" rx="4" fill="#fff"/><rect x="12" y="41" width="18" height="8" rx="4" fill="#F5DF7B"/></svg>shedly' }), skip]);
-    var dots = h("div", { class: "dots" });
+    var dots = h("div", { class: "dots" + (slides.length > 9 ? " many" : "") });
     slides.forEach(function (_, i) { dots.append(h("button", { type: "button", "aria-label": "Go to step " + (i + 1), onclick: function () { goTo(i); } })); });
     var next = h("button", { class: "next", id: "tourNext", type: "button", onclick: function () { if (idx < slides.length - 1) goTo(idx + 1); else finish(); } });
     root.append(top, track, h("div", { class: "tour-bot" }, [dots, next]));
@@ -3347,8 +3454,8 @@ h1.hello.big{margin:6px 0 0}
       slides.forEach(function (s, k) { s.classList.toggle("live", k === i); });
       Array.prototype.forEach.call(dots.children, function (d, k) { if (k === i) d.setAttribute("aria-current", "true"); else d.removeAttribute("aria-current"); });
       var last = i === slides.length - 1;
-      next.textContent = last ? (mode === "first" ? "Start shedding" : "Got it") : "Next";
-      skip.style.visibility = (mode === "first" && last) ? "hidden" : "visible";
+      next.textContent = last ? (mode === "first" ? "Start shedding" : mode === "update" ? "Done" : "Got it") : "Next";
+      skip.style.visibility = (mode === "update" || (mode === "first" && (last || i < introCount))) ? "hidden" : "visible";
       if (slides[i].querySelector("#tourN")) runCounter();
     }
     var raf = 0;
@@ -3360,13 +3467,20 @@ h1.hello.big{margin:6px 0 0}
     function tourResize() { if (!$("onboard").hidden) track.scrollTo({ left: idx * track.clientWidth }); }
 
     function finish() {
-      if (mode === "first") {
-        state.profile.name = fName.value.trim();
-        state.profile.country = fCountry.value;
-        state.profile.currency = fCur.value;
-        state.onboarded = true; state.profile.analytics = !!fAn.checked; state.profile.askedV2 = true; save();
+      if (mode === "first" || mode === "update") {
+        if (mode === "first") { state.profile.name = fName.value.trim(); state.profile.country = fCountry.value; state.profile.currency = fCur.value; }
+        state.onboarded = true; state.profile.analytics = !!fAn.checked; state.profile.askedV2 = true; state.profile.introV2 = true;
+        state.profile.swipeNav = !!fSwipe.checked;
+        var wantWx = !!fWx.checked, wantRem = !!fRem.checked;
+        if (!wantWx) { state.profile.skyWeather = false; delete state.profile.skyLoc; }
+        else if (state.profile.skyWeather === true) wantWx = false;
+        save();
         if (state.profile.analytics) loadAnalytics();
-        logEvent("onboarding_completed", { skipped_to_setup: idx < slides.length - 2 });
+        logEvent(mode === "update" ? "intro_completed" : "onboarding_completed", { skipped_to_tutorial: idx < slides.length - 1, weather: wantWx, reminders: wantRem, swipe: !!fSwipe.checked });
+        setTimeout(function () {
+          if (wantWx) enableWeather(function (okk) { if (okk) render(); else { state.profile.skyWeather = false; save(); } });
+          if (wantRem) enableReminders();
+        }, 600);
       } else logEvent("tour_closed", { at_step: idx });
       closeTour();
     }
@@ -3397,6 +3511,7 @@ h1.hello.big{margin:6px 0 0}
   if (state.profile.analytics) loadAnalytics();
   render(); autoWeather();
   if (!state.onboarded) openTour("first");
+  else if (!state.profile.introV2) setTimeout(function () { openTour("update"); }, 400);
   else setTimeout(askConsent, 700);
   handleLaunch();
 
