@@ -2,7 +2,7 @@
 // Pages are fetched fresh when online (so a new version shows on the next open),
 // and fall back to the stored copy when offline. Other files are cache-first.
 // Bump CACHE whenever files change so phones pick up the new version.
-var CACHE = "shedly-v11";
+var CACHE = "shedly-v14";
 var FILES = ["./", "index.html", "manifest.webmanifest", "icon.svg", "icon-192.png", "icon-512.png", "icon-180.png", "fonts/display.woff2", "fonts/body.woff2"];
 
 // A new version waits until the page asks it to take over (shown as the "New version ready" banner).
@@ -51,4 +51,24 @@ self.addEventListener("fetch", function (e) {
       });
     })
   );
+});
+
+// Reminders from the Shedly service. The text is generic unless the person chose to show item names.
+self.addEventListener("push", function (e) {
+  var data = {};
+  try { data = e.data ? e.data.json() : {}; } catch (err) { data = { body: e.data ? e.data.text() : "" }; }
+  e.waitUntil(self.registration.showNotification(data.title || "Shedly", {
+    body: data.body || "",
+    tag: data.tag || "shedly",
+    icon: "icon-192.png",
+    badge: "icon-192.png",
+    data: { url: "./" }
+  }));
+});
+self.addEventListener("notificationclick", function (e) {
+  e.notification.close();
+  e.waitUntil(self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(function (list) {
+    for (var i = 0; i < list.length; i++) if ("focus" in list[i]) return list[i].focus();
+    return self.clients.openWindow("./");
+  }));
 });
