@@ -836,7 +836,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.22";
+  var APP_VERSION = "0.23";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -854,7 +854,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
 
   // ---- language: strings are looked up by their English text; anything not translated stays English ----
   function dnLoc() { return LANG === "en-GB" ? "en" : LANG === "tl" ? "fil" : LANG === "zh" ? "zh-Hans" : LANG === "ceb" ? "fil" : LANG; }
-  var LANGS = [["en-GB", "English (UK)"], ["en-US", "English (US)"], ["es", "Espa\u00f1ol"], ["fr", "Fran\u00e7ais"], ["de", "Deutsch"], ["it", "Italiano"], ["pt", "Portugu\u00eas"], ["nl", "Nederlands"], ["pl", "Polski"], ["zh", "\u4e2d\u6587\uff08\u666e\u901a\u8bdd\uff09"], ["tl", "Tagalog"], ["ceb", "Bisaya (Cebuano)"], ["ru", "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"]];
+  var LANGS = [["en-GB", "English (UK)"], ["en-US", "English (US)"], ["es", "Espa\u00f1ol"], ["fr", "Fran\u00e7ais"], ["de", "Deutsch"], ["it", "Italiano"], ["pt", "Portugu\u00eas"], ["nl", "Nederlands"], ["pl", "Polski"], ["zh", "\u4e2d\u6587\uff08\u666e\u901a\u8bdd\uff09"], ["tl", "Tagalog"], ["ceb", "Bisaya (Cebuano)"], ["ru", "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"], ["uk", "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430"]];
   var LANG = "en-GB"; try { LANG = localStorage.getItem("shedly.lang") || "en-GB"; } catch (e) {}
   if (!LANGS.some(function (l) { return l[0] === LANG; })) LANG = "en-GB";
   try { document.documentElement.lang = LANG === "zh" ? "zh-Hans" : LANG === "ceb" ? "ceb" : LANG.slice(0, 2); } catch (e) {}
