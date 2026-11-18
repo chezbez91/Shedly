@@ -184,7 +184,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 
 /* founder note + reverse shredder */
 
-.sigsvg{display:block;width:210px;height:auto;margin:2px 0 0;overflow:visible;transform:rotate(-3deg);transform-origin:left center}
+.sigsvg{display:block;width:180px;height:auto;margin:2px 0 0;overflow:visible;transform:rotate(-3deg);transform-origin:left center}
 .sigsvg path{fill:none;stroke:#7D95FF;stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:100}
 .sigsvg circle{fill:#7D95FF}
 .live .sigsvg path{animation:sign .9s calc(1.2s + var(--k) * .6s) ease-in-out both}
@@ -223,6 +223,13 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 .live .ph.sw .finger{animation:fing 3.6s ease-in-out infinite}
 @keyframes fing{0%,10%{opacity:0;transform:translateX(0)}18%{opacity:1;transform:translateX(0)}35%{opacity:1;transform:translateX(-46px)}42%,100%{opacity:0;transform:translateX(-46px)}}
 @media (prefers-reduced-motion:reduce){.live .wxmini *,.live .ph *{animation:none!important}}
+.inst-pop{text-align:center;padding:8px 4px 4px}
+.inst-pop h1{font-family:var(--display);font-weight:800;font-size:28px;line-height:1.05;letter-spacing:-.03em;margin:12px 0 8px}
+.inst-pop p{margin:0 0 14px;color:var(--muted);font-size:15px;line-height:1.4}
+.inst-pop .inst-logo{display:inline-block}
+.inst-pop .pill{width:100%;margin:6px 0 4px}
+.inst-pop .linkbtn{display:block;margin:6px auto 0;padding:10px}
+.inst-steps{text-align:left;margin:0 0 12px;padding:14px 16px 14px 34px;background:var(--surface);border-radius:16px;font-size:15px;line-height:1.5}
 .stage.short{height:clamp(120px,17vh,150px)}
 .rev{position:relative;width:210px;height:150px}
 .rev .strips{position:absolute;left:0;right:0;top:0;height:112px;display:flex}
@@ -706,7 +713,13 @@ h1.hello.big{margin:6px 0 0}
 .minibtn{display:flex;align-items:center;justify-content:center;gap:8px;height:46px;background:none;border:1.5px solid var(--line);border-radius:999px;font-size:14px;font-weight:700;color:var(--ink)}
 .minibtn:active{background:var(--line)}
 :root[data-theme=night] .dock button[aria-selected="true"]{color:#0A0F1F}
-@media (max-height:720px){.sky{display:none}.stamp{width:68px;height:68px}.stamp b{font-size:24px}}
+h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
+.panel.empty-p{padding:18px 18px 16px;border-radius:26px}
+.panel.empty-p h3{font-size:clamp(26px,min(8vw,4.6dvh),36px);margin:0 0 6px}
+.panel.empty-p p{font-size:14px;line-height:1.35;margin:0 0 10px}
+.panel.empty-p .eg-row{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.panel.empty-p .eg{font-size:13px;padding:7px 12px;min-height:0;text-align:left}
+@media (max-height:720px){main{padding-bottom:calc(env(safe-area-inset-bottom) + 80px)}h1.hello.big{font-size:clamp(28px,min(10.5vw,5.4dvh),44px);margin:4px 0 0}#view-review .sub{margin:0 0 6px}.ticket .top{padding:12px 18px 24px}.ticket h2{font-size:clamp(26px,min(9vw,5dvh),40px)}.stub{padding-top:8px}.sky{display:none}.stamp{width:68px;height:68px}.stamp b{font-size:24px}}
 
 /* You */
 .you-name{display:block;width:100%;background:none;border:0;padding:0;margin:10px 0 0;text-align:left;font-family:var(--display);font-weight:800;font-size:clamp(46px,16vw,68px);letter-spacing:-.05em;line-height:1;color:var(--ink);overflow-wrap:anywhere}
@@ -812,7 +825,7 @@ h1.hello.big{margin:6px 0 0}
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.18";
+  var APP_VERSION = "0.19";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -1441,6 +1454,38 @@ h1.hello.big{margin:6px 0 0}
     ]);
   }
 
+  // ---- install pop-up for people using the website: shown now and then until they install ----
+  var installTries = 0, installShown = false;
+  function installDue() {
+    if (isStandalone() || installShown) return false;
+    if (navigator.webdriver && !localStorage.getItem("shedly.forceInst")) return false;
+    var r = {}; try { r = JSON.parse(localStorage.getItem("shedly.inst") || "{}"); } catch (e) {}
+    return (r.n || 0) < 4 && Date.now() - (r.at || 0) > 2 * DAY;
+  }
+  function tryInstallSheet() {
+    if (!installDue() || !state.onboarded || !state.profile.introV2) return;
+    if (sheetEl || !$("onboard").hidden) { if (++installTries < 12) setTimeout(tryInstallSheet, 4000); return; }
+    installShown = true;
+    var r = {}; try { r = JSON.parse(localStorage.getItem("shedly.inst") || "{}"); } catch (e) {}
+    try { localStorage.setItem("shedly.inst", JSON.stringify({ n: (r.n || 0) + 1, at: Date.now() })); } catch (e) {}
+    logEvent("install_sheet_shown");
+    openSheet("Install Shedly", function (inner, close) {
+      var ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+      var steps = ios
+        ? h("ol", { class: "inst-steps" }, [h("li", { html: "Tap the <b>Share</b> button in Safari" }), h("li", { html: "Choose <b>Add to Home Screen</b>" }), h("li", { html: "Open Shedly from your home screen" })])
+        : deferredInstall ? null : h("ol", { class: "inst-steps" }, [h("li", { html: "Open the browser menu <b>\u22ee</b>" }), h("li", { html: "Tap <b>Install app</b> or <b>Add to Home screen</b>" })]);
+      inner.append(h("div", { class: "inst-pop", id: "installPop" }, [
+        h("div", { class: "inst-logo", "aria-hidden": "true", html: '<svg viewBox="0 0 32 32" width="34" height="34"><rect width="32" height="32" rx="8" fill="#2F45FF"/><rect x="7" y="9" width="18" height="3.6" rx="1.8" fill="#fff"/><rect x="7" y="15" width="12" height="3.6" rx="1.8" fill="#fff"/><rect x="7" y="21" width="7" height="3.6" rx="1.8" fill="#FFE45C"/></svg>' }),
+        h("h1", { text: "Shedly works best installed." }),
+        h("p", { html: "Opens full screen from your home screen, works offline, and <strong>is the only way to get reminders on an iPhone.</strong>" }),
+        steps,
+        deferredInstall ? h("button", { class: "pill", type: "button", id: "installNow", text: "Install", onclick: function () { close(); doInstall(); } }) : null,
+        h("button", { class: "linkbtn", type: "button", id: "installLater", text: "Not now", onclick: function () { logEvent("install_sheet_dismissed"); close(); } })
+      ]));
+    });
+  }
+  window.addEventListener("beforeinstallprompt", function () { setTimeout(tryInstallSheet, 2500); });
+
   // ---- one-time tips, shown in the tab where each thing first matters ----
   function tipCandidate() {
     var seen = state.profile.tips, c = [];
@@ -1479,7 +1524,7 @@ h1.hello.big{margin:6px 0 0}
     if (!q.length) {
       var eg = h("div", { class: "eg-row" });
       EXAMPLES.forEach(function (t) { eg.append(h("button", { class: "eg", type: "button", text: "+ " + t, onclick: function () { add(t); } })); });
-      root.append(h("div", { class: "panel" }, [
+      root.append(h("div", { class: "panel empty-p" }, [
         h("h3", { text: "Nothing to shed yet." }),
         h("p", { text: "Add what you've said yes to: tasks, meetings, subscriptions. Tap a few to see how it works." }),
         eg,
@@ -3374,10 +3419,10 @@ h1.hello.big{margin:6px 0 0}
     w.append(st, h("div", { class: "lip" }, [h("span", { class: "led" })]));
     return w;
   }
-  var SIG_STROKES = ["M8 84 C46 46 110 16 166 12 C176 12 172 24 166 40 L148 108 C146 118 150 124 160 120 C178 112 200 106 226 108", "M226 108 C232 94 238 84 241 92 C243 100 240 106 250 100", "M272 92 C262 84 252 96 256 106 C260 114 272 106 276 90 C274 104 280 112 290 102", "M290 102 C294 88 300 84 303 94 C304 102 302 108 310 98 C314 88 320 84 323 94 C324 102 322 110 334 94 C342 82 350 72 358 74"];
+  var SIG_STROKES = ["M78 66 C100 38 138 16 166 12 C176 12 172 24 166 40 L148 108 C146 118 150 124 160 120 C178 112 200 106 226 108", "M226 108 C232 94 238 84 241 92 C243 100 240 106 250 100", "M272 92 C262 84 252 96 256 106 C260 114 272 106 276 90 C274 104 280 112 290 102", "M290 102 C294 88 300 84 303 94 C304 102 302 108 310 98 C314 88 320 84 323 94 C324 102 322 110 334 94 C342 82 350 72 358 74"];
   function signature() {
     var NS = "http://www.w3.org/2000/svg", svg = document.createElementNS(NS, "svg");
-    svg.setAttribute("viewBox", "0 0 370 140"); svg.setAttribute("class", "sigsvg"); svg.setAttribute("role", "img"); svg.setAttribute("aria-label", "Liam");
+    svg.setAttribute("viewBox", "70 0 300 140"); svg.setAttribute("class", "sigsvg"); svg.setAttribute("role", "img"); svg.setAttribute("aria-label", "Liam");
     SIG_STROKES.forEach(function (d, i) {
       var p = document.createElementNS(NS, "path"); p.setAttribute("d", d); p.setAttribute("pathLength", "100"); p.style.setProperty("--k", i); svg.append(p);
     });
@@ -3555,6 +3600,7 @@ h1.hello.big{margin:6px 0 0}
           if (wantWx) enableWeather(function (okk) { if (okk) render(); else { state.profile.skyWeather = false; save(); } });
           if (wantRem) enableReminders();
         }, 600);
+        setTimeout(tryInstallSheet, 5000);
       } else logEvent("tour_closed", { at_step: idx });
       closeTour();
     }
@@ -3588,6 +3634,7 @@ h1.hello.big{margin:6px 0 0}
   else if (!state.profile.introV2) setTimeout(function () { openTour("update"); }, 400);
   else setTimeout(askConsent, 700);
   handleLaunch();
+  setTimeout(tryInstallSheet, 3500);
 
   if (window.__SHEDLY_TEST__) window.__shedly = { extractDate: extractDate, parseEntry: parseEntry, state: function () { return state; }, SKINS: SKINS, THEMES: THEMES, shredElement: shredElement, openWorkshop: openWorkshop, openImport: openImport, showUnlock: showUnlock, checkUnlocks: checkUnlocks, render: render, save: save, isUnlocked: isUnlocked, metric: metric, nudgeFor: nudgeFor, digestText: digestText, findRecurring: findRecurring, parseTable: parseTable, importCandidates: importCandidates, radarItems: radarItems, chargesText: chargesText, longestStreak: longestStreak };
 
