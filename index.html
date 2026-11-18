@@ -183,7 +183,45 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 
 
 /* founder note + reverse shredder */
-.stage.short{height:clamp(150px,22vh,180px)}
+
+.sigsvg{display:block;width:150px;height:auto;margin:0;overflow:visible}
+.sigsvg path{fill:var(--ink)}
+.live .sigsvg path{animation:inkin 1.8s 1.4s cubic-bezier(.5,0,.3,1) both}
+@keyframes inkin{from{clip-path:inset(-20% 100% -20% 0)}to{clip-path:inset(-20% 0 -20% 0)}}
+@media (prefers-reduced-motion:reduce){.live .sigsvg path{animation:none}}
+.note .sig{margin-top:2px}
+.optctl{margin-top:16px}
+.slide .stage.opt{height:clamp(160px,24vh,210px)}
+.optctl .circles{margin:0}
+.wxmini{position:relative;width:100%;max-width:300px;height:150px;border-radius:20px;overflow:hidden;background:linear-gradient(#35507A,#8FA6C4)}
+.wxmini .sun{position:absolute;left:22px;top:18px;width:36px;height:36px;border-radius:50%;background:#FFE45C;box-shadow:0 0 0 8px rgba(255,228,92,.25),0 0 0 18px rgba(255,228,92,.12)}
+.wxmini .cl{position:absolute;height:26px;border-radius:14px;background:#E9EEF6;opacity:.95}
+.wxmini .c1{width:110px;left:70px;top:22px}.wxmini .c2{width:84px;left:150px;top:46px;opacity:.8}
+.live .wxmini .c1{animation:drift 9s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translateX(24px)}}
+.wxmini .dr{position:absolute;top:60px;width:2px;height:14px;border-radius:2px;background:#CFE3FF;opacity:0}
+.live .wxmini .dr{animation:rain .8s calc(var(--i) * .09s) linear infinite}
+@keyframes rain{0%{transform:translateY(0);opacity:.9}100%{transform:translateY(80px);opacity:0}}
+.wxmini .wcap{position:absolute;left:14px;bottom:10px;font-weight:700;font-size:14px;color:#fff}
+.swpair{display:flex;gap:18px;justify-content:center}
+.ph{position:relative;width:112px;height:176px;border-radius:18px;background:#0A0F1F;border:3px solid #263044;overflow:hidden}
+.ph .scr{position:absolute;inset:0 0 28px 0;display:flex;width:200%}
+.ph .pg{flex:0 0 50%;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:15px;background:#2F45FF}
+.ph .pg.p2{background:#FFE45C;color:#0A0F1F}
+.ph .pdock{position:absolute;left:8px;right:8px;bottom:6px;height:16px;border-radius:9px;background:#182041;display:flex;gap:6px;align-items:center;justify-content:center}
+.ph .pdock i{width:14px;height:6px;border-radius:3px;background:#5A6797}
+.ph .plab{position:absolute;left:0;right:0;top:6px;text-align:center;font-size:11px;color:#fff;z-index:2;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.live .ph.sw .scr{animation:flick 3.6s ease-in-out infinite}
+.live .ph.tp .scr{animation:flicktap 3.6s ease-in-out infinite}
+.live .ph.tp .pdock i:nth-child(2){animation:tapdot 3.6s infinite}
+@keyframes flick{0%,20%{transform:none}35%,70%{transform:translateX(-50%)}85%,100%{transform:none}}
+@keyframes flicktap{0%,30%{transform:none}38%,70%{transform:translateX(-50%)}78%,100%{transform:none}}
+@keyframes tapdot{0%,28%{background:#5A6797}32%,70%{background:#FFE45C;transform:scale(1.4)}74%,100%{background:#5A6797}}
+.ph .finger{position:absolute;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.75);left:70px;top:90px;z-index:3;opacity:0}
+.live .ph.sw .finger{animation:fing 3.6s ease-in-out infinite}
+@keyframes fing{0%,10%{opacity:0;transform:translateX(0)}18%{opacity:1;transform:translateX(0)}35%{opacity:1;transform:translateX(-46px)}42%,100%{opacity:0;transform:translateX(-46px)}}
+@media (prefers-reduced-motion:reduce){.live .wxmini *,.live .ph *{animation:none!important}}
+.stage.short{height:clamp(120px,17vh,150px)}
 .rev{position:relative;width:210px;height:150px}
 .rev .strips{position:absolute;left:0;right:0;top:0;height:112px;display:flex}
 .rev .strips i{flex:1;background-color:#fff;background-image:repeating-linear-gradient(transparent 0 15px,#C9D1E6 15px 16px);background-size:210px 112px;box-shadow:inset -1px 0 0 rgba(0,0,0,.06)}
@@ -195,8 +233,8 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 .rev .led{position:absolute;right:6px;top:-6px;width:9px;height:9px;border-radius:50%;background:#FFE45C}
 .live .rev .led{animation:blink 1s .2s 3}
 @keyframes blink{50%{opacity:.25}}
-.note{margin-top:14px;font-size:17px;line-height:1.45;max-width:36ch}
-.note p{margin:0 0 10px}
+.note{margin-top:10px;font-size:16px;line-height:1.4;max-width:38ch}
+.note p{margin:0 0 8px}
 .note .sig{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.02em;margin-top:6px}
 .note .sig small{display:block;font-family:var(--body);font-weight:600;font-size:14px;color:var(--muted);letter-spacing:0}
 .optgroup{margin:0 0 20px}
@@ -292,6 +330,16 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 /* ---------- themes (earned through streaks; Paper and Midnight are free from the start) ---------- */
 :root[data-theme=midnight]{color-scheme:dark;--paper:#0E1320;--surface:#171E31;--ink:#E9ECF5;--on-ink:#121828;--muted:#98A2BD;--line:#27304A;--card:#4155F0;--lav:#212A4D;--dock:#1F2842;--strike:#FF7A6E}
 :root[data-theme=white]{color-scheme:light;--paper:#FFFFFF;--surface:#F5F6F8;--ink:#111827;--on-ink:#FFFFFF;--muted:#5B6474;--line:#E3E6EB;--card:#2F45FF;--lav:#EEF0F4;--dock:#111827;--strike:#D8483B}
+/* new free looks */
+:root[data-theme=violet]{color-scheme:dark;--paper:#160F2B;--surface:#21183F;--ink:#F4F0FF;--on-ink:#160F2B;--muted:#A99BD0;--line:#33284F;--card:#7A4DFF;--hl:#FFE45C;--lav:#21183F;--dock:#2A1F4D;--strike:#FF7A8E}
+:root[data-theme=sunset]{color-scheme:dark;--paper:#1E1210;--surface:#2E1B17;--ink:#FFF1EA;--on-ink:#1E1210;--muted:#CFA79A;--line:#432A24;--card:#FF6A3D;--hl:#FFE45C;--lav:#2E1B17;--dock:#3A2019;--strike:#FF8A7A}
+:root[data-theme=rose]{color-scheme:light;--paper:#FFF1F5;--surface:#FFFFFF;--ink:#3A1224;--on-ink:#FFF1F5;--muted:#86566A;--line:#F3D3DE;--card:#E8457C;--lav:#FCE0E9;--dock:#3A1224;--strike:#D63A5E}
+:root[data-theme=mint]{color-scheme:light;--paper:#EAF8F1;--surface:#F6FDF9;--ink:#0F2D22;--on-ink:#EAF8F1;--muted:#4F7A68;--line:#CDE8DB;--card:#12A36B;--lav:#D3EFE1;--dock:#0F2D22;--strike:#C9453A}
+:root[data-theme=violet] .dock button,:root[data-theme=sunset] .dock button{color:#CFC6E6}
+:root[data-theme=sunset] .dock button{color:#E6C9BC}
+:root[data-theme=violet] mark,:root[data-theme=sunset] mark{color:#160F2B}
+:root[data-theme=violet] .dock button[aria-selected="true"],:root[data-theme=sunset] .dock button[aria-selected="true"]{color:#1E1210}
+:root[data-theme=violet] .result.gold h1,:root[data-theme=sunset] .result.gold h1,:root[data-theme=violet] .result.gold .kick,:root[data-theme=sunset] .result.gold .kick{color:#F5DF7B}
 :root[data-theme=sage]{color-scheme:light;--paper:#E8EDE7;--surface:#F4F7F3;--ink:#1F2E27;--on-ink:#F1F6F0;--muted:#58695F;--line:#CBD6CA;--card:#2D6A55;--lav:#D3E3D8;--dock:#25372F;--strike:#C0463A}
 :root[data-theme=dusk]{color-scheme:light;--paper:#EEEAF3;--surface:#F9F6FC;--ink:#2B2640;--on-ink:#F5F2FA;--muted:#675F7F;--line:#DBD3E5;--card:#5F45D6;--lav:#E1D9F6;--dock:#312A4C;--strike:#D2425A}
 :root[data-theme=mono]{color-scheme:light;--paper:#F2F2F0;--surface:#FAFAF8;--ink:#141414;--on-ink:#F7F7F5;--muted:#5E5E5A;--line:#D8D8D4;--card:#141414;--lav:#E2E2DE;--dock:#141414;--strike:#C93B2E}
@@ -762,7 +810,7 @@ h1.hello.big{margin:6px 0 0}
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.17";
+  var APP_VERSION = "0.18";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -828,7 +876,7 @@ h1.hello.big{margin:6px 0 0}
     var P = s.profile, seedNeeded = !Array.isArray(P.unlocked);
     P.shr = Object.assign({ skin: "graphite", led: "auto", plate: "", cut: "strip", mode: "office" }, P.shr || {});
     if (seedNeeded) P.unlocked = [];
-    if (!P.theme) P.theme = "paper";
+    if (!P.theme) P.theme = "night"; else if (P.theme === "paper") P.theme = "white"; else if (P.theme === "midnight") P.theme = "night"; else if (P.theme === "forest") P.theme = "mint";
     if (P.plus === undefined) P.plus = false;
     if (!P.notify) P.notify = { weekly: true, deadline: true, stale: false, streak: true, names: false };
     if (!P.tips) P.tips = {};
@@ -1071,9 +1119,10 @@ h1.hello.big{margin:6px 0 0}
   var THEMES = [
     { id: "night", name: "Night", at: null, sw: ["#0A0F1F", "#F2F4FA", "#FFE45C"], note: "Navy and yellow" },
     { id: "white", name: "White", at: null, sw: ["#FFFFFF", "#111827", "#2F45FF"], note: "Plain white" },
-    { id: "paper", name: "Paper", at: null, sw: ["#EFF0F3", "#263044", "#3347E8"], note: "Follows your phone" },
-    { id: "midnight", name: "Midnight", at: null, sw: ["#0E1320", "#E9ECF5", "#4155F0"], note: "Always dark" },
-    { id: "forest", name: "Forest", at: null, sw: ["#12211A", "#E9C46A", "#2F7257"], note: "Dark green, amber marks" },
+    { id: "violet", name: "Violet", at: null, sw: ["#160F2B", "#F4F0FF", "#7A4DFF"], note: "Deep purple" },
+    { id: "rose", name: "Rose", at: null, sw: ["#FFF1F5", "#3A1224", "#E8457C"], note: "Soft pink" },
+    { id: "mint", name: "Mint", at: null, sw: ["#EAF8F1", "#0F2D22", "#12A36B"], note: "Fresh green" },
+    { id: "sunset", name: "Sunset", at: null, sw: ["#1E1210", "#FFF1EA", "#FF6A3D"], note: "Warm and dark" },
     { id: "sage", name: "Sage", at: { k: "streak", n: 2 }, sw: ["#E8EDE7", "#1F2E27", "#2D6A55"] },
     { id: "dusk", name: "Dusk", at: { k: "streak", n: 4 }, sw: ["#EEEAF3", "#2B2640", "#5F45D6"] },
     { id: "mono", name: "Ink", at: { k: "streak", n: 8 }, sw: ["#F2F2F0", "#141414", "#141414"] }
@@ -1815,7 +1864,7 @@ h1.hello.big{margin:6px 0 0}
     root.append(h("h2", { class: "you-h", text: "Look" }));
     var circ = h("div", { class: "circles", role: "group", "aria-label": "Theme" });
     THEMES.forEach(function (t) {
-      var open = isUnlocked(t), on = (p.theme || "paper") === t.id;
+      var open = isUnlocked(t), on = (p.theme || "night") === t.id;
       var dot = h("i"); dot.style.background = "linear-gradient(135deg," + t.sw[0] + " 50%," + t.sw[2] + " 50%)";
       circ.append(h("button", { class: "circ" + (on ? " on" : "") + (open ? "" : " locked"), type: "button", id: "circle-" + t.id, "aria-pressed": String(on), "aria-label": t.name + (open ? (on ? ", selected" : "") : ", locked. " + reqText(t.at)), onclick: function () {
         if (!open) { toast(t.name + " unlocks: " + reqText(t.at) + ".", true); return; }
@@ -3323,6 +3372,31 @@ h1.hello.big{margin:6px 0 0}
     w.append(st, h("div", { class: "lip" }, [h("span", { class: "led" })]));
     return w;
   }
+  var SIG_PATH = "M799 311Q789 311 786.0 307.5Q783 304 783 300Q801 297 818.0 273.5Q835 250 835 219Q835 170 803.0 124.5Q771 79 713.0 41.0Q655 3 577.5 -24.5Q500 -52 408 -65Q374 -17 331.5 23.5Q289 64 237.5 88.5Q186 113 126 113Q63 113 30.0 84.0Q-3 55 -3 17Q-3 -18 25.5 -53.5Q54 -89 112.5 -112.5Q171 -136 261 -136Q330 -136 401 -124Q426 -168 446.0 -212.0Q466 -256 481 -295Q382 -299 325.0 -325.5Q268 -352 244.0 -392.0Q220 -432 220 -474Q220 -527 252.0 -574.5Q284 -622 339.0 -652.0Q394 -682 462 -682Q470 -682 472.0 -676.0Q474 -670 474 -666Q436 -666 400.5 -649.0Q365 -632 337.0 -603.5Q309 -575 292.5 -540.0Q276 -505 276 -468Q276 -432 295.0 -397.5Q314 -363 360.0 -340.0Q406 -317 489 -315Q498 -338 504.5 -357.5Q511 -377 516 -391Q540 -463 567.5 -534.0Q595 -605 630.5 -663.0Q666 -721 715.0 -756.0Q764 -791 832 -791Q876 -791 900.5 -766.0Q925 -741 925 -697Q925 -654 905.0 -602.5Q885 -551 849.0 -500.0Q813 -449 764.0 -405.0Q715 -361 657.0 -332.0Q599 -303 535 -296Q520 -264 497.0 -215.5Q474 -167 442 -116Q529 -96 606.5 -62.0Q684 -28 743.5 15.5Q803 59 837.0 108.5Q871 158 871 207Q871 251 849.0 281.0Q827 311 799 311ZM832 -740Q789 -740 751.0 -702.5Q713 -665 678.5 -603.5Q644 -542 611.0 -467.0Q578 -392 545 -318Q604 -326 655.0 -354.0Q706 -382 748.0 -422.5Q790 -463 820.0 -509.0Q850 -555 866.0 -599.5Q882 -644 882 -679Q882 -707 870.0 -723.5Q858 -740 832 -740ZM22 31Q22 56 49.0 74.5Q76 93 126 93Q200 93 260.0 45.5Q320 -2 367 -70Q314 -75 261 -75Q179 -75 126.0 -58.5Q73 -42 47.5 -17.5Q22 7 22 31ZM803 0Q766 0 751.0 -21.5Q736 -43 736 -71Q736 -86 739.5 -101.5Q743 -117 748 -130L815 -301Q818 -309 818 -315Q818 -325 813.0 -332.5Q808 -340 806 -343L861 -345Q876 -346 882.5 -341.5Q889 -337 889 -331Q889 -325 882 -309Q872 -285 855.0 -249.0Q838 -213 821.5 -175.0Q805 -137 793.5 -104.0Q782 -71 782 -53Q782 -40 788.5 -31.0Q795 -22 811 -22Q832 -22 852.5 -38.5Q873 -55 891.0 -81.0Q909 -107 924.5 -137.0Q940 -167 951 -193Q963 -193 963 -184Q953 -159 937.0 -127.0Q921 -95 900.5 -66.5Q880 -38 855.5 -19.0Q831 0 803 0ZM892 -407Q879 -407 869.5 -417.0Q860 -427 860 -441Q860 -458 874.0 -471.5Q888 -485 905 -485Q919 -485 929.0 -476.0Q939 -467 939 -453Q939 -435 925.0 -421.0Q911 -407 892 -407ZM1168 3Q1145 3 1127.5 -10.0Q1110 -23 1110 -63Q1110 -80 1112.5 -95.0Q1115 -110 1119 -127Q1110 -112 1094.0 -90.0Q1078 -68 1058.5 -47.0Q1039 -26 1018.5 -12.0Q998 2 980 2Q954 2 938.0 -21.5Q922 -45 922 -83Q922 -124 941.0 -171.0Q960 -218 993.0 -261.0Q1026 -304 1069.0 -331.0Q1112 -358 1159 -358Q1182 -358 1203.0 -350.5Q1224 -343 1240 -326Q1247 -319 1247 -310Q1247 -304 1242.0 -300.0Q1237 -296 1229 -298Q1218 -333 1182 -333Q1165 -333 1143 -322Q1116 -308 1085.5 -277.5Q1055 -247 1028.5 -208.5Q1002 -170 985.0 -131.0Q968 -92 968 -60Q968 -27 993 -27Q1015 -27 1038.5 -48.0Q1062 -69 1083.5 -100.5Q1105 -132 1123.0 -163.0Q1141 -194 1151 -213Q1166 -240 1179.0 -258.0Q1192 -276 1216 -276Q1227 -276 1238.0 -273.0Q1249 -270 1261 -272Q1231 -242 1208.5 -201.0Q1186 -160 1174.0 -120.5Q1162 -81 1162 -54Q1162 -24 1182 -24Q1198 -24 1216.5 -42.0Q1235 -60 1252.5 -87.5Q1270 -115 1285.0 -143.5Q1300 -172 1309 -193Q1314 -193 1317.5 -192.0Q1321 -191 1321 -184Q1320 -180 1317.5 -175.5Q1315 -171 1310 -160Q1302 -144 1288.0 -117.0Q1274 -90 1255.0 -62.5Q1236 -35 1214.0 -16.0Q1192 3 1168 3ZM1212 5Q1249 -66 1282.0 -137.5Q1315 -209 1349 -273Q1369 -309 1382.5 -323.5Q1396 -338 1419 -338Q1427 -338 1436.0 -335.5Q1445 -333 1454 -333Q1460 -333 1463 -334Q1449 -326 1427.0 -294.5Q1405 -263 1382.0 -222.0Q1359 -181 1341 -145Q1360 -168 1380.5 -191.0Q1401 -214 1426 -235Q1448 -254 1472.5 -276.5Q1497 -299 1521.0 -315.0Q1545 -331 1563 -331Q1570 -331 1572 -330Q1591 -322 1591 -304Q1591 -298 1586 -286Q1573 -252 1552.5 -216.5Q1532 -181 1514 -145Q1529 -163 1551.5 -189.0Q1574 -215 1597 -235Q1619 -255 1653.0 -277.0Q1687 -299 1720.0 -315.0Q1753 -331 1773 -331Q1780 -331 1783 -330Q1783 -330 1772.0 -310.5Q1761 -291 1744.5 -259.5Q1728 -228 1711.0 -192.5Q1694 -157 1680.5 -124.5Q1667 -92 1663 -70Q1660 -57 1660 -46Q1660 -30 1666.0 -25.0Q1672 -20 1679 -20Q1699 -20 1718.5 -37.0Q1738 -54 1757.0 -80.5Q1776 -107 1791.5 -137.0Q1807 -167 1818 -193Q1830 -193 1830 -184Q1819 -157 1802.5 -124.5Q1786 -92 1765.0 -63.0Q1744 -34 1719.0 -15.0Q1694 4 1665 4Q1644 4 1625.5 -10.0Q1607 -24 1607 -62Q1607 -103 1626.5 -144.0Q1646 -185 1667 -219Q1677 -236 1677 -246Q1677 -258 1665 -258Q1655 -258 1637.5 -248.0Q1620 -238 1594 -213Q1578 -198 1556.5 -171.5Q1535 -145 1513.0 -114.0Q1491 -83 1475.0 -53.0Q1459 -23 1454 0Q1439 0 1430.0 -12.5Q1421 -25 1421 -42Q1421 -45 1421.0 -48.0Q1421 -51 1422 -55Q1427 -86 1438.0 -107.5Q1449 -129 1463 -158Q1470 -171 1479.0 -188.5Q1488 -206 1495.0 -222.5Q1502 -239 1502 -250Q1502 -260 1494 -260Q1485 -260 1470.5 -251.0Q1456 -242 1443.0 -230.5Q1430 -219 1423 -213Q1398 -189 1362.5 -144.0Q1327 -99 1285 -16Q1279 -5 1271.0 -2.5Q1263 0 1246 0Q1235 0 1227.5 0.5Q1220 1 1212 5Z";
+  function signature() {
+    var NS = "http://www.w3.org/2000/svg", svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("viewBox", "-10 -810 1860 1130"); svg.setAttribute("class", "sigsvg"); svg.setAttribute("role", "img"); svg.setAttribute("aria-label", "Liam");
+    var p = document.createElementNS(NS, "path"); p.setAttribute("d", SIG_PATH); svg.append(p);
+    return svg;
+  }
+  function visualLook() {
+    return h("div", { class: "mini mini-ticket" }, [
+      h("div", { class: "mt-top" }, [h("small", { text: "Untouched for 41 days" }), h("b", { text: "Gym membership" }), h("span", {}, [h("mark", { text: "\u20ac360 a year" })])]),
+      h("div", { class: "mt-stub" }, [h("i", { class: "a", text: "Shed it" }), h("i", { class: "b", text: "Keep it" })])
+    ]);
+  }
+  function visualWeather() {
+    var box = h("div", { class: "wxmini" }, [h("i", { class: "sun" }), h("i", { class: "cl c1" }), h("i", { class: "cl c2" })]);
+    for (var i = 0; i < 9; i++) { var d = h("i", { class: "dr" }); d.style.left = (14 + i * 9) + "%"; d.style.setProperty("--i", i); box.append(d); }
+    box.append(h("span", { class: "wcap", text: "12\u00b0C  Light rain" }));
+    return box;
+  }
+  function visualSwipe() {
+    function phone(label, cls) {
+      return h("div", { class: "ph " + cls }, [h("div", { class: "scr" }, [h("div", { class: "pg p1", text: "Review" }), h("div", { class: "pg p2", text: "List" })]), h("div", { class: "pdock" }, [h("i"), h("i"), h("i"), h("i")]), h("b", { class: "plab", text: label }), cls === "sw" ? h("i", { class: "finger" }) : null]);
+    }
+    return h("div", { class: "swpair" }, [phone("Without", "tp"), phone("With swiping", "sw")]);
+  }
   function visualTabs() {
     return h("div", { class: "tabs4" }, [h("span", { class: "on", text: "Review" }), h("em", { text: "\u203a" }), h("span", { text: "List" }), h("em", { text: "\u203a" }), h("span", { text: "Shed" }), h("em", { text: "\u203a" }), h("span", { text: "You" })]);
   }
@@ -3372,8 +3446,7 @@ h1.hello.big{margin:6px 0 0}
       slide("l", visualNudge(), "It notices things.", "Renewals coming up, what each use really costs, and a line when you've kept something again and again. <strong>Never a rule. Always your call.</strong>"),
       slide("y", visualRemind(), "Hear about it before it ends.", "Turn on reminders in You, under Notifications. Pick the deadlines you want: a week, three days and one day before. <strong>Quiet after 9 pm, and never more than one a day.</strong>"),
       slide("l", visualTotal(), "Watch the number go up.", "Every shed adds to your total, and to what you've freed up if it had a price. Miss a week and nothing explodes. <strong>Miss a month and we'll mention it.</strong>"),
-      slide("y", visualTabs(), "Four screens. One swipe.", "Review is your weekly question, List is everything you've said yes to, Shed is your total and your machines, You is settings. <strong>Switch on swiping in You and flick between them.</strong>"),
-      slide("l", visualOwn(), "It stays yours.", "Your list lives on this phone. No account, nothing sold, nothing shared unless you choose to. <strong>Export it or erase it whenever you like.</strong>")
+      slide("y", visualTabs(), "Four screens. One swipe.", "Review is your weekly question, List is everything you've said yes to, Shed is your total and your machines, You is settings. <strong>Switch on swiping in You and flick between them.</strong>")
     ];
     var slides = tutorial.slice(), introCount = 0;
 
@@ -3393,7 +3466,8 @@ h1.hello.big{margin:6px 0 0}
         h("p", { text: "Most to-do apps help you add things. Shedly helps you let go of them. Once a week it asks one question about one thing: is this still a yes?" }),
         h("p", { text: "Shed it and it goes through the shredder. Keep it and say why. That's the whole app." }),
         h("p", { text: "No account, no email. Your list stays on this phone." }),
-        h("div", { class: "sig" }, ["Liam", h("small", { text: "Founder, Shedly" })])
+        h("p", { text: "Shedly is new, and I'd love your support and help to make it amazing. Tell me what works and what doesn't." }),
+        h("div", { class: "sig" }, [signature(), h("small", { text: "Founder, Shedly" })])
       ]));
       var setup = h("section", { class: "slide" }, [h("div", { class: "slide-in" }, [
         h("h2", { text: "Who's shedding?" }),
@@ -3409,32 +3483,27 @@ h1.hello.big{margin:6px 0 0}
       // opt-ins
       var P0 = state.profile;
       var fWx = h("input", { type: "checkbox", id: "obWeather", "aria-label": "Show today's weather" }); fWx.checked = P0.skyWeather !== false;
-      var fRem = h("input", { type: "checkbox", id: "obRemind", "aria-label": "Remind me before things end" }); fRem.checked = !!P0.remindOn;
+      var fRem = h("input", { type: "checkbox", id: "obRemind", "aria-label": "Remind me before things end" }); fRem.checked = P0.remindOn !== false;
       var fSwipe = h("input", { type: "checkbox", id: "obSwipe", "aria-label": "Swipe between screens", checked: "" }); fSwipe.checked = true;
       var tg = function (t, box) { return h("label", { class: "toggle" }, [h("span", { text: t }), box]); };
       var circs = h("div", { class: "circles", role: "group", "aria-label": "Look" });
       THEMES.filter(function (t) { return !t.at; }).forEach(function (t) {
         var dot = h("i"); dot.style.background = "linear-gradient(135deg," + t.sw[0] + " 50%," + t.sw[2] + " 50%)";
-        circs.append(h("button", { class: "circ" + ((P0.theme || (mode === "first" ? "night" : "paper")) === t.id ? " on" : ""), type: "button", id: "ob-circle-" + t.id, "aria-pressed": String((P0.theme || (mode === "first" ? "night" : "paper")) === t.id), onclick: function () {
+        circs.append(h("button", { class: "circ" + ((P0.theme || "night") === t.id ? " on" : ""), type: "button", id: "ob-circle-" + t.id, "aria-pressed": String((P0.theme || "night") === t.id), onclick: function () {
           P0.theme = t.id; save(); applyTheme();
           Array.prototype.forEach.call(circs.children, function (c) { var on = c.id === "ob-circle-" + t.id; c.classList.toggle("on", on); c.setAttribute("aria-pressed", String(on)); });
         } }, [dot, h("span", { text: t.name })]));
       });
-      var opts = h("section", { class: "slide" }, [h("div", { class: "slide-in" }, [
-        h("h2", { text: "Make it yours." }),
-        h("p", { class: "lede", html: "Everything here is optional and <strong>you can change it later in You.</strong>" }),
-        h("div", { style: "height:18px" }),
-        h("div", { class: "optgroup" }, [h("h3", { text: "Look" }), circs]),
-        h("div", { class: "optgroup" }, [h("h3", { text: "Weather and location" }), tg("Show today's weather in the sky", fWx),
-          h("p", { class: "fine-print", text: "Asks for your approximate location once, then sends it rounded to about 10 km to Open-Meteo to look up the weather. Nothing else is sent." })]),
-        h("div", { class: "optgroup" }, [h("h3", { text: "Notifications" }), tg("Remind me before things end", fRem),
-          h("p", { class: "fine-print", text: "Picks up dates on your items. Quiet after 9 pm, never more than one a day. Your phone will ask for permission." })]),
-        h("div", { class: "optgroup" }, [h("h3", { text: "Swiping" }), tg("Swipe between screens", fSwipe),
-          h("p", { class: "fine-print", text: "Flick left or right to go from Review to List, Shed and You." })]),
-        h("div", { class: "optgroup" }, [h("h3", { text: "Your data" }), tg("Help test Shedly: share anonymous usage", fAn),
-          h("p", { class: "fine-print", text: "Records which screens and buttons you use, with all text hidden. Item names, prices and notes are never sent. Your list stays on this device." })])
-      ])]);
-      if (mode === "update") { slides = [founder, opts]; introCount = 2; } else { slides = [founder, setup, opts].concat(tutorial); introCount = 3; }
+      function optSlide(stage, visual, title, lede, ctl, fine) {
+        return slide(stage, visual, title, lede, h("div", { class: "optctl" }, [ctl, h("p", { class: "fine-print", text: fine })]));
+      }
+      var optLook = slide("y opt", visualLook(), "Pick your look.", "Dark or light, calm or loud. <strong>Tap one and the app changes right now.</strong>", h("div", { class: "optctl" }, [circs]));
+      var optWx = optSlide("l opt", visualWeather(), "Weather in your sky.", "Rain, sun, snow and a real moon, matching what's outside. <strong>Totally optional.</strong>", tg("Show today's weather in the sky", fWx), "Asks for your approximate location once, then sends it rounded to about 10 km to Open-Meteo to look up the weather. Nothing else is sent.");
+      var optRem = optSlide("y opt", visualRemind(), "Hear about it before it ends.", "A quiet nudge a week, three days and a day before something ends. <strong>Quiet after 9 pm, never more than one a day.</strong>", tg("Remind me before things end", fRem), "Your phone will ask for permission. You choose which items remind you, in You \u2192 Notifications.");
+      var optSwipe = optSlide("l opt", visualSwipe(), "Tap, or just swipe.", "Flick left or right to go from Review to List, Shed and You. <strong>The tabs at the bottom still work either way.</strong>", tg("Swipe between screens", fSwipe), "Turn it off any time in You.");
+      var optData = optSlide("y opt", visualOwn(), "Your data.", "Your list stays on this phone. No account, no email. <strong>Help us test Shedly if you like.</strong>", tg("Share anonymous usage", fAn), "Records which screens and buttons you use, with all text hidden. Item names, prices and notes are never sent. Export or erase everything any time in You.");
+      var opts = [optLook, optWx, optRem, optSwipe, optData];
+      if (mode === "update") { slides = [founder].concat(opts); introCount = slides.length; } else { slides = [founder, setup].concat(opts, tutorial); introCount = 2 + opts.length; }
       fName.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); goTo(2); } });
     }
 
