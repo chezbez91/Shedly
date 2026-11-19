@@ -836,7 +836,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.23";
+  var APP_VERSION = "0.24";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -2726,15 +2726,29 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   };
   function cachedWeather() { try { var w = JSON.parse(localStorage.getItem("shedly.wx") || "null"); return w && Date.now() - w.at < 3 * 3600000 ? w : null; } catch (e) { return null; } }
   var wxBusy = false;
-  function refreshWeather() {
+  function refreshWeather(force) {
     var P = state.profile; if (!P.skyWeather || !P.skyLoc || wxBusy) return;
-    var c = cachedWeather(); if (c && Date.now() - c.at < 3600000) return;
+    var c = cachedWeather(); if (!force && c && Date.now() - c.at < 20 * 60000) return;
     wxBusy = true;
-    fetch("https://api.open-meteo.com/v1/forecast?latitude=" + P.skyLoc[0] + "&longitude=" + P.skyLoc[1] + "&current=temperature_2m,weather_code,is_day,wind_speed_10m&timezone=auto")
-      .then(function (r) { return r.json(); })
-      .then(function (j) {
-        if (j && j.current) { try { localStorage.setItem("shedly.wx", JSON.stringify({ at: Date.now(), t: j.current.temperature_2m, c: j.current.weather_code, d: j.current.is_day, wd: j.current.wind_speed_10m })); } catch (e) {} if (current === "review" && !sheetEl) render(); }
-      }).catch(function () {}).then(function () { wxBusy = false; });
+    var go = function () {
+      fetch("https://api.open-meteo.com/v1/forecast?latitude=" + P.skyLoc[0] + "&longitude=" + P.skyLoc[1] + "&current=temperature_2m,weather_code,is_day,wind_speed_10m&timezone=auto", { cache: "no-store" })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          if (j && j.current) { try { localStorage.setItem("shedly.wx", JSON.stringify({ at: Date.now(), t: j.current.temperature_2m, c: j.current.weather_code, d: j.current.is_day, wd: j.current.wind_speed_10m })); } catch (e) {} if (current === "review" && !sheetEl) render(); }
+        }).catch(function () {}).then(function () { wxBusy = false; });
+    };
+    // Keep the saved location current: if location access is already allowed, quietly re-read it (never prompts).
+    var relocate = function () {
+      navigator.geolocation.getCurrentPosition(function (pos) {
+        var ll = [Math.round(pos.coords.latitude * 10) / 10, Math.round(pos.coords.longitude * 10) / 10];
+        if (ll[0] !== P.skyLoc[0] || ll[1] !== P.skyLoc[1]) { P.skyLoc = ll; save(); try { localStorage.removeItem("shedly.wx"); } catch (e) {} }
+        go();
+      }, go, { timeout: 6000, maximumAge: 30 * 60000 });
+    };
+    try {
+      if (navigator.geolocation && navigator.permissions && navigator.permissions.query) navigator.permissions.query({ name: "geolocation" }).then(function (st) { if (st.state === "granted") relocate(); else go(); }, go);
+      else go();
+    } catch (e) { go(); }
   }
   function enableWeather(done) {
     if (!navigator.geolocation) { done(false, "This browser can't share a location."); return; }
@@ -2984,15 +2998,29 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   };
   function cachedWeather() { try { var w = JSON.parse(localStorage.getItem("shedly.wx") || "null"); return w && Date.now() - w.at < 3 * 3600000 ? w : null; } catch (e) { return null; } }
   var wxBusy = false;
-  function refreshWeather() {
+  function refreshWeather(force) {
     var P = state.profile; if (!P.skyWeather || !P.skyLoc || wxBusy) return;
-    var c = cachedWeather(); if (c && Date.now() - c.at < 3600000) return;
+    var c = cachedWeather(); if (!force && c && Date.now() - c.at < 20 * 60000) return;
     wxBusy = true;
-    fetch("https://api.open-meteo.com/v1/forecast?latitude=" + P.skyLoc[0] + "&longitude=" + P.skyLoc[1] + "&current=temperature_2m,weather_code,is_day,wind_speed_10m&timezone=auto")
-      .then(function (r) { return r.json(); })
-      .then(function (j) {
-        if (j && j.current) { try { localStorage.setItem("shedly.wx", JSON.stringify({ at: Date.now(), t: j.current.temperature_2m, c: j.current.weather_code, d: j.current.is_day, wd: j.current.wind_speed_10m })); } catch (e) {} if (current === "review" && !sheetEl) render(); }
-      }).catch(function () {}).then(function () { wxBusy = false; });
+    var go = function () {
+      fetch("https://api.open-meteo.com/v1/forecast?latitude=" + P.skyLoc[0] + "&longitude=" + P.skyLoc[1] + "&current=temperature_2m,weather_code,is_day,wind_speed_10m&timezone=auto", { cache: "no-store" })
+        .then(function (r) { return r.json(); })
+        .then(function (j) {
+          if (j && j.current) { try { localStorage.setItem("shedly.wx", JSON.stringify({ at: Date.now(), t: j.current.temperature_2m, c: j.current.weather_code, d: j.current.is_day, wd: j.current.wind_speed_10m })); } catch (e) {} if (current === "review" && !sheetEl) render(); }
+        }).catch(function () {}).then(function () { wxBusy = false; });
+    };
+    // Keep the saved location current: if location access is already allowed, quietly re-read it (never prompts).
+    var relocate = function () {
+      navigator.geolocation.getCurrentPosition(function (pos) {
+        var ll = [Math.round(pos.coords.latitude * 10) / 10, Math.round(pos.coords.longitude * 10) / 10];
+        if (ll[0] !== P.skyLoc[0] || ll[1] !== P.skyLoc[1]) { P.skyLoc = ll; save(); try { localStorage.removeItem("shedly.wx"); } catch (e) {} }
+        go();
+      }, go, { timeout: 6000, maximumAge: 30 * 60000 });
+    };
+    try {
+      if (navigator.geolocation && navigator.permissions && navigator.permissions.query) navigator.permissions.query({ name: "geolocation" }).then(function (st) { if (st.state === "granted") relocate(); else go(); }, go);
+      else go();
+    } catch (e) { go(); }
   }
   function enableWeather(done) {
     if (!navigator.geolocation) { done(false, "This browser can't share a location."); return; }
@@ -3750,6 +3778,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
       });
       offer();
       document.addEventListener("visibilitychange", function () { if (!document.hidden) reg.update().catch(function () {}); });
+      document.addEventListener("visibilitychange", function () { if (!document.hidden) refreshWeather(); });
     }).catch(function () {});
   }
 })();
