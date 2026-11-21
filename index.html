@@ -200,6 +200,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 .gtile .stage.tg>.tin{position:absolute;left:50%;top:50%;width:310px;transform:translate(-50%,-50%) scale(var(--s,.45));pointer-events:none}
 .gtile .stage.tg .mini{max-width:none}
 .gtile.wide .stage.tg{height:clamp(60px,8vh,76px)}
+.tfoot small{display:block;font-weight:500;font-size:12px;line-height:1.3;color:var(--muted);margin-top:3px}
 .tfoot{display:block;padding:10px 12px 12px;font-weight:700;font-size:14px;line-height:1.25;flex:1}
 .gtile>input{position:absolute;top:8px;right:8px;z-index:2;box-shadow:0 0 0 2px var(--surface)}
 .gtile.wide .tin{width:440px}
@@ -864,7 +865,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.25";
+  var APP_VERSION = "0.26";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -3635,19 +3636,19 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     tourMode = mode;
     var root = $("onboard"); root.textContent = ""; root.hidden = false; setInert(true);
 
-    function tut(vis, scale, label, cls) { return h("div", { class: "gtile static" + (cls ? " " + cls : "") }, [h("div", { class: "stage tg " + (cls && cls.indexOf("l") >= 0 ? "l" : "y") }, [h("div", { class: "tin", style: "--s:" + scale }, [vis])]), h("span", { class: "tfoot", text: label })]); }
+    function tut(vis, scale, label, cap, cls) { return h("div", { class: "gtile static" + (cls ? " " + cls : "") }, [h("div", { class: "stage tg " + (cls && cls.indexOf("l") >= 0 ? "l" : "y") }, [h("div", { class: "tin", style: "--s:" + scale }, [vis])]), h("span", { class: "tfoot" }, [label, h("small", { text: cap })])]); }
     function tutSlide(title, tiles) { return h("section", { class: "slide" }, [h("div", { class: "slide-in" }, [h("h2", { text: title }), h("div", { class: "gtiles" }, tiles)])]); }
     var tutorial = [
       tutSlide("How Shedly works", [
-        tut(visualList(), .42, "A to-do list that gets shorter."),
-        tut(visualTyped(), .5, "Type it like you'd say it.", "l"),
-        tut(visualTicket(), .5, "Once a week, one question."),
-        tut(visualTotal(), .45, "Watch the number go up.", "l")
+        tut(visualList(), .42, T("A to-do list that gets shorter."), T("Once a week, let go of one thing.")),
+        tut(visualTyped(), .5, T("Type it like you'd say it."), T("Add tasks, meetings or subscriptions, with a price if it has one."), "l"),
+        tut(visualTicket(), .5, T("Once a week, one question."), T("Is this still a yes? Shed it, or keep it and say why.")),
+        tut(visualTotal(), .45, T("Watch the number go up."), T("Every shed adds to your total and to what you've freed up."), "l")
       ]),
       tutSlide("Make it yours", [
-        tut(visualShelf(), .5, "Earn your shredder."),
-        tut(visualNudge(), .5, "It notices things.", "l"),
-        tut(visualTabs(), .62, "Four screens. One swipe.", "wide")
+        tut(visualShelf(), .5, T("Earn your shredder."), T("Shed more to unlock new machines.")),
+        tut(visualNudge(), .5, T("It notices things."), T("Gentle nudges about renewals and things you keep keeping."), "l"),
+        tut(visualTabs(), .62, T("Four screens. One swipe."), T("Review, List, Shed and You. Swipe between them."), "wide")
       ])
     ];
     var slides = tutorial.slice(), introCount = 0;

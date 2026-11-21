@@ -390,7 +390,14 @@ window.I18N = {
 "You're one of the first people to try Shedly. <strong>Sharing anonymous usage is the fastest way to make it better.</strong> It shows us which screens help, which get in the way, and where people get stuck.": "Eres de las primeras personas en probar Shedly. <strong>Compartir uso anónimo es la forma más rápida de mejorarla.</strong> Nos muestra qué pantallas",
 "Dictation uses your phone's own speech service. On most phones that means your voice is sent to Apple or Google to be turned into text. Shedly never receives or keeps the audio.": "El dictado usa el servicio de voz de tu teléfono. En la mayoría de móviles tu voz se envía a Apple o Google para convertirla en texto. Shedly nunca r",
 "Switch on what you want.": "Activa lo que quieras.",
-"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "El tiempo usa tu ubicación una vez, redondeada a unos 10 km. Los datos de uso son anónimos y nunca incluyen lo que escribes."
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "El tiempo usa tu ubicación una vez, redondeada a unos 10 km. Los datos de uso son anónimos y nunca incluyen lo que escribes.",
+"Once a week, let go of one thing.": "Una vez por semana, suelta una cosa.",
+"Add tasks, meetings or subscriptions, with a price if it has one.": "Añade tareas, reuniones o suscripciones, con precio si lo tienen.",
+"Is this still a yes? Shed it, or keep it and say why.": "¿Sigue siendo un sí? Suéltalo, o consérvalo y di por qué.",
+"Every shed adds to your total and to what you've freed up.": "Cada vez que sueltas algo suma a tu total y a lo que has liberado.",
+"Shed more to unlock new machines.": "Suelta más para desbloquear nuevas máquinas.",
+"Gentle nudges about renewals and things you keep keeping.": "Avisos suaves sobre renovaciones y cosas que conservas una y otra vez.",
+"Review, List, Shed and You. Swipe between them.": "Revisar, Lista, Soltar y Tú. Desliza entre ellas."
 },
 "fr": {
 "Review": "Revoir",
@@ -783,7 +790,14 @@ window.I18N = {
 "You're one of the first people to try Shedly. <strong>Sharing anonymous usage is the fastest way to make it better.</strong> It shows us which screens help, which get in the way, and where people get stuck.": "Tu fais partie des premières personnes à essayer Shedly. <strong>Partager l'usage anonyme est le moyen le plus rapide de l'améliorer.</strong> Cela nous montre quels écrans",
 "Dictation uses your phone's own speech service. On most phones that means your voice is sent to Apple or Google to be turned into text. Shedly never receives or keeps the audio.": "La dictée utilise le service vocal de ton téléphone. Sur la plupart, ta voix est envoyée à Apple ou Google pour être transcrite. Shedly ne r",
 "Switch on what you want.": "Active ce que vous voulez.",
-"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "La météo utilise votre position une fois, arrondie à environ 10 km. Les données d'usage sont anonymes et n'incluent jamais ce que vous saisissez."
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "La météo utilise votre position une fois, arrondie à environ 10 km. Les données d'usage sont anonymes et n'incluent jamais ce que vous saisissez.",
+"Once a week, let go of one thing.": "Une fois par semaine, lâchez une chose.",
+"Add tasks, meetings or subscriptions, with a price if it has one.": "Ajoutez tâches, réunions ou abonnements, avec un prix s'il y en a un.",
+"Is this still a yes? Shed it, or keep it and say why.": "Est-ce toujours un oui ? Lâchez-le, ou gardez-le et dites pourquoi.",
+"Every shed adds to your total and to what you've freed up.": "Chaque lâcher s'ajoute à votre total et à ce que vous avez libéré.",
+"Shed more to unlock new machines.": "Lâchez plus pour débloquer de nouvelles machines.",
+"Gentle nudges about renewals and things you keep keeping.": "De petits rappels sur les renouvellements et ce que vous gardez sans cesse.",
+"Review, List, Shed and You. Swipe between them.": "Revoir, Liste, Lâcher et Toi. Glissez entre elles."
 },
 "de": {
 "Review": "Prüfen",
@@ -1176,7 +1190,14 @@ window.I18N = {
 "You're one of the first people to try Shedly. <strong>Sharing anonymous usage is the fastest way to make it better.</strong> It shows us which screens help, which get in the way, and where people get stuck.": "Du gehörst zu den Ersten, die Shedly ausprobieren. <strong>Anonyme Nutzung zu teilen ist der schnellste Weg, es besser zu machen.</strong> Wir sehen, welche Bildschirme",
 "Dictation uses your phone's own speech service. On most phones that means your voice is sent to Apple or Google to be turned into text. Shedly never receives or keeps the audio.": "Diktieren nutzt den Sprachdienst deines Handys. Bei den meisten wird deine Stimme zur Umwandlung in Text an Apple oder Google gesendet. Shedly sp",
 "Switch on what you want.": "Schalte ein, was du willst.",
-"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Das Wetter nutzt deinen Standort einmal, auf etwa 10 km gerundet. Nutzungsdaten sind anonym und enthalten nie, was du eingibst."
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Das Wetter nutzt deinen Standort einmal, auf etwa 10 km gerundet. Nutzungsdaten sind anonym und enthalten nie, was du eingibst.",
+"Once a week, let go of one thing.": "Einmal pro Woche eine Sache loslassen.",
+"Add tasks, meetings or subscriptions, with a price if it has one.": "Füge Aufgaben, Termine oder Abos hinzu, mit Preis, falls vorhanden.",
+"Is this still a yes? Shed it, or keep it and say why.": "Ist das noch ein Ja? Lass es los oder behalte es und sag, warum.",
+"Every shed adds to your total and to what you've freed up.": "Jedes Loslassen zählt zu deiner Summe und zu dem, was du freigesetzt hast.",
+"Shed more to unlock new machines.": "Lass mehr los, um neue Maschinen freizuschalten.",
+"Gentle nudges about renewals and things you keep keeping.": "Sanfte Hinweise zu Verlängerungen und Dingen, die du immer wieder behältst.",
+"Review, List, Shed and You. Swipe between them.": "Prüfen, Liste, Loslassen und Du. Wische zwischen ihnen."
 },
 "it": {
 "Review": "Rivedi",
@@ -1569,7 +1590,14 @@ window.I18N = {
 "You're one of the first people to try Shedly. <strong>Sharing anonymous usage is the fastest way to make it better.</strong> It shows us which screens help, which get in the way, and where people get stuck.": "Sei una delle prime persone a provare Shedly. <strong>Condividere l'uso anonimo è il modo più veloce per migliorarla.</strong> Ci mostra quali schermate",
 "Dictation uses your phone's own speech service. On most phones that means your voice is sent to Apple or Google to be turned into text. Shedly never receives or keeps the audio.": "La dettatura usa il servizio vocale del tuo telefono. Sulla maggior parte, la tua voce viene inviata ad Apple o Google per trasformarla in testo. Shedly non r",
 "Switch on what you want.": "Attiva ciò che vuoi.",
-"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Il meteo usa la tua posizione una volta, arrotondata a circa 10 km. I dati d'uso sono anonimi e non includono mai ciò che scrivi."
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Il meteo usa la tua posizione una volta, arrotondata a circa 10 km. I dati d'uso sono anonimi e non includono mai ciò che scrivi.",
+"Once a week, let go of one thing.": "Una volta a settimana, lascia andare una cosa.",
+"Add tasks, meetings or subscriptions, with a price if it has one.": "Aggiungi attività, riunioni o abbonamenti, con il prezzo se c'è.",
+"Is this still a yes? Shed it, or keep it and say why.": "È ancora un sì? Lascialo andare, o tienilo e dì perché.",
+"Every shed adds to your total and to what you've freed up.": "Ogni cosa lasciata si somma al tuo totale e a ciò che hai liberato.",
+"Shed more to unlock new machines.": "Lascia andare di più per sbloccare nuove macchine.",
+"Gentle nudges about renewals and things you keep keeping.": "Promemoria gentili su rinnovi e cose che continui a tenere.",
+"Review, List, Shed and You. Swipe between them.": "Rivedi, Elenco, Lascia e Tu. Scorri tra di loro."
 },
 "pt": {
 "Review": "Rever",
@@ -1962,7 +1990,14 @@ window.I18N = {
 "You're one of the first people to try Shedly. <strong>Sharing anonymous usage is the fastest way to make it better.</strong> It shows us which screens help, which get in the way, and where people get stuck.": "És das primeiras pessoas a experimentar o Shedly. <strong>Partilhar utilização anónima é a forma mais rápida de o melhorar.</strong> Mostra-nos que ecrãs",
 "Dictation uses your phone's own speech service. On most phones that means your voice is sent to Apple or Google to be turned into text. Shedly never receives or keeps the audio.": "O ditado usa o serviço de voz do teu telemóvel. Na maioria, a tua voz é enviada à Apple ou à Google para ser convertida em texto. O Shedly nunca r",
 "Switch on what you want.": "Ative o que quiser.",
-"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "O tempo usa a sua localização uma vez, arredondada a cerca de 10 km. Os dados de utilização são anónimos e nunca incluem o que escreve."
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "O tempo usa a sua localização uma vez, arredondada a cerca de 10 km. Os dados de utilização são anónimos e nunca incluem o que escreve.",
+"Once a week, let go of one thing.": "Uma vez por semana, largue uma coisa.",
+"Add tasks, meetings or subscriptions, with a price if it has one.": "Adicione tarefas, reuniões ou subscrições, com preço se tiverem.",
+"Is this still a yes? Shed it, or keep it and say why.": "Ainda é um sim? Largue, ou mantenha e diga porquê.",
+"Every shed adds to your total and to what you've freed up.": "Cada coisa largada soma ao seu total e ao que libertou.",
+"Shed more to unlock new machines.": "Largue mais para desbloquear novas máquinas.",
+"Gentle nudges about renewals and things you keep keeping.": "Avisos suaves sobre renovações e coisas que mantém vezes sem conta.",
+"Review, List, Shed and You. Swipe between them.": "Rever, Lista, Soltar e Tu. Deslize entre elas."
 },
 "nl": {
 "Review": "Bekijken",
@@ -2355,7 +2390,14 @@ window.I18N = {
 "You're one of the first people to try Shedly. <strong>Sharing anonymous usage is the fastest way to make it better.</strong> It shows us which screens help, which get in the way, and where people get stuck.": "Je bent een van de eersten die Shedly uitprobeert. <strong>Anoniem gebruik delen is de snelste manier om het beter te maken.</strong> Het laat ons zien welke schermen",
 "Dictation uses your phone's own speech service. On most phones that means your voice is sent to Apple or Google to be turned into text. Shedly never receives or keeps the audio.": "Dicteren gebruikt de spraakdienst van je telefoon. Op de meeste telefoons wordt je stem naar Apple of Google gestuurd om tekst te maken. Shedly neemt nooit",
 "Switch on what you want.": "Zet aan wat je wilt.",
-"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Het weer gebruikt je locatie één keer, afgerond op ongeveer 10 km. Gebruiksgegevens zijn anoniem en bevatten nooit wat je typt."
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Het weer gebruikt je locatie één keer, afgerond op ongeveer 10 km. Gebruiksgegevens zijn anoniem en bevatten nooit wat je typt.",
+"Once a week, let go of one thing.": "Eén keer per week laat je één ding los.",
+"Add tasks, meetings or subscriptions, with a price if it has one.": "Voeg taken, afspraken of abonnementen toe, met een prijs als die er is.",
+"Is this still a yes? Shed it, or keep it and say why.": "Is dit nog een ja? Laat los, of behoud en zeg waarom.",
+"Every shed adds to your total and to what you've freed up.": "Elke keer loslaten telt mee in je totaal en in wat je hebt vrijgemaakt.",
+"Shed more to unlock new machines.": "Laat meer los om nieuwe machines te ontgrendelen.",
+"Gentle nudges about renewals and things you keep keeping.": "Zachte duwtjes over verlengingen en dingen die je steeds behoudt.",
+"Review, List, Shed and You. Swipe between them.": "Bekijken, Lijst, Loslaten en Jij. Veeg ertussen."
 },
 "pl": {
 "Review": "Przegląd",
@@ -2746,7 +2788,14 @@ window.I18N = {
 "You shed ": "Puściłeś ",
 " {0} days ago. Do you miss it?": " {0} dni temu. Tęsknisz za tym?",
 "Switch on what you want.": "Włącz, co chcesz.",
-"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Pogoda używa Twojej lokalizacji raz, zaokrąglonej do ok. 10 km. Dane o użyciu są anonimowe i nigdy nie zawierają tego, co wpisujesz."
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Pogoda używa Twojej lokalizacji raz, zaokrąglonej do ok. 10 km. Dane o użyciu są anonimowe i nigdy nie zawierają tego, co wpisujesz.",
+"Once a week, let go of one thing.": "Raz w tygodniu puść jedną rzecz.",
+"Add tasks, meetings or subscriptions, with a price if it has one.": "Dodaj zadania, spotkania lub subskrypcje, z ceną, jeśli ją mają.",
+"Is this still a yes? Shed it, or keep it and say why.": "Czy to nadal tak? Puść to albo zachowaj i powiedz dlaczego.",
+"Every shed adds to your total and to what you've freed up.": "Każde puszczenie zwiększa Twój wynik i to, co uwolniłeś.",
+"Shed more to unlock new machines.": "Puszczaj więcej, by odblokować nowe maszyny.",
+"Gentle nudges about renewals and things you keep keeping.": "Delikatne przypomnienia o odnowieniach i rzeczach, które wciąż zachowujesz.",
+"Review, List, Shed and You. Swipe between them.": "Przegląd, Lista, Puść i Ty. Przesuwaj między nimi."
 },
 "zh": {
 "Review": "回顾",
@@ -3137,7 +3186,14 @@ window.I18N = {
 "You shed ": "你放手了 ",
 " {0} days ago. Do you miss it?": "{0} 天前。你想念它吗？",
 "Switch on what you want.": "开启你想要的功能。",
-"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "天气只会使用一次你的位置，并取整到约 10 公里。使用数据是匿名的，绝不包含你输入的内容。"
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "天气只会使用一次你的位置，并取整到约 10 公里。使用数据是匿名的，绝不包含你输入的内容。",
+"Once a week, let go of one thing.": "每周放手一件事。",
+"Add tasks, meetings or subscriptions, with a price if it has one.": "添加任务、会议或订阅，有价格就标上。",
+"Is this still a yes? Shed it, or keep it and say why.": "这还是\"要\"吗？放手，或写下理由保留。",
+"Every shed adds to your total and to what you've freed up.": "每次放手都会累加到你的总数和节省的金额。",
+"Shed more to unlock new machines.": "放手越多，解锁的碎纸机越多。",
+"Gentle nudges about renewals and things you keep keeping.": "对续订和你一再保留的事项给出温和提示。",
+"Review, List, Shed and You. Swipe between them.": "回顾、清单、放手和我的。左右滑动即可切换。"
 },
 "tl": {
 "Review": "Suriin",
@@ -3528,7 +3584,14 @@ window.I18N = {
 "You shed ": "Nabitawan mo ang ",
 " {0} days ago. Do you miss it?": " {0} araw ang nakalipas. Na-miss mo ba ito?",
 "Switch on what you want.": "I-on ang gusto mo.",
-"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Gagamitin ng panahon ang lokasyon mo nang isang beses, naka-round sa mga 10 km. Anonymous ang data ng paggamit at hindi kailanman kasama ang tina-type mo."
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Gagamitin ng panahon ang lokasyon mo nang isang beses, naka-round sa mga 10 km. Anonymous ang data ng paggamit at hindi kailanman kasama ang tina-type mo.",
+"Once a week, let go of one thing.": "Minsan isang linggo, bumitaw ng isang bagay.",
+"Add tasks, meetings or subscriptions, with a price if it has one.": "Magdagdag ng gawain, pulong o subscription, may presyo kung mayroon.",
+"Is this still a yes? Shed it, or keep it and say why.": "Oo pa rin ba ito? Bitawan, o itago at sabihin kung bakit.",
+"Every shed adds to your total and to what you've freed up.": "Bawat bitaw ay nadadagdag sa kabuuan mo at sa napalaya mo.",
+"Shed more to unlock new machines.": "Bumitaw nang higit pa para ma-unlock ang mga bagong makina.",
+"Gentle nudges about renewals and things you keep keeping.": "Banayad na paalala tungkol sa mga renewal at mga paulit-ulit mong itinatago.",
+"Review, List, Shed and You. Swipe between them.": "Suriin, Listahan, Bitawan at Ikaw. Mag-swipe sa pagitan nila."
 },
 "ceb": {
 "Review": "Susiha",
@@ -3919,7 +3982,14 @@ window.I18N = {
 "You shed ": "Nabuhi nimo ang ",
 " {0} days ago. Do you miss it?": " {0} ka adlaw ang milabay. Gimingaw ka ba niini?",
 "Switch on what you want.": "I-on ang gusto nimo.",
-"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Gamiton sa panahon ang imong lokasyon kausa, gi-round sa mga 10 km. Anonymous ang data sa paggamit ug dili gayod apil ang imong gi-type."
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Gamiton sa panahon ang imong lokasyon kausa, gi-round sa mga 10 km. Anonymous ang data sa paggamit ug dili gayod apil ang imong gi-type.",
+"Once a week, let go of one thing.": "Kausa sa usa ka semana, buhi og usa ka butang.",
+"Add tasks, meetings or subscriptions, with a price if it has one.": "Idugang ang buluhaton, miting o subscription, uban sa presyo kung naa.",
+"Is this still a yes? Shed it, or keep it and say why.": "Oo pa ba ni? Buhii, o tipigi ug isulti ngano.",
+"Every shed adds to your total and to what you've freed up.": "Matag buhi madugang sa imong kinatibuk-an ug sa imong nahaw-as.",
+"Shed more to unlock new machines.": "Buhi og mas daghan aron ma-unlock ang bag-ong mga makina.",
+"Gentle nudges about renewals and things you keep keeping.": "Hinay nga pahinumdom bahin sa mga renewal ug mga balik-balik nimong gitipigan.",
+"Review, List, Shed and You. Swipe between them.": "Susiha, Listahan, Buhian ug Ikaw. Mag-swipe taliwala nila."
 },
 "ru": {
 "Review": "Обзор",
@@ -4310,7 +4380,14 @@ window.I18N = {
 "You shed ": "Вы отпустили ",
 " {0} days ago. Do you miss it?": " {0} дн. назад. Скучаете?",
 "Switch on what you want.": "Включите то, что нужно.",
-"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Погода использует ваше местоположение один раз, округлённое до 10 км. Данные об использовании анонимны и никогда не включают то, что вы вводите."
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Погода использует ваше местоположение один раз, округлённое до 10 км. Данные об использовании анонимны и никогда не включают то, что вы вводите.",
+"Once a week, let go of one thing.": "Раз в неделю отпускайте одно дело.",
+"Add tasks, meetings or subscriptions, with a price if it has one.": "Добавляйте задачи, встречи или подписки — с ценой, если она есть.",
+"Is this still a yes? Shed it, or keep it and say why.": "Это всё ещё «да»? Отпустите или оставьте и скажите почему.",
+"Every shed adds to your total and to what you've freed up.": "Каждое отпущенное прибавляется к итогу и к освобождённому.",
+"Shed more to unlock new machines.": "Отпускайте больше, чтобы открывать новые машины.",
+"Gentle nudges about renewals and things you keep keeping.": "Мягкие подсказки о продлениях и о том, что вы снова и снова оставляете.",
+"Review, List, Shed and You. Swipe between them.": "Обзор, Список, Отпустить и Вы. Смахивайте между ними."
 },
 "uk": {
 "Review": "Огляд",
@@ -4701,7 +4778,14 @@ window.I18N = {
 "You shed ": "Ви відпустили ",
 " {0} days ago. Do you miss it?": " {0} дн. тому. Сумуєте?",
 "Switch on what you want.": "Увімкніть те, що потрібно.",
-"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Погода використовує ваше місцезнаходження один раз, округлене до 10 км. Дані про використання анонімні й ніколи не містять того, що ви вводите."
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Погода використовує ваше місцезнаходження один раз, округлене до 10 км. Дані про використання анонімні й ніколи не містять того, що ви вводите.",
+"Once a week, let go of one thing.": "Раз на тиждень відпускайте одну справу.",
+"Add tasks, meetings or subscriptions, with a price if it has one.": "Додавайте завдання, зустрічі чи підписки — з ціною, якщо вона є.",
+"Is this still a yes? Shed it, or keep it and say why.": "Це все ще «так»? Відпустіть або залиште й скажіть чому.",
+"Every shed adds to your total and to what you've freed up.": "Кожне відпущене додається до підсумку та до звільненого.",
+"Shed more to unlock new machines.": "Відпускайте більше, щоб відкривати нові машини.",
+"Gentle nudges about renewals and things you keep keeping.": "М’які підказки про поновлення та те, що ви знову й знову залишаєте.",
+"Review, List, Shed and You. Swipe between them.": "Огляд, Список, Відпустити й Ви. Змахуйте між ними."
 },
 "en-US": {
 "Customise the machine": "Customize the machine",
