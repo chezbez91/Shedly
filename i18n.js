@@ -398,7 +398,11 @@ window.I18N = {
 "Shed more to unlock new machines.": "Suelta más para desbloquear nuevas máquinas.",
 "Gentle nudges about renewals and things you keep keeping.": "Avisos suaves sobre renovaciones y cosas que conservas una y otra vez.",
 "Review, List, Shed and You. Swipe between them.": "Revisar, Lista, Soltar y Tú. Desliza entre ellas.",
-"Show the item's name on your lock screen.": "Muestra el nombre del elemento en la pantalla de bloqueo."
+"Show the item's name on your lock screen.": "Muestra el nombre del elemento en la pantalla de bloqueo.",
+"Rain, sun and a real moon in your sky.": "Lluvia, sol y una luna real en tu cielo.",
+"A quiet nudge before something ends.": "Un aviso discreto antes de que algo termine.",
+"Flick left or right to change screen.": "Desliza a izquierda o derecha para cambiar de pantalla.",
+"Anonymous. Never what you type.": "Anónimo. Nunca lo que escribes."
 },
 "fr": {
 "Review": "Revoir",
@@ -799,7 +803,11 @@ window.I18N = {
 "Shed more to unlock new machines.": "Lâchez plus pour débloquer de nouvelles machines.",
 "Gentle nudges about renewals and things you keep keeping.": "De petits rappels sur les renouvellements et ce que vous gardez sans cesse.",
 "Review, List, Shed and You. Swipe between them.": "Revoir, Liste, Lâcher et Toi. Glissez entre elles.",
-"Show the item's name on your lock screen.": "Affiche le nom de l'élément sur l'écran de verrouillage."
+"Show the item's name on your lock screen.": "Affiche le nom de l'élément sur l'écran de verrouillage.",
+"Rain, sun and a real moon in your sky.": "Pluie, soleil et vraie lune dans votre ciel.",
+"A quiet nudge before something ends.": "Un rappel discret avant la fin de quelque chose.",
+"Flick left or right to change screen.": "Glissez à gauche ou à droite pour changer d'écran.",
+"Anonymous. Never what you type.": "Anonyme. Jamais ce que vous saisissez."
 },
 "de": {
 "Review": "Prüfen",
@@ -1200,7 +1208,11 @@ window.I18N = {
 "Shed more to unlock new machines.": "Lass mehr los, um neue Maschinen freizuschalten.",
 "Gentle nudges about renewals and things you keep keeping.": "Sanfte Hinweise zu Verlängerungen und Dingen, die du immer wieder behältst.",
 "Review, List, Shed and You. Swipe between them.": "Prüfen, Liste, Loslassen und Du. Wische zwischen ihnen.",
-"Show the item's name on your lock screen.": "Zeigt den Namen des Eintrags auf dem Sperrbildschirm."
+"Show the item's name on your lock screen.": "Zeigt den Namen des Eintrags auf dem Sperrbildschirm.",
+"Rain, sun and a real moon in your sky.": "Regen, Sonne und ein echter Mond an deinem Himmel.",
+"A quiet nudge before something ends.": "Ein leiser Hinweis, bevor etwas endet.",
+"Flick left or right to change screen.": "Wische nach links oder rechts, um den Bildschirm zu wechseln.",
+"Anonymous. Never what you type.": "Anonym. Nie, was du eingibst."
 },
 "it": {
 "Review": "Rivedi",
@@ -1601,7 +1613,11 @@ window.I18N = {
 "Shed more to unlock new machines.": "Lascia andare di più per sbloccare nuove macchine.",
 "Gentle nudges about renewals and things you keep keeping.": "Promemoria gentili su rinnovi e cose che continui a tenere.",
 "Review, List, Shed and You. Swipe between them.": "Rivedi, Elenco, Lascia e Tu. Scorri tra di loro.",
-"Show the item's name on your lock screen.": "Mostra il nome dell'elemento nella schermata di blocco."
+"Show the item's name on your lock screen.": "Mostra il nome dell'elemento nella schermata di blocco.",
+"Rain, sun and a real moon in your sky.": "Pioggia, sole e una luna vera nel tuo cielo.",
+"A quiet nudge before something ends.": "Un promemoria discreto prima che qualcosa finisca.",
+"Flick left or right to change screen.": "Scorri a sinistra o a destra per cambiare schermata.",
+"Anonymous. Never what you type.": "Anonimo. Mai ciò che scrivi."
 },
 "pt": {
 "Review": "Rever",
@@ -2002,7 +2018,11 @@ window.I18N = {
 "Shed more to unlock new machines.": "Largue mais para desbloquear novas máquinas.",
 "Gentle nudges about renewals and things you keep keeping.": "Avisos suaves sobre renovações e coisas que mantém vezes sem conta.",
 "Review, List, Shed and You. Swipe between them.": "Rever, Lista, Soltar e Tu. Deslize entre elas.",
-"Show the item's name on your lock screen.": "Mostra o nome do item no ecrã de bloqueio."
+"Show the item's name on your lock screen.": "Mostra o nome do item no ecrã de bloqueio.",
+"Rain, sun and a real moon in your sky.": "Chuva, sol e uma lua real no seu céu.",
+"A quiet nudge before something ends.": "Um aviso discreto antes de algo terminar.",
+"Flick left or right to change screen.": "Deslize para a esquerda ou direita para mudar de ecrã.",
+"Anonymous. Never what you type.": "Anónimo. Nunca o que escreve."
 },
 "nl": {
 "Review": "Bekijken",
@@ -2403,7 +2423,11 @@ window.I18N = {
 "Shed more to unlock new machines.": "Laat meer los om nieuwe machines te ontgrendelen.",
 "Gentle nudges about renewals and things you keep keeping.": "Zachte duwtjes over verlengingen en dingen die je steeds behoudt.",
 "Review, List, Shed and You. Swipe between them.": "Bekijken, Lijst, Loslaten en Jij. Veeg ertussen.",
-"Show the item's name on your lock screen.": "Toont de naam van het item op je vergrendelscherm."
+"Show the item's name on your lock screen.": "Toont de naam van het item op je vergrendelscherm.",
+"Rain, sun and a real moon in your sky.": "Regen, zon en een echte maan in je lucht.",
+"A quiet nudge before something ends.": "Een zachte herinnering voordat iets afloopt.",
+"Flick left or right to change screen.": "Veeg naar links of rechts om van scherm te wisselen.",
+"Anonymous. Never what you type.": "Anoniem. Nooit wat je typt."
 },
 "pl": {
 "Review": "Przegląd",
@@ -2802,7 +2826,11 @@ window.I18N = {
 "Shed more to unlock new machines.": "Puszczaj więcej, by odblokować nowe maszyny.",
 "Gentle nudges about renewals and things you keep keeping.": "Delikatne przypomnienia o odnowieniach i rzeczach, które wciąż zachowujesz.",
 "Review, List, Shed and You. Swipe between them.": "Przegląd, Lista, Puść i Ty. Przesuwaj między nimi.",
-"Show the item's name on your lock screen.": "Pokazuje nazwę pozycji na ekranie blokady."
+"Show the item's name on your lock screen.": "Pokazuje nazwę pozycji na ekranie blokady.",
+"Rain, sun and a real moon in your sky.": "Deszcz, słońce i prawdziwy księżyc na Twoim niebie.",
+"A quiet nudge before something ends.": "Dyskretne przypomnienie, zanim coś się skończy.",
+"Flick left or right to change screen.": "Przesuń w lewo lub w prawo, by zmienić ekran.",
+"Anonymous. Never what you type.": "Anonimowo. Nigdy to, co wpisujesz."
 },
 "zh": {
 "Review": "回顾",
@@ -3201,7 +3229,11 @@ window.I18N = {
 "Shed more to unlock new machines.": "放手越多，解锁的碎纸机越多。",
 "Gentle nudges about renewals and things you keep keeping.": "对续订和你一再保留的事项给出温和提示。",
 "Review, List, Shed and You. Swipe between them.": "回顾、清单、放手和我的。左右滑动即可切换。",
-"Show the item's name on your lock screen.": "在锁屏上显示事项名称。"
+"Show the item's name on your lock screen.": "在锁屏上显示事项名称。",
+"Rain, sun and a real moon in your sky.": "你的天空里有雨、阳光和真实的月亮。",
+"A quiet nudge before something ends.": "在事项到期前轻轻提醒你。",
+"Flick left or right to change screen.": "向左或向右滑动即可切换界面。",
+"Anonymous. Never what you type.": "匿名，绝不包含你输入的内容。"
 },
 "tl": {
 "Review": "Suriin",
@@ -3600,7 +3632,11 @@ window.I18N = {
 "Shed more to unlock new machines.": "Bumitaw nang higit pa para ma-unlock ang mga bagong makina.",
 "Gentle nudges about renewals and things you keep keeping.": "Banayad na paalala tungkol sa mga renewal at mga paulit-ulit mong itinatago.",
 "Review, List, Shed and You. Swipe between them.": "Suriin, Listahan, Bitawan at Ikaw. Mag-swipe sa pagitan nila.",
-"Show the item's name on your lock screen.": "Ipinapakita ang pangalan ng item sa lock screen mo."
+"Show the item's name on your lock screen.": "Ipinapakita ang pangalan ng item sa lock screen mo.",
+"Rain, sun and a real moon in your sky.": "Ulan, araw at totoong buwan sa langit mo.",
+"A quiet nudge before something ends.": "Tahimik na paalala bago may matapos.",
+"Flick left or right to change screen.": "Mag-swipe pakaliwa o pakanan para magpalit ng screen.",
+"Anonymous. Never what you type.": "Anonymous. Hindi kailanman ang tina-type mo."
 },
 "ceb": {
 "Review": "Susiha",
@@ -3999,7 +4035,11 @@ window.I18N = {
 "Shed more to unlock new machines.": "Buhi og mas daghan aron ma-unlock ang bag-ong mga makina.",
 "Gentle nudges about renewals and things you keep keeping.": "Hinay nga pahinumdom bahin sa mga renewal ug mga balik-balik nimong gitipigan.",
 "Review, List, Shed and You. Swipe between them.": "Susiha, Listahan, Buhian ug Ikaw. Mag-swipe taliwala nila.",
-"Show the item's name on your lock screen.": "Ipakita ang ngalan sa item sa imong lock screen."
+"Show the item's name on your lock screen.": "Ipakita ang ngalan sa item sa imong lock screen.",
+"Rain, sun and a real moon in your sky.": "Ulan, adlaw ug tinuod nga bulan sa imong langit.",
+"A quiet nudge before something ends.": "Hinay nga pahinumdom sa dili pa mahurot ang usa ka butang.",
+"Flick left or right to change screen.": "Mag-swipe pa-wala o pa-tuo aron mausab ang screen.",
+"Anonymous. Never what you type.": "Anonymous. Dili gayod ang imong gi-type."
 },
 "ru": {
 "Review": "Обзор",
@@ -4398,7 +4438,11 @@ window.I18N = {
 "Shed more to unlock new machines.": "Отпускайте больше, чтобы открывать новые машины.",
 "Gentle nudges about renewals and things you keep keeping.": "Мягкие подсказки о продлениях и о том, что вы снова и снова оставляете.",
 "Review, List, Shed and You. Swipe between them.": "Обзор, Список, Отпустить и Вы. Смахивайте между ними.",
-"Show the item's name on your lock screen.": "Показывает название позиции на экране блокировки."
+"Show the item's name on your lock screen.": "Показывает название позиции на экране блокировки.",
+"Rain, sun and a real moon in your sky.": "Дождь, солнце и настоящая луна в вашем небе.",
+"A quiet nudge before something ends.": "Тихое напоминание до окончания срока.",
+"Flick left or right to change screen.": "Смахните влево или вправо, чтобы сменить экран.",
+"Anonymous. Never what you type.": "Анонимно. Никогда не то, что вы вводите."
 },
 "uk": {
 "Review": "Огляд",
@@ -4797,7 +4841,11 @@ window.I18N = {
 "Shed more to unlock new machines.": "Відпускайте більше, щоб відкривати нові машини.",
 "Gentle nudges about renewals and things you keep keeping.": "М’які підказки про поновлення та те, що ви знову й знову залишаєте.",
 "Review, List, Shed and You. Swipe between them.": "Огляд, Список, Відпустити й Ви. Змахуйте між ними.",
-"Show the item's name on your lock screen.": "Показує назву позиції на екрані блокування."
+"Show the item's name on your lock screen.": "Показує назву позиції на екрані блокування.",
+"Rain, sun and a real moon in your sky.": "Дощ, сонце й справжній місяць у вашому небі.",
+"A quiet nudge before something ends.": "Тихе нагадування до завершення строку.",
+"Flick left or right to change screen.": "Змахніть ліворуч або праворуч, щоб змінити екран.",
+"Anonymous. Never what you type.": "Анонімно. Ніколи не те, що ви вводите."
 },
 "en-US": {
 "Customise the machine": "Customize the machine",

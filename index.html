@@ -866,7 +866,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.27";
+  var APP_VERSION = "0.28";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -3699,18 +3699,17 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
         } }, [dot, h("span", { text: t.name })]));
       });
       var optLook = slide("y opt", visualLook(), "Pick your look.", "Dark or light, calm or loud. <strong>Tap one and the app changes right now.</strong>", h("div", { class: "optctl" }, [circs]));
-      function optTile(vis, scale, label, box, cls) {
-        return h("label", { class: "gtile" + (cls ? " " + cls : "") }, [h("div", { class: "stage tg " + (cls && cls.indexOf("l") === 0 ? "l" : "y") }, [h("div", { class: "tin", style: "--s:" + scale }, [vis])]), h("span", { class: "tfoot", text: label }), box]);
+      function optTile(vis, scale, label, cap, box, cls) {
+        return h("label", { class: "gtile" + (cls ? " " + cls : "") }, [h("div", { class: "stage tg " + (cls && cls.indexOf("l") === 0 ? "l" : "y") }, [h("div", { class: "tin", style: "--s:" + scale }, [vis])]), h("span", { class: "tfoot" }, [T(label), h("small", { text: cap })]), box]);
       }
       var optAll = h("section", { class: "slide" }, [h("div", { class: "slide-in" }, [
         h("h2", { text: "Switch on what you want." }),
         h("div", { class: "gtiles" }, [
-          optTile(visualWeather(), .5, "Show today's weather", fWx, "l"),
-          optTile(visualRemind(), .42, "Remind me before things end", fRem, "y"),
-          optTile(visualSwipe(), .36, "Swipe between screens", fSwipe, "y"),
-          optTile(visualOwn(), .5, "Share anonymous usage", fAn, "l")
-        ]),
-        h("p", { class: "fine-print tilenote", text: "Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type." })
+          optTile(visualWeather(), .5, "Show today's weather", "Rain, sun and a real moon in your sky.", fWx, "l"),
+          optTile(visualRemind(), .42, "Remind me before things end", "A quiet nudge before something ends.", fRem, "y"),
+          optTile(visualSwipe(), .36, "Swipe between screens", "Flick left or right to change screen.", fSwipe, "y"),
+          optTile(visualOwn(), .5, "Share anonymous usage", "Anonymous. Never what you type.", fAn, "l")
+        ])
       ])]);
       var opts = [optLook, optAll];
       if (mode === "update") { slides = [langSlide, founder].concat(opts); introCount = slides.length; } else { slides = [langSlide, founder, setup].concat(opts, tutorial); introCount = 3 + opts.length; }
