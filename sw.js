@@ -2,7 +2,7 @@
 // Pages are fetched fresh when online (so a new version shows on the next open),
 // and fall back to the stored copy when offline. Other files are cache-first.
 // Bump CACHE whenever files change so phones pick up the new version.
-var CACHE = "shedly-v43";
+var CACHE = "shedly-v44";
 var FILES = ["./", "index.html", "manifest.webmanifest", "icon.svg", "icon-192.png", "icon-512.png", "icon-180.png", "i18n.js", "fonts/display.woff2", "fonts/body.woff2", "fonts/onest-500.woff2", "fonts/onest-700.woff2", "fonts/onest-800.woff2"];
 
 // A new version waits until the page asks it to take over (shown as the "New version ready" banner).

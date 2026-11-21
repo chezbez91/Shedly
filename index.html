@@ -671,6 +671,15 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 @keyframes confDrop{0%{opacity:0;transform:translateY(0) rotate(0)}10%{opacity:1}100%{opacity:0;transform:translateY(420px) rotate(300deg)}}
 @media (prefers-reduced-motion:reduce){.confetti{display:none}.add button.mic.on{animation:none}.quote{transition:none}}
 
+.dumpling{display:block;width:76px;height:52px;margin-right:-2px}.dumpling[hidden]{display:none}.dumpling svg{width:100%;height:100%;overflow:visible;display:block}
+.dl-sh{transform-box:fill-box;transform-origin:30% 100%;animation:dlsh 2.6s ease-in-out infinite}
+.dl-dp{transform-box:fill-box;transform-origin:70% 100%;animation:dldp 2.6s ease-in-out infinite}
+.dl-h{transform:translate(40px,30px) scale(0);opacity:0;animation:dlheart 2.6s ease-out infinite}.dl-h2{animation-delay:.87s}.dl-h3{animation-delay:1.74s}
+@keyframes dlsh{0%,40%,100%{transform:translateX(0) rotate(0)}55%,70%{transform:translateX(4px) rotate(7deg)}}
+@keyframes dldp{0%,40%,100%{transform:translateX(0) rotate(0)}55%,70%{transform:translateX(-3px) rotate(-6deg)}}
+@keyframes dlheart{0%,45%{transform:translate(40px,30px) scale(0);opacity:0}55%{opacity:1;transform:translate(40px,26px) scale(1.2)}100%{transform:translate(46px,-6px) scale(.8);opacity:0}}
+.dl-h2{--x:0}
+@media (prefers-reduced-motion:reduce){.dl-sh,.dl-dp,.dl-h{animation:none}.dl-sh{transform:translateX(3px) rotate(5deg)}.dl-dp{transform:translateX(-2px) rotate(-5deg)}.dl-h1{transform:translate(40px,22px) scale(1);opacity:1}}
 .hdr-r{display:flex;align-items:center;gap:10px}
 .how{width:36px;height:36px;padding:0;justify-content:center;font-family:var(--display);font-weight:800;font-size:17px;color:var(--ink)}
 .streak-chip{font-size:14px;font-weight:700;padding:6px 12px;border-radius:999px;background:var(--ink);color:var(--on-ink);white-space:nowrap}
@@ -902,7 +911,10 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
       <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#3347E8"/><rect x="12" y="15" width="40" height="8" rx="4" fill="#fff"/><rect x="12" y="28" width="30" height="8" rx="4" fill="#fff"/><rect x="12" y="41" width="18" height="8" rx="4" fill="#F5DF7B"/></svg>
       shedly
     </div>
-    <div class="hdr-r"><span class="streak-chip" id="streakChip" hidden></span><button class="how" id="howBtn" type="button" aria-label="How it works" title="How it works">?</button></div>
+    <div class="hdr-r"><span class="streak-chip" id="streakChip" hidden></span><span class="dumpling" id="dumplingLove" hidden role="img" aria-label="A shrimp kissing a dumpling"><svg viewBox="0 0 80 54" aria-hidden="true">
+<g class="dl-sh"><path d="M11 40C9 28 19 20 29 24C36 27 37 36 31 42C25 47 13 47 11 40Z" fill="#FF8A75"/><path d="M12 38L2 31Q5 38 2 45Z" fill="#FF6F5C"/><path d="M17 27Q15 36 18 44M23 25Q21 35 23 45" stroke="#E8644F" stroke-width="1.1" fill="none" stroke-linecap="round"/><path d="M28 24Q31 16 37 15M24 22Q24 14 30 11" stroke="#FF6F5C" stroke-width="1.3" fill="none" stroke-linecap="round"/><circle cx="29" cy="31" r="1.7" fill="#3A2230"/><circle cx="29.5" cy="30.4" r=".5" fill="#fff"/><circle cx="32" cy="37" r="2.3" fill="#FF5D8F" opacity=".5"/><path d="M33 42Q35 43 35 40" stroke="#E8644F" stroke-width="1.2" fill="none" stroke-linecap="round"/></g>
+<g class="dl-dp"><path d="M43 46C42 31 50 23 60 23C70 23 78 31 77 46Z" fill="#FFF6E8" stroke="#E5CBA8" stroke-width="1.2" stroke-linejoin="round"/><path d="M50 26Q53 29 52 33M56 24Q58 28 57 31M63 24Q62 28 64 31M70 26Q67 29 69 33" stroke="#E5CBA8" stroke-width="1.1" fill="none" stroke-linecap="round"/><circle cx="54" cy="38" r="1.6" fill="#3A2230"/><circle cx="66" cy="38" r="1.6" fill="#3A2230"/><circle cx="50" cy="42" r="2.5" fill="#FF8FB0" opacity=".6"/><circle cx="70" cy="42" r="2.5" fill="#FF8FB0" opacity=".6"/><path d="M57.500 42Q60 44.500 62.500 42" stroke="#3A2230" stroke-width="1.2" fill="none" stroke-linecap="round"/></g>
+<path class="dl-h dl-h1" d="M0 4C-6-1-3-6 0-3C3-6 6-1 0 4Z" fill="#FF4D86"/><path class="dl-h dl-h2" d="M0 4C-6-1-3-6 0-3C3-6 6-1 0 4Z" fill="#FF8FB0"/><path class="dl-h dl-h3" d="M0 4C-6-1-3-6 0-3C3-6 6-1 0 4Z" fill="#FF3D7F"/></svg></span><button class="how" id="howBtn" type="button" aria-label="How it works" title="How it works">?</button></div>
   </header>
 
   <main>
@@ -943,7 +955,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.39";
+  var APP_VERSION = "0.40";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -3770,6 +3782,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     if (current === "review") renderReview(); else if (current === "list") renderList(); else if (current === "you") renderYou(); else renderProgress();
     updateBadge();
     var hb = $("howBtn"); if (hb) hb.style.visibility = (current === "review" || current === "you") ? "" : "hidden";
+    var dlv = $("dumplingLove"); if (dlv) dlv.hidden = !((current === "review" || current === "you") && /^dumpling$/i.test((state.profile.name || "").replace(/[^A-Za-z]/g, "")));
     if (current !== "review") $("quoteSlot").textContent = "";
     var chip = $("streakChip"), sn = streak();
     if (current === "review" && sn > 0) { chip.textContent = sn + "-week streak"; chip.hidden = false; } else chip.hidden = true;
