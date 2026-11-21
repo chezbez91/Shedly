@@ -214,6 +214,7 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 .tilenote{margin:12px 2px 0}
 .ntiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px}
 .ntile{display:flex;flex-direction:column;gap:10px;border:2px solid var(--line);border-radius:18px;background:var(--surface);padding:14px 12px 12px;font-weight:700;font-size:14px;line-height:1.2;color:var(--ink);cursor:pointer;margin:0}
+.ntile small{font-weight:500;font-size:12px;line-height:1.3;color:var(--muted)}
 .ntile .ico{font-size:26px;line-height:1}
 .ntile .nrow{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .ntile input{appearance:none;-webkit-appearance:none;width:42px;height:25px;border-radius:999px;background:var(--line);position:relative;flex:none;transition:background .2s;cursor:pointer;margin:0}
@@ -865,7 +866,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.26";
+  var APP_VERSION = "0.27";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -1933,13 +1934,13 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
       ]));
       var ICONS = { weekly: "\ud83d\udcc5", deadline: "\u23f0", stale: "\ud83d\udd78\ufe0f", streak: "\ud83d\udd25", names: "\ud83d\udc41\ufe0f" };
       var grid = h("div", { class: "ntiles" });
-      var ntile = function (key, label) {
+      var ntile = function (key, label, note) {
         var box = h("input", { type: "checkbox", "aria-label": label }); box.checked = !!state.profile.notify[key];
         box.addEventListener("change", function () { state.profile.notify[key] = box.checked; save(); });
-        grid.append(h("label", { class: "ntile" }, [h("span", { class: "ico", "aria-hidden": "true", text: ICONS[key] }), h("span", { class: "nrow" }, [h("span", { text: label }), box])]));
+        grid.append(h("label", { class: "ntile" }, [h("span", { class: "ico", "aria-hidden": "true", text: ICONS[key] }), h("span", { class: "nrow" }, [h("span", { text: label }), box]), h("small", { text: note })]));
       };
-      NOTIFY_TYPES.forEach(function (t) { ntile(t[0], t[1]); });
-      ntile("names", "Show item names");
+      NOTIFY_TYPES.forEach(function (t) { ntile(t[0], t[1], t[2]); });
+      ntile("names", "Show item names", "Show the item's name on your lock screen.");
       inner.append(grid);
       var dated = state.items.filter(function (i) { return i.due != null; }).sort(function (a, b) { return a.due - b.due; });
       if (dated.length) {
@@ -1953,7 +1954,6 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
         });
         inner.append(box);
       }
-      inner.append(h("p", { class: "fine-print", text: "Quiet hours: nothing between 9 pm and 8 am. At most one reminder a day, and about two a week." }));
     });
   }
   function sharingSheet() {

@@ -397,7 +397,8 @@ window.I18N = {
 "Every shed adds to your total and to what you've freed up.": "Cada vez que sueltas algo suma a tu total y a lo que has liberado.",
 "Shed more to unlock new machines.": "Suelta más para desbloquear nuevas máquinas.",
 "Gentle nudges about renewals and things you keep keeping.": "Avisos suaves sobre renovaciones y cosas que conservas una y otra vez.",
-"Review, List, Shed and You. Swipe between them.": "Revisar, Lista, Soltar y Tú. Desliza entre ellas."
+"Review, List, Shed and You. Swipe between them.": "Revisar, Lista, Soltar y Tú. Desliza entre ellas.",
+"Show the item's name on your lock screen.": "Muestra el nombre del elemento en la pantalla de bloqueo."
 },
 "fr": {
 "Review": "Revoir",
@@ -797,7 +798,8 @@ window.I18N = {
 "Every shed adds to your total and to what you've freed up.": "Chaque lâcher s'ajoute à votre total et à ce que vous avez libéré.",
 "Shed more to unlock new machines.": "Lâchez plus pour débloquer de nouvelles machines.",
 "Gentle nudges about renewals and things you keep keeping.": "De petits rappels sur les renouvellements et ce que vous gardez sans cesse.",
-"Review, List, Shed and You. Swipe between them.": "Revoir, Liste, Lâcher et Toi. Glissez entre elles."
+"Review, List, Shed and You. Swipe between them.": "Revoir, Liste, Lâcher et Toi. Glissez entre elles.",
+"Show the item's name on your lock screen.": "Affiche le nom de l'élément sur l'écran de verrouillage."
 },
 "de": {
 "Review": "Prüfen",
@@ -1197,7 +1199,8 @@ window.I18N = {
 "Every shed adds to your total and to what you've freed up.": "Jedes Loslassen zählt zu deiner Summe und zu dem, was du freigesetzt hast.",
 "Shed more to unlock new machines.": "Lass mehr los, um neue Maschinen freizuschalten.",
 "Gentle nudges about renewals and things you keep keeping.": "Sanfte Hinweise zu Verlängerungen und Dingen, die du immer wieder behältst.",
-"Review, List, Shed and You. Swipe between them.": "Prüfen, Liste, Loslassen und Du. Wische zwischen ihnen."
+"Review, List, Shed and You. Swipe between them.": "Prüfen, Liste, Loslassen und Du. Wische zwischen ihnen.",
+"Show the item's name on your lock screen.": "Zeigt den Namen des Eintrags auf dem Sperrbildschirm."
 },
 "it": {
 "Review": "Rivedi",
@@ -1597,7 +1600,8 @@ window.I18N = {
 "Every shed adds to your total and to what you've freed up.": "Ogni cosa lasciata si somma al tuo totale e a ciò che hai liberato.",
 "Shed more to unlock new machines.": "Lascia andare di più per sbloccare nuove macchine.",
 "Gentle nudges about renewals and things you keep keeping.": "Promemoria gentili su rinnovi e cose che continui a tenere.",
-"Review, List, Shed and You. Swipe between them.": "Rivedi, Elenco, Lascia e Tu. Scorri tra di loro."
+"Review, List, Shed and You. Swipe between them.": "Rivedi, Elenco, Lascia e Tu. Scorri tra di loro.",
+"Show the item's name on your lock screen.": "Mostra il nome dell'elemento nella schermata di blocco."
 },
 "pt": {
 "Review": "Rever",
@@ -1997,7 +2001,8 @@ window.I18N = {
 "Every shed adds to your total and to what you've freed up.": "Cada coisa largada soma ao seu total e ao que libertou.",
 "Shed more to unlock new machines.": "Largue mais para desbloquear novas máquinas.",
 "Gentle nudges about renewals and things you keep keeping.": "Avisos suaves sobre renovações e coisas que mantém vezes sem conta.",
-"Review, List, Shed and You. Swipe between them.": "Rever, Lista, Soltar e Tu. Deslize entre elas."
+"Review, List, Shed and You. Swipe between them.": "Rever, Lista, Soltar e Tu. Deslize entre elas.",
+"Show the item's name on your lock screen.": "Mostra o nome do item no ecrã de bloqueio."
 },
 "nl": {
 "Review": "Bekijken",
@@ -2397,7 +2402,8 @@ window.I18N = {
 "Every shed adds to your total and to what you've freed up.": "Elke keer loslaten telt mee in je totaal en in wat je hebt vrijgemaakt.",
 "Shed more to unlock new machines.": "Laat meer los om nieuwe machines te ontgrendelen.",
 "Gentle nudges about renewals and things you keep keeping.": "Zachte duwtjes over verlengingen en dingen die je steeds behoudt.",
-"Review, List, Shed and You. Swipe between them.": "Bekijken, Lijst, Loslaten en Jij. Veeg ertussen."
+"Review, List, Shed and You. Swipe between them.": "Bekijken, Lijst, Loslaten en Jij. Veeg ertussen.",
+"Show the item's name on your lock screen.": "Toont de naam van het item op je vergrendelscherm."
 },
 "pl": {
 "Review": "Przegląd",
@@ -2795,7 +2801,8 @@ window.I18N = {
 "Every shed adds to your total and to what you've freed up.": "Każde puszczenie zwiększa Twój wynik i to, co uwolniłeś.",
 "Shed more to unlock new machines.": "Puszczaj więcej, by odblokować nowe maszyny.",
 "Gentle nudges about renewals and things you keep keeping.": "Delikatne przypomnienia o odnowieniach i rzeczach, które wciąż zachowujesz.",
-"Review, List, Shed and You. Swipe between them.": "Przegląd, Lista, Puść i Ty. Przesuwaj między nimi."
+"Review, List, Shed and You. Swipe between them.": "Przegląd, Lista, Puść i Ty. Przesuwaj między nimi.",
+"Show the item's name on your lock screen.": "Pokazuje nazwę pozycji na ekranie blokady."
 },
 "zh": {
 "Review": "回顾",
@@ -3193,7 +3200,8 @@ window.I18N = {
 "Every shed adds to your total and to what you've freed up.": "每次放手都会累加到你的总数和节省的金额。",
 "Shed more to unlock new machines.": "放手越多，解锁的碎纸机越多。",
 "Gentle nudges about renewals and things you keep keeping.": "对续订和你一再保留的事项给出温和提示。",
-"Review, List, Shed and You. Swipe between them.": "回顾、清单、放手和我的。左右滑动即可切换。"
+"Review, List, Shed and You. Swipe between them.": "回顾、清单、放手和我的。左右滑动即可切换。",
+"Show the item's name on your lock screen.": "在锁屏上显示事项名称。"
 },
 "tl": {
 "Review": "Suriin",
@@ -3591,7 +3599,8 @@ window.I18N = {
 "Every shed adds to your total and to what you've freed up.": "Bawat bitaw ay nadadagdag sa kabuuan mo at sa napalaya mo.",
 "Shed more to unlock new machines.": "Bumitaw nang higit pa para ma-unlock ang mga bagong makina.",
 "Gentle nudges about renewals and things you keep keeping.": "Banayad na paalala tungkol sa mga renewal at mga paulit-ulit mong itinatago.",
-"Review, List, Shed and You. Swipe between them.": "Suriin, Listahan, Bitawan at Ikaw. Mag-swipe sa pagitan nila."
+"Review, List, Shed and You. Swipe between them.": "Suriin, Listahan, Bitawan at Ikaw. Mag-swipe sa pagitan nila.",
+"Show the item's name on your lock screen.": "Ipinapakita ang pangalan ng item sa lock screen mo."
 },
 "ceb": {
 "Review": "Susiha",
@@ -3989,7 +3998,8 @@ window.I18N = {
 "Every shed adds to your total and to what you've freed up.": "Matag buhi madugang sa imong kinatibuk-an ug sa imong nahaw-as.",
 "Shed more to unlock new machines.": "Buhi og mas daghan aron ma-unlock ang bag-ong mga makina.",
 "Gentle nudges about renewals and things you keep keeping.": "Hinay nga pahinumdom bahin sa mga renewal ug mga balik-balik nimong gitipigan.",
-"Review, List, Shed and You. Swipe between them.": "Susiha, Listahan, Buhian ug Ikaw. Mag-swipe taliwala nila."
+"Review, List, Shed and You. Swipe between them.": "Susiha, Listahan, Buhian ug Ikaw. Mag-swipe taliwala nila.",
+"Show the item's name on your lock screen.": "Ipakita ang ngalan sa item sa imong lock screen."
 },
 "ru": {
 "Review": "Обзор",
@@ -4387,7 +4397,8 @@ window.I18N = {
 "Every shed adds to your total and to what you've freed up.": "Каждое отпущенное прибавляется к итогу и к освобождённому.",
 "Shed more to unlock new machines.": "Отпускайте больше, чтобы открывать новые машины.",
 "Gentle nudges about renewals and things you keep keeping.": "Мягкие подсказки о продлениях и о том, что вы снова и снова оставляете.",
-"Review, List, Shed and You. Swipe between them.": "Обзор, Список, Отпустить и Вы. Смахивайте между ними."
+"Review, List, Shed and You. Swipe between them.": "Обзор, Список, Отпустить и Вы. Смахивайте между ними.",
+"Show the item's name on your lock screen.": "Показывает название позиции на экране блокировки."
 },
 "uk": {
 "Review": "Огляд",
@@ -4785,7 +4796,8 @@ window.I18N = {
 "Every shed adds to your total and to what you've freed up.": "Кожне відпущене додається до підсумку та до звільненого.",
 "Shed more to unlock new machines.": "Відпускайте більше, щоб відкривати нові машини.",
 "Gentle nudges about renewals and things you keep keeping.": "М’які підказки про поновлення та те, що ви знову й знову залишаєте.",
-"Review, List, Shed and You. Swipe between them.": "Огляд, Список, Відпустити й Ви. Змахуйте між ними."
+"Review, List, Shed and You. Swipe between them.": "Огляд, Список, Відпустити й Ви. Змахуйте між ними.",
+"Show the item's name on your lock screen.": "Показує назву позиції на екрані блокування."
 },
 "en-US": {
 "Customise the machine": "Customize the machine",
