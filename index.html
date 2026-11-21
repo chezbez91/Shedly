@@ -416,11 +416,11 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 :root[data-theme=forest] .shred-dim{background:rgba(6,14,10,.7)}
 
 /* ---------- sheets (workshop, import, unlock reveal) ---------- */
-.swc-hint{position:fixed;left:0;right:0;top:calc(env(safe-area-inset-top) + 64px);display:flex;flex-direction:column;align-items:center;gap:4px;pointer-events:none;z-index:60;animation:swcfade 4.2s ease both}
-.swc-bar{width:44px;height:5px;border-radius:3px;background:var(--ink);opacity:.35}
-.swc-hand{font-size:40px;line-height:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,.35));animation:swcdrop 1.15s ease-in-out 3}
-@keyframes swcdrop{0%{transform:translateY(-10px);opacity:0}25%{opacity:1}75%{transform:translateY(46px);opacity:1}100%{transform:translateY(58px);opacity:0}}
-@keyframes swcfade{0%,85%{opacity:1}100%{opacity:0}}
+.swc-chip{position:fixed;right:14px;bottom:calc(env(safe-area-inset-bottom) + 14px);width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);color:var(--muted);display:grid;place-items:center;padding:0;opacity:.8;z-index:60}
+.swc-chip.hi{bottom:calc(env(safe-area-inset-bottom) + 98px)}
+.swc-chip svg{width:18px;height:18px;animation:swcbob 2.4s ease-in-out infinite}
+@keyframes swcbob{0%,60%,100%{transform:translateY(-1px)}30%{transform:translateY(3px)}}
+@media (prefers-reduced-motion:reduce){.swc-chip svg{animation:none}}
 .sheet{position:fixed;inset:0;z-index:30;background:var(--paper);overflow-y:auto;overscroll-behavior:contain;padding:calc(env(safe-area-inset-top) + 14px) 20px calc(env(safe-area-inset-bottom) + 48px);animation:sheetIn .3s cubic-bezier(.2,.8,.2,1)}
 .sheet:focus{outline:none}
 .sheet-in{max-width:560px;margin:0 auto}
@@ -955,7 +955,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.40";
+  var APP_VERSION = "0.41";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -2786,19 +2786,16 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   // Swipe down to close: pop-ups follow the finger, and a hand shows how the first few times.
   var swcHint = null;
   function hideSwcHint() { if (swcHint) { swcHint.remove(); swcHint = null; } }
-  function showSwcHint(host) {
-    var tp = state.profile.tips || (state.profile.tips = {}); if ((tp.swc || 0) >= 3 || reduceMotion) return;
-    setTimeout(function () {
-      if (!document.contains(host)) return; tp.swc = (tp.swc || 0) + 1; save();
-      hideSwcHint(); swcHint = h("div", { class: "swc-hint", "aria-hidden": "true" }, [h("i", { class: "swc-bar" }), h("span", { class: "swc-hand", text: "\ud83d\udc47" })]);
-      host.append(swcHint); var me = swcHint; setTimeout(function () { if (swcHint === me) hideSwcHint(); }, 4200);
-    }, 1100);
+  function showSwcHint(host, close, high) {
+    hideSwcHint();
+    swcHint = h("button", { class: "swc-chip" + (high ? " hi" : ""), type: "button", "aria-label": "Close", onclick: function () { close(); }, html: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>' });
+    host.append(swcHint);
   }
   function swipeDown(panel, close, scrollerTop, canStart) {
     var y0 = null, x0 = 0, dy = 0, drag = false;
     panel.addEventListener("touchstart", function (e) {
       if (e.touches.length !== 1 || (canStart && !canStart(e))) { y0 = null; return; }
-      y0 = e.touches[0].clientY; x0 = e.touches[0].clientX; dy = 0; drag = false; hideSwcHint();
+      y0 = e.touches[0].clientY; x0 = e.touches[0].clientX; dy = 0; drag = false;
     }, { passive: true });
     panel.addEventListener("touchmove", function (e) {
       if (y0 === null) return; var t = e.touches[0], ddy = t.clientY - y0, ddx = t.clientX - x0;
@@ -2824,7 +2821,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     document.body.append(ov); sheetEl = ov; setInert(true);
     build(inner, function () { closeSheet(); });
     ov.focus({ preventScroll: true });
-    swipeDown(ov, function () { closeSheet(); }, function () { return ov.scrollTop; }); showSwcHint(ov);
+    swipeDown(ov, function () { closeSheet(); }, function () { return ov.scrollTop; }); showSwcHint(ov, function () { closeSheet(); });
   }
   function closeSheet(silent) {
     if (!sheetEl) return;
@@ -4134,7 +4131,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     root._cleanup = function () { window.removeEventListener("resize", tourResize); };
     if (mode === "replay") {
       if (!root._swc) { root._swc = true; swipeDown(root, function () { logEvent("tour_closed", { swipe: 1 }); closeTour(); }, function () { var l = root.querySelector(".slide.live"); return l ? l.scrollTop : 0; }, function () { return tourMode === "replay" && !root.querySelector(".gdetail"); }); }
-      showSwcHint(root);
+      showSwcHint(root, function () { logEvent("tour_closed", { swipe: 0 }); closeTour(); }, true);
     }
   }
   function closeTour() {
