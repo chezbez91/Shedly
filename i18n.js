@@ -446,7 +446,10 @@ window.I18N = {
 "Shed 100 things. It has been watching.": "Elimina 100 cosas. Lleva tiempo observándote.",
 "Keep a 4-week streak to light it.": "Mantén una racha de 4 semanas para encenderla.",
 "Keep an 8-week streak. Good things take time.": "Mantén una racha de 8 semanas. Las cosas buenas tardan.",
-"Free 1,000 a year to polish it.": "Ahorra 1.000 al año para pulirla."
+"Free 1,000 a year to polish it.": "Ahorra 1.000 al año para pulirla.",
+"Shed 5 things on a Sunday. Good things take time.": "Elimina 5 cosas un domingo. Las cosas buenas tardan.",
+"Shed 5 things on a Sunday": "Elimina 5 cosas un domingo",
+"{0} of {1} Sunday sheds": "{0} de {1} eliminaciones en domingo"
 },
 "fr": {
 "Review": "Revoir",
@@ -895,7 +898,10 @@ window.I18N = {
 "Shed 100 things. It has been watching.": "Lâchez 100 choses. Elle vous observe depuis un moment.",
 "Keep a 4-week streak to light it.": "Gardez une série de 4 semaines pour l'allumer.",
 "Keep an 8-week streak. Good things take time.": "Gardez une série de 8 semaines. Les bonnes choses prennent du temps.",
-"Free 1,000 a year to polish it.": "Libérez 1 000 par an pour la faire briller."
+"Free 1,000 a year to polish it.": "Libérez 1 000 par an pour la faire briller.",
+"Shed 5 things on a Sunday. Good things take time.": "Lâchez 5 choses un dimanche. Les bonnes choses prennent du temps.",
+"Shed 5 things on a Sunday": "Lâchez 5 choses un dimanche",
+"{0} of {1} Sunday sheds": "{0} sur {1} lâchers du dimanche"
 },
 "de": {
 "Review": "Prüfen",
@@ -1344,7 +1350,10 @@ window.I18N = {
 "Shed 100 things. It has been watching.": "Lass 100 Dinge los. Es beobachtet dich schon.",
 "Keep a 4-week streak to light it.": "Halte 4 Wochen am Stück durch, um sie zu entzünden.",
 "Keep an 8-week streak. Good things take time.": "Halte 8 Wochen durch. Gute Dinge brauchen Zeit.",
-"Free 1,000 a year to polish it.": "Gib 1.000 pro Jahr frei, um sie zu polieren."
+"Free 1,000 a year to polish it.": "Gib 1.000 pro Jahr frei, um sie zu polieren.",
+"Shed 5 things on a Sunday. Good things take time.": "Lass 5 Dinge an einem Sonntag los. Gute Dinge brauchen Zeit.",
+"Shed 5 things on a Sunday": "Lass 5 Dinge an einem Sonntag los",
+"{0} of {1} Sunday sheds": "{0} von {1} Sonntags-Loslassen"
 },
 "it": {
 "Review": "Rivedi",
@@ -1793,7 +1802,10 @@ window.I18N = {
 "Shed 100 things. It has been watching.": "Elimina 100 cose. Ti sta osservando da un pezzo.",
 "Keep a 4-week streak to light it.": "Mantieni una serie di 4 settimane per accenderla.",
 "Keep an 8-week streak. Good things take time.": "Mantieni una serie di 8 settimane. Le cose buone richiedono tempo.",
-"Free 1,000 a year to polish it.": "Libera 1.000 all'anno per lucidarla."
+"Free 1,000 a year to polish it.": "Libera 1.000 all'anno per lucidarla.",
+"Shed 5 things on a Sunday. Good things take time.": "Elimina 5 cose di domenica. Le cose buone richiedono tempo.",
+"Shed 5 things on a Sunday": "Elimina 5 cose di domenica",
+"{0} of {1} Sunday sheds": "{0} di {1} eliminazioni di domenica"
 },
 "pt": {
 "Review": "Rever",
@@ -2242,7 +2254,10 @@ window.I18N = {
 "Shed 100 things. It has been watching.": "Elimine 100 coisas. Tem andado a observar.",
 "Keep a 4-week streak to light it.": "Mantenha uma sequência de 4 semanas para a acender.",
 "Keep an 8-week streak. Good things take time.": "Mantenha uma sequência de 8 semanas. As coisas boas levam tempo.",
-"Free 1,000 a year to polish it.": "Liberte 1.000 por ano para a polir."
+"Free 1,000 a year to polish it.": "Liberte 1.000 por ano para a polir.",
+"Shed 5 things on a Sunday. Good things take time.": "Elimine 5 coisas num domingo. As coisas boas levam tempo.",
+"Shed 5 things on a Sunday": "Elimine 5 coisas num domingo",
+"{0} of {1} Sunday sheds": "{0} de {1} eliminações no domingo"
 },
 "nl": {
 "Review": "Bekijken",
@@ -2691,7 +2706,10 @@ window.I18N = {
 "Shed 100 things. It has been watching.": "Laat 100 dingen los. Het kijkt al een tijdje.",
 "Keep a 4-week streak to light it.": "Houd 4 weken op rij vol om hem aan te steken.",
 "Keep an 8-week streak. Good things take time.": "Houd 8 weken vol. Goede dingen duren even.",
-"Free 1,000 a year to polish it.": "Bevrijd 1.000 per jaar om hem te polijsten."
+"Free 1,000 a year to polish it.": "Bevrijd 1.000 per jaar om hem te polijsten.",
+"Shed 5 things on a Sunday. Good things take time.": "Laat 5 dingen los op een zondag. Goede dingen duren even.",
+"Shed 5 things on a Sunday": "Laat 5 dingen los op een zondag",
+"{0} of {1} Sunday sheds": "{0} van {1} loslatingen op zondag"
 },
 "pl": {
 "Review": "Przegląd",
@@ -3138,7 +3156,10 @@ window.I18N = {
 "Shed 100 things. It has been watching.": "Puść 100 rzeczy. Od dawna cię obserwuje.",
 "Keep a 4-week streak to light it.": "Utrzymaj 4-tygodniową serię, by ją zapalić.",
 "Keep an 8-week streak. Good things take time.": "Utrzymaj 8-tygodniową serię. Dobre rzeczy wymagają czasu.",
-"Free 1,000 a year to polish it.": "Uwolnij 1000 rocznie, by ją wypolerować."
+"Free 1,000 a year to polish it.": "Uwolnij 1000 rocznie, by ją wypolerować.",
+"Shed 5 things on a Sunday. Good things take time.": "Puść 5 rzeczy w niedzielę. Dobre rzeczy wymagają czasu.",
+"Shed 5 things on a Sunday": "Puść 5 rzeczy w niedzielę",
+"{0} of {1} Sunday sheds": "{0} z {1} puszczeń w niedzielę"
 },
 "zh": {
 "Review": "回顾",
@@ -3585,7 +3606,10 @@ window.I18N = {
 "Shed 100 things. It has been watching.": "放手 100 件事。它一直在看着你。",
 "Keep a 4-week streak to light it.": "保持 4 周连续记录，将它点亮。",
 "Keep an 8-week streak. Good things take time.": "保持 8 周连续记录。好东西需要时间。",
-"Free 1,000 a year to polish it.": "每年节省 1,000，把它擦亮。"
+"Free 1,000 a year to polish it.": "每年节省 1,000，把它擦亮。",
+"Shed 5 things on a Sunday. Good things take time.": "周日放手 5 件事。好东西需要时间。",
+"Shed 5 things on a Sunday": "周日放手 5 件事",
+"{0} of {1} Sunday sheds": "周日已放手 {0}/{1}"
 },
 "tl": {
 "Review": "Suriin",
@@ -4032,7 +4056,10 @@ window.I18N = {
 "Shed 100 things. It has been watching.": "Bitawan ang 100 bagay. Matagal na itong nagmamasid.",
 "Keep a 4-week streak to light it.": "Panatilihin ang 4-linggong streak para mailawan ito.",
 "Keep an 8-week streak. Good things take time.": "Panatilihin ang 8-linggong streak. Mabagal ang mabubuting bagay.",
-"Free 1,000 a year to polish it.": "Magpalaya ng 1,000 kada taon para mapakintab ito."
+"Free 1,000 a year to polish it.": "Magpalaya ng 1,000 kada taon para mapakintab ito.",
+"Shed 5 things on a Sunday. Good things take time.": "Bitawan ang 5 bagay tuwing Linggo. Mabagal ang mabubuting bagay.",
+"Shed 5 things on a Sunday": "Bitawan ang 5 bagay tuwing Linggo",
+"{0} of {1} Sunday sheds": "{0} sa {1} nabitawan tuwing Linggo"
 },
 "ceb": {
 "Review": "Susiha",
@@ -4479,7 +4506,10 @@ window.I18N = {
 "Shed 100 things. It has been watching.": "Buhii ang 100 ka butang. Dugay na kini nagbantay.",
 "Keep a 4-week streak to light it.": "Padayon ang 4-ka-semana nga streak aron masiga kini.",
 "Keep an 8-week streak. Good things take time.": "Padayon ang 8-ka-semana nga streak. Hinay ang maayo.",
-"Free 1,000 a year to polish it.": "Pahawa-a ang 1,000 matag tuig aron pasinawon kini."
+"Free 1,000 a year to polish it.": "Pahawa-a ang 1,000 matag tuig aron pasinawon kini.",
+"Shed 5 things on a Sunday. Good things take time.": "Buhii ang 5 ka butang sa Domingo. Hinay ang maayo.",
+"Shed 5 things on a Sunday": "Buhii ang 5 ka butang sa Domingo",
+"{0} of {1} Sunday sheds": "{0} sa {1} nabuhi sa Domingo"
 },
 "ru": {
 "Review": "Обзор",
@@ -4926,7 +4956,10 @@ window.I18N = {
 "Shed 100 things. It has been watching.": "Отпустите 100 дел. Давно за вами наблюдает.",
 "Keep a 4-week streak to light it.": "Держите серию 4 недели, чтобы её зажечь.",
 "Keep an 8-week streak. Good things take time.": "Держите серию 8 недель. Хорошее требует времени.",
-"Free 1,000 a year to polish it.": "Освободите 1000 в год, чтобы его отполировать."
+"Free 1,000 a year to polish it.": "Освободите 1000 в год, чтобы его отполировать.",
+"Shed 5 things on a Sunday. Good things take time.": "Отпустите 5 дел в воскресенье. Хорошее требует времени.",
+"Shed 5 things on a Sunday": "Отпустите 5 дел в воскресенье",
+"{0} of {1} Sunday sheds": "{0} из {1} отпусканий в воскресенье"
 },
 "uk": {
 "Review": "Огляд",
@@ -5373,7 +5406,10 @@ window.I18N = {
 "Shed 100 things. It has been watching.": "Відпустіть 100 справ. Давно за вами спостерігає.",
 "Keep a 4-week streak to light it.": "Тримайте серію 4 тижні, щоб її запалити.",
 "Keep an 8-week streak. Good things take time.": "Тримайте серію 8 тижнів. Добре вимагає часу.",
-"Free 1,000 a year to polish it.": "Звільніть 1000 на рік, щоб його відполірувати."
+"Free 1,000 a year to polish it.": "Звільніть 1000 на рік, щоб його відполірувати.",
+"Shed 5 things on a Sunday. Good things take time.": "Відпустіть 5 справ у неділю. Добре вимагає часу.",
+"Shed 5 things on a Sunday": "Відпустіть 5 справ у неділю",
+"{0} of {1} Sunday sheds": "{0} із {1} відпускань у неділю"
 },
 "en-US": {
 "Customise the machine": "Customize the machine",
