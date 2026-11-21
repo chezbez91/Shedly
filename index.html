@@ -943,7 +943,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.37";
+  var APP_VERSION = "0.38";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -2142,6 +2142,14 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
       inner.append(sheetHead("Language", close));
       inner.append(langChips(close));
       inner.append(h("p", { class: "fine-print", text: "The app reloads in the language you pick. Anything not translated yet stays in English." }));
+      if (SpeechRec) {
+        var dl = h("select", { id: "dictLangSel", "aria-label": "Dictation language" });
+        dl.append(h("option", { value: "", text: "Same as the app" }));
+        DICT_LANGS.forEach(function (d) { dl.append(h("option", { value: d[0], text: d[1] })); });
+        dl.value = state.profile.dictLang || "";
+        dl.addEventListener("change", function () { state.profile.dictLang = dl.value || null; save(); });
+        inner.append(h("label", { class: "field", style: "margin-top:18px" }, [h("span", { text: "Dictation language" }), dl]));
+      }
     });
   }
   function resetSheet() {
@@ -3651,7 +3659,9 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   //  Dictation: say it, don't type it (the phone's own speech service does the listening)
   // =====================================================================
   var SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition, dictRec = null;
+  var DICT_LANGS = [["en-GB", "English (UK)"], ["en-US", "English (US)"], ["en-PH", "English (Philippines)"], ["fil-PH", "Filipino (Tagalog)"], ["es-ES", "Espa\u00f1ol"], ["fr-FR", "Fran\u00e7ais"], ["de-DE", "Deutsch"], ["it-IT", "Italiano"], ["pt-PT", "Portugu\u00eas (PT)"], ["pt-BR", "Portugu\u00eas (BR)"], ["nl-NL", "Nederlands"], ["pl-PL", "Polski"], ["zh-CN", "\u4e2d\u6587"], ["ru-RU", "\u0420\u0443\u0441\u0441\u043a\u0438\u0439"], ["uk-UA", "\u0423\u043a\u0440\u0430\u0457\u043d\u0441\u044c\u043a\u0430"]];
   function dictLang() {
+    if (state.profile.dictLang) return state.profile.dictLang;
     var base = { "en-GB": "en-GB", "en-US": "en-US", es: "es-ES", fr: "fr-FR", de: "de-DE", it: "it-IT", pt: "pt-PT", nl: "nl-NL", pl: "pl-PL", zh: "zh-CN", tl: "fil-PH", ceb: "fil-PH", ru: "ru-RU", uk: "uk-UA" }[LANG] || "en-GB";
     var nl = navigator.language || ""; if (nl.slice(0, 2).toLowerCase() === base.slice(0, 2) && LANG !== "tl" && LANG !== "ceb" && LANG !== "zh") return nl;
     return base;
