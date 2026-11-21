@@ -185,12 +185,10 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 /* founder note + reverse shredder */
 
 .sigsvg{display:block;width:180px;height:auto;margin:2px 0 0;overflow:visible;transform:rotate(-3deg);transform-origin:left center}
-.sigsvg path{fill:none;stroke:#7D95FF;stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:100}
-.sigsvg circle{fill:#7D95FF}
-.live .sigsvg path{animation:sign .9s calc(1.2s + var(--k) * .6s) ease-in-out both}
-.live .sigsvg circle{animation:pop .3s 3s both}
-@keyframes sign{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
-@media (prefers-reduced-motion:reduce){.live .sigsvg path,.live .sigsvg circle{animation:none}}
+.sigsvg path{fill:none;stroke:#7D95FF;stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:100;stroke-dashoffset:100;opacity:0}
+.sigsvg circle{fill:#7D95FF;opacity:0;transition:opacity .15s}
+.sigsvg .pen{opacity:0;transition:opacity .25s}
+.sigsvg.done path{stroke-dashoffset:0;opacity:1}.sigsvg.done circle{opacity:1}
 .note .sig{margin-top:2px}
 .optctl{margin-top:16px}
 .gridslide{position:relative}
@@ -278,11 +276,13 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 .inst-pop .pill{width:100%;margin:6px 0 4px}
 .inst-pop .linkbtn{display:block;margin:6px auto 0;padding:10px}
 .inst-steps{text-align:left;margin:0 0 12px;padding:14px 16px 14px 34px;background:var(--surface);border-radius:16px;font-size:15px;line-height:1.5}
-.langs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:6px 0 10px}
-.lang{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:13px 14px;border:1.5px solid var(--line);border-radius:16px;background:none;color:var(--ink);font-size:16px;font-weight:600;text-align:left}
+.langs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:4px 0 8px}
+.lang{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 13px;border:1.5px solid var(--line);border-radius:14px;background:none;color:var(--ink);font-size:15px;font-weight:600;text-align:left}
 .lang.on{border-color:var(--hl);background:var(--surface)}
 .lang i{font-style:normal;color:var(--hl)}
 .globe{font-size:74px;line-height:1}
+.slide .stage.l.opt{height:clamp(80px,12vh,120px);padding:10px}.stage.l.opt .globe{font-size:clamp(44px,7vh,64px)}
+@media (max-height:760px){.lang{padding:7px 12px;font-size:14px;border-radius:12px}.langs{gap:6px}}
 .resetbox{padding:6px 2px}
 .resetbox h2{font-family:var(--display);font-weight:800;font-size:28px;letter-spacing:-.03em;margin:6px 0 8px}
 .resetbox p{color:var(--muted);line-height:1.45;margin:0 0 16px}
@@ -930,7 +930,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.31";
+  var APP_VERSION = "0.32";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -3699,10 +3699,47 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   function signature() {
     var NS = "http://www.w3.org/2000/svg", svg = document.createElementNS(NS, "svg");
     svg.setAttribute("viewBox", "70 0 300 140"); svg.setAttribute("class", "sigsvg"); svg.setAttribute("role", "img"); svg.setAttribute("aria-label", "Liam");
-    SIG_STROKES.forEach(function (d, i) {
-      var p = document.createElementNS(NS, "path"); p.setAttribute("d", d); p.setAttribute("pathLength", "100"); p.style.setProperty("--k", i); svg.append(p);
+    var paths = SIG_STROKES.map(function (d) {
+      var p = document.createElementNS(NS, "path"); p.setAttribute("d", d); p.setAttribute("pathLength", "100"); svg.append(p); return p;
     });
     var dot = document.createElementNS(NS, "circle"); dot.setAttribute("cx", "240"); dot.setAttribute("cy", "74"); dot.setAttribute("r", "2.8"); svg.append(dot);
+    var pen = document.createElementNS(NS, "g"); pen.setAttribute("class", "pen");
+    pen.innerHTML = '<g transform="rotate(32)"><path d="M0 0L-3.5-13L3.5-13Z" fill="#f0cf7a" stroke="#1b2350" stroke-width="1"/><path d="M-5-13H5L7.500-46H-7.500Z" fill="#232d6b" stroke="#aab6ff" stroke-width="1" stroke-linejoin="round"/><rect x="-8" y="-50" width="16" height="5" rx="1.500" fill="#f0cf7a"/><path d="M-7.500-50H7.500L6-82H-6Z" fill="#2f3b8c" stroke="#aab6ff" stroke-width="1" stroke-linejoin="round"/><rect x="4" y="-78" width="1.800" height="22" rx=".9" fill="#f0cf7a"/></g>';
+    svg.append(pen);
+    var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches, raf = 0, T0 = 0;
+    var lens = paths.map(function (p) { return p.getTotalLength(); }), sum = lens.reduce(function (a, b) { return a + b; }, 0), TOTAL = 1500;
+    function finish() { svg.classList.add("done"); pen.style.opacity = 0; }
+    function reset() {
+      cancelAnimationFrame(raf); svg.classList.remove("done"); pen.style.opacity = 0;
+      paths.forEach(function (p) { p.style.strokeDashoffset = ""; p.style.opacity = ""; }); dot.style.opacity = "";
+    }
+    function play() {
+      reset(); if (reduce) { finish(); return; }
+      pen.style.opacity = 1; T0 = 0;
+      raf = requestAnimationFrame(function step(t) {
+        if (!T0) T0 = t;
+        var el = t - T0, f = Math.min(el / TOTAL, 1), at = f * sum, acc = 0, cur = -1, pt = null;
+        paths.forEach(function (p, i) {
+          var L = lens[i], k = Math.max(0, Math.min((at - acc) / L, 1));
+          p.style.opacity = k > 0 ? 1 : 0; p.style.strokeDashoffset = String(100 - k * 100);
+          if (k > 0 && k < 1) { cur = i; pt = p.getPointAtLength(k * L); }
+          acc += L;
+        });
+        if (!pt && f < 1) { var li = 0, a2 = 0; for (; li < lens.length - 1 && a2 + lens[li] < at; li++) a2 += lens[li]; pt = paths[li].getPointAtLength(Math.min(Math.max(at - a2, 0), lens[li])); }
+        if (pt) pen.setAttribute("transform", "translate(" + pt.x + " " + pt.y + ")");
+        if (f >= 0.97) dot.style.opacity = 1;
+        if (f < 1) raf = requestAnimationFrame(step);
+        else setTimeout(function () { pen.style.opacity = 0; svg.classList.add("done"); }, 150);
+      });
+    }
+    // start when the slide goes live, rewind when it leaves
+    var seen = false;
+    function watch() {
+      var sl = svg.closest(".slide"); if (!sl || seen) return; seen = true;
+      function chk() { if (sl.classList.contains("live")) { if (!svg._on) { svg._on = 1; setTimeout(play, 250); } } else if (svg._on) { svg._on = 0; reset(); } }
+      new MutationObserver(chk).observe(sl, { attributes: true, attributeFilter: ["class"] }); chk();
+    }
+    svg.watch = watch; setTimeout(function () { watch(); }, 0); setTimeout(watch, 300);
     return svg;
   }
   function visualLook() {
