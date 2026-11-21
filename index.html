@@ -185,10 +185,10 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 /* founder note + reverse shredder */
 
 .sigsvg{display:block;width:180px;height:auto;margin:2px 0 0;overflow:visible;transform:rotate(-3deg);transform-origin:left center}
-.sigsvg path{fill:none;stroke:#7D95FF;stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:100;stroke-dashoffset:100;opacity:0}
+.sigsvg>path{fill:none;stroke:#7D95FF;stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:100;stroke-dashoffset:100;opacity:0}
 .sigsvg circle{fill:#7D95FF;opacity:0;transition:opacity .15s}
 .sigsvg .pen{opacity:0;transition:opacity .25s}
-.sigsvg.done path{stroke-dashoffset:0;opacity:1}.sigsvg.done circle{opacity:1}
+.sigsvg.done>path{stroke-dashoffset:0;opacity:1}.sigsvg.done circle{opacity:1}
 .note .sig{margin-top:2px}
 .optctl{margin-top:16px}
 .gridslide{position:relative}
@@ -930,7 +930,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.33";
+  var APP_VERSION = "0.34";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -3704,7 +3704,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     });
     var dot = document.createElementNS(NS, "circle"); dot.setAttribute("cx", "240"); dot.setAttribute("cy", "74"); dot.setAttribute("r", "2.8"); svg.append(dot);
     var pen = document.createElementNS(NS, "g"); pen.setAttribute("class", "pen");
-    pen.innerHTML = '<g transform="scale(1.25) rotate(32)" style="filter:drop-shadow(0 0 3px rgba(125,149,255,.9))"><path d="M0 0L-3.5-13L3.5-13Z" fill="#ffd966" stroke="#1b2350" stroke-width=".8"/><path d="M-5-13H5L7.500-46H-7.500Z" fill="#f4f1ff" stroke="#1b2350" stroke-width=".8" stroke-linejoin="round"/><rect x="-8" y="-50" width="16" height="5" rx="1.500" fill="#ffd966" stroke="#1b2350" stroke-width=".8"/><path d="M-7.500-50H7.500L6-82H-6Z" fill="#7D95FF" stroke="#1b2350" stroke-width=".8" stroke-linejoin="round"/><rect x="3.500" y="-78" width="1.800" height="22" rx=".9" fill="#ffffff" opacity=".8"/></g>';
+    pen.innerHTML = '<g transform="scale(1.25) rotate(32)"><path d="M-7.500-50H7.500L6-82H-6L-7.500-50L-5-13H5L7.500-50" fill="none" stroke="#7D95FF" stroke-opacity=".45" stroke-width="7" stroke-linejoin="round"/><path d="M0 0L-3.5-13L3.5-13Z" fill="#ffd966" stroke="#1b2350" stroke-width=".8"/><path d="M-5-13H5L7.500-46H-7.500Z" fill="#f4f1ff" stroke="#1b2350" stroke-width=".8" stroke-linejoin="round"/><rect x="-8" y="-50" width="16" height="5" rx="1.500" fill="#ffd966" stroke="#1b2350" stroke-width=".8"/><path d="M-7.500-50H7.500L6-82H-6Z" fill="#7D95FF" stroke="#1b2350" stroke-width=".8" stroke-linejoin="round"/><rect x="3.500" y="-78" width="1.800" height="22" rx=".9" fill="#ffffff" opacity=".8"/></g>';
     svg.append(pen);
     var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches, raf = 0, T0 = 0;
     var lens = paths.map(function (p) { return p.getTotalLength(); }), sum = lens.reduce(function (a, b) { return a + b; }, 0), TOTAL = 1500;
