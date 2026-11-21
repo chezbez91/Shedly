@@ -416,6 +416,11 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 :root[data-theme=forest] .shred-dim{background:rgba(6,14,10,.7)}
 
 /* ---------- sheets (workshop, import, unlock reveal) ---------- */
+.swc-hint{position:fixed;left:0;right:0;top:calc(env(safe-area-inset-top) + 64px);display:flex;flex-direction:column;align-items:center;gap:4px;pointer-events:none;z-index:60;animation:swcfade 4.2s ease both}
+.swc-bar{width:44px;height:5px;border-radius:3px;background:var(--ink);opacity:.35}
+.swc-hand{font-size:40px;line-height:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,.35));animation:swcdrop 1.15s ease-in-out 3}
+@keyframes swcdrop{0%{transform:translateY(-10px);opacity:0}25%{opacity:1}75%{transform:translateY(46px);opacity:1}100%{transform:translateY(58px);opacity:0}}
+@keyframes swcfade{0%,85%{opacity:1}100%{opacity:0}}
 .sheet{position:fixed;inset:0;z-index:30;background:var(--paper);overflow-y:auto;overscroll-behavior:contain;padding:calc(env(safe-area-inset-top) + 14px) 20px calc(env(safe-area-inset-bottom) + 48px);animation:sheetIn .3s cubic-bezier(.2,.8,.2,1)}
 .sheet:focus{outline:none}
 .sheet-in{max-width:560px;margin:0 auto}
@@ -938,7 +943,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.36";
+  var APP_VERSION = "0.37";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -2758,6 +2763,39 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   //  Sheets, the workshop and the unlock reveal
   // =====================================================================
   var sheetEl = null, sheetReturn = null;
+  // Swipe down to close: pop-ups follow the finger, and a hand shows how the first few times.
+  var swcHint = null;
+  function hideSwcHint() { if (swcHint) { swcHint.remove(); swcHint = null; } }
+  function showSwcHint(host) {
+    var tp = state.profile.tips || (state.profile.tips = {}); if ((tp.swc || 0) >= 3 || reduceMotion) return;
+    setTimeout(function () {
+      if (!document.contains(host)) return; tp.swc = (tp.swc || 0) + 1; save();
+      hideSwcHint(); swcHint = h("div", { class: "swc-hint", "aria-hidden": "true" }, [h("i", { class: "swc-bar" }), h("span", { class: "swc-hand", text: "\ud83d\udc47" })]);
+      host.append(swcHint); var me = swcHint; setTimeout(function () { if (swcHint === me) hideSwcHint(); }, 4200);
+    }, 1100);
+  }
+  function swipeDown(panel, close, scrollerTop, canStart) {
+    var y0 = null, x0 = 0, dy = 0, drag = false;
+    panel.addEventListener("touchstart", function (e) {
+      if (e.touches.length !== 1 || (canStart && !canStart(e))) { y0 = null; return; }
+      y0 = e.touches[0].clientY; x0 = e.touches[0].clientX; dy = 0; drag = false; hideSwcHint();
+    }, { passive: true });
+    panel.addEventListener("touchmove", function (e) {
+      if (y0 === null) return; var t = e.touches[0], ddy = t.clientY - y0, ddx = t.clientX - x0;
+      if (!drag) {
+        if (ddy > 10 && ddy > Math.abs(ddx) * 1.5 && scrollerTop() <= 0) { drag = true; y0 = t.clientY; }
+        else { if (Math.abs(ddx) > 14 || ddy < -6 || (ddy > 6 && scrollerTop() > 0)) y0 = null; return; }
+      }
+      dy = Math.max(0, t.clientY - y0); panel.style.transition = "none"; panel.style.transform = "translateY(" + dy + "px)"; panel.style.opacity = String(1 - Math.min(0.5, dy / 600));
+      if (e.cancelable) e.preventDefault();
+    }, { passive: false });
+    function end() {
+      if (!drag) { y0 = null; return; } drag = false; y0 = null;
+      if (dy > 110) { panel.style.transition = "transform .22s ease-in,opacity .22s"; panel.style.transform = "translateY(100%)"; panel.style.opacity = "0"; setTimeout(function () { close(); panel.style.transition = panel.style.transform = panel.style.opacity = ""; }, 210); }
+      else { panel.style.transition = "transform .25s ease-out,opacity .25s"; panel.style.transform = ""; panel.style.opacity = ""; setTimeout(function () { panel.style.transition = ""; }, 260); }
+    }
+    panel.addEventListener("touchend", end); panel.addEventListener("touchcancel", end);
+  }
   function openSheet(label, build) {
     closeSheet(true);
     var ov = h("div", { class: "sheet", role: "dialog", "aria-modal": "true", "aria-label": label, tabindex: "-1" });
@@ -2766,10 +2804,11 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     document.body.append(ov); sheetEl = ov; setInert(true);
     build(inner, function () { closeSheet(); });
     ov.focus({ preventScroll: true });
+    swipeDown(ov, function () { closeSheet(); }, function () { return ov.scrollTop; }); showSwcHint(ov);
   }
   function closeSheet(silent) {
     if (!sheetEl) return;
-    sheetEl.remove(); sheetEl = null; setInert(false);
+    hideSwcHint(); sheetEl.remove(); sheetEl = null; setInert(false);
     if (!silent) {
       try { if (sheetReturn && sheetReturn.focus && document.contains(sheetReturn)) sheetReturn.focus({ preventScroll: true }); } catch (e) {}
       render();
@@ -3612,11 +3651,16 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   //  Dictation: say it, don't type it (the phone's own speech service does the listening)
   // =====================================================================
   var SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition, dictRec = null;
+  function dictLang() {
+    var base = { "en-GB": "en-GB", "en-US": "en-US", es: "es-ES", fr: "fr-FR", de: "de-DE", it: "it-IT", pt: "pt-PT", nl: "nl-NL", pl: "pl-PL", zh: "zh-CN", tl: "fil-PH", ceb: "fil-PH", ru: "ru-RU", uk: "uk-UA" }[LANG] || "en-GB";
+    var nl = navigator.language || ""; if (nl.slice(0, 2).toLowerCase() === base.slice(0, 2) && LANG !== "tl" && LANG !== "ceb" && LANG !== "zh") return nl;
+    return base;
+  }
   function startDictation() {
     var mic = $("micBtn"), inp = $("newItem"); if (!SpeechRec || inp.disabled) return;
     var base = inp.value.trim() ? inp.value.trim() + " " : "";
     try { dictRec = new SpeechRec(); } catch (e) { return; }
-    dictRec.lang = navigator.language || "en-GB"; dictRec.interimResults = true; dictRec.continuous = false; dictRec.maxAlternatives = 1;
+    dictRec.lang = dictLang(); dictRec.interimResults = true; dictRec.continuous = false; dictRec.maxAlternatives = 1;
     dictRec.onresult = function (e) {
       var t = ""; for (var i = 0; i < e.results.length; i++) t += e.results[i][0].transcript;
       inp.value = (base + t).slice(0, 120); updatePreview();
@@ -4051,12 +4095,17 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     };
     document.addEventListener("keydown", root._keys);
     root._cleanup = function () { window.removeEventListener("resize", tourResize); };
+    if (mode === "replay") {
+      if (!root._swc) { root._swc = true; swipeDown(root, function () { logEvent("tour_closed", { swipe: 1 }); closeTour(); }, function () { var l = root.querySelector(".slide.live"); return l ? l.scrollTop : 0; }, function () { return tourMode === "replay" && !root.querySelector(".gdetail"); }); }
+      showSwcHint(root);
+    }
   }
   function closeTour() {
     var root = $("onboard");
     document.removeEventListener("keydown", root._keys);
     if (root._cleanup) root._cleanup();
     counterTimers.forEach(clearTimeout);
+    hideSwcHint(); root.style.transform = root.style.opacity = root.style.transition = "";
     root.hidden = true; root.textContent = ""; setInert(false);
     tourMode = null; render();
     var how = $("howBtn"); if (how) how.focus({ preventScroll: true });
