@@ -193,6 +193,34 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 @media (prefers-reduced-motion:reduce){.live .sigsvg path,.live .sigsvg circle{animation:none}}
 .note .sig{margin-top:2px}
 .optctl{margin-top:16px}
+.gtiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.gtile{position:relative;display:flex;flex-direction:column;border:2px solid var(--line);border-radius:20px;background:var(--surface);overflow:hidden;color:var(--ink);cursor:pointer;margin:0;text-align:left}
+.gtile.wide{grid-column:1/-1}
+.gtile .stage.tg{width:100%;flex:none;height:clamp(92px,14.5vh,128px);border-radius:0;padding:0;display:block}
+.gtile .stage.tg>.tin{position:absolute;left:50%;top:50%;width:310px;transform:translate(-50%,-50%) scale(var(--s,.45));pointer-events:none}
+.gtile .stage.tg .mini{max-width:none}
+.gtile.wide .stage.tg{height:clamp(60px,8vh,76px)}
+.tfoot{display:block;padding:10px 12px 12px;font-weight:700;font-size:14px;line-height:1.25;flex:1}
+.gtile>input{position:absolute;top:8px;right:8px;z-index:2;box-shadow:0 0 0 2px var(--surface)}
+.gtile.wide .tin{width:440px}
+.gtile .tabs4{flex-wrap:nowrap;white-space:nowrap;justify-content:center}
+.gtile>input{appearance:none;-webkit-appearance:none;width:42px;height:25px;border-radius:999px;background:var(--line);flex:none;transition:background .2s;cursor:pointer;margin:0}
+.gtile>input::after{content:"";position:absolute;top:3px;left:3px;width:19px;height:19px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.gtile>input:checked{background:var(--card)}
+.gtile>input:checked::after{transform:translateX(17px)}
+.gtile:has(input:not(:checked)) .stage.tg{opacity:.45;filter:saturate(.4)}
+.gtile.static{cursor:default}
+.tilenote{margin:12px 2px 0}
+.ntiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px}
+.ntile{display:flex;flex-direction:column;gap:10px;border:2px solid var(--line);border-radius:18px;background:var(--surface);padding:14px 12px 12px;font-weight:700;font-size:14px;line-height:1.2;color:var(--ink);cursor:pointer;margin:0}
+.ntile .ico{font-size:26px;line-height:1}
+.ntile .nrow{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.ntile input{appearance:none;-webkit-appearance:none;width:42px;height:25px;border-radius:999px;background:var(--line);position:relative;flex:none;transition:background .2s;cursor:pointer;margin:0}
+.ntile input::after{content:"";position:absolute;top:3px;left:3px;width:19px;height:19px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.ntile input:checked{background:var(--card)}
+.ntile input:checked::after{transform:translateX(17px)}
+.nitems .toggle{padding:10px 14px;margin:0 0 8px;font-size:14px}
+.nitems .toggle small{display:block;font-weight:500;color:var(--muted);font-size:12px;margin-top:2px}
 .slide .stage.opt{height:clamp(160px,24vh,210px)}
 .optctl .circles{margin:0}
 .wxmini{position:relative;width:100%;max-width:300px;height:150px;border-radius:20px;overflow:hidden;background:linear-gradient(#35507A,#8FA6C4)}
@@ -472,8 +500,8 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 .tile .sw{display:flex;width:100%;height:10px;border-radius:6px;overflow:hidden;margin-top:auto;border:1px solid var(--line)}
 .tile .sw i{flex:1}
 .why-d{margin-top:18px}
-.remind-card{border:2px solid var(--line);border-radius:18px;padding:14px 16px;margin:0 0 14px;background:var(--surface)}
-.remind-state{margin:0 0 12px;font-size:15px;line-height:1.4}
+.remind-card{display:flex;align-items:center;justify-content:space-between;gap:12px;border:2px solid var(--line);border-radius:18px;padding:12px 16px;margin:0 0 12px;background:var(--surface)}
+.remind-state{margin:0;font-size:15px;line-height:1.4}
 .remind-card .pill{width:auto;padding:10px 18px;font-size:14px}
 .mini-remind{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:16px 18px;max-width:300px;margin:0 auto;text-align:left}
 .mini-remind .rn{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:6px}
@@ -836,7 +864,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.24";
+  var APP_VERSION = "0.25";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -1898,24 +1926,32 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     openSheet("Notifications", function (inner, close) {
       inner.append(sheetHead("Notifications", close));
       var on = !!state.profile.remindOn;
-      var status = on ? (remindSyncedAt ? "On. Last synced " + ago(remindSyncedAt) + "." : "On. Syncing your reminders.") : "Off. Nothing is sent until you turn reminders on.";
       inner.append(h("div", { class: "remind-card" }, [
-        h("p", { class: "remind-state", text: status }),
+        h("p", { class: "remind-state", text: on ? "Reminders are on." : "Reminders are off." }),
         h("button", { class: "pill", type: "button", id: on ? "remindOff" : "remindOn", text: on ? "Turn reminders off" : "Turn reminders on", onclick: on ? disableReminders : enableReminders })
       ]));
-      inner.append(h("p", { class: "fine-print", text: "Reminders are sent through Shedly's reminder service. It only gets reminder dates and your on/off choices, and never item names unless you turn names on." }));
-      NOTIFY_TYPES.forEach(function (t) {
-        inner.append(toggleRow(t[1], state.profile.notify[t[0]], function (on) { state.profile.notify[t[0]] = on; save(); }, t[2]));
-      });
-      inner.append(toggleRow("Show item names", state.profile.notify.names, function (on) { state.profile.notify.names = on; save(); },
-        "Off: a reminder says “An item is ending soon” rather than naming it, so the lock screen stays private."));
-      inner.append(h("h2", { class: "sec", text: "Item reminders" }));
+      var ICONS = { weekly: "\ud83d\udcc5", deadline: "\u23f0", stale: "\ud83d\udd78\ufe0f", streak: "\ud83d\udd25", names: "\ud83d\udc41\ufe0f" };
+      var grid = h("div", { class: "ntiles" });
+      var ntile = function (key, label) {
+        var box = h("input", { type: "checkbox", "aria-label": label }); box.checked = !!state.profile.notify[key];
+        box.addEventListener("change", function () { state.profile.notify[key] = box.checked; save(); });
+        grid.append(h("label", { class: "ntile" }, [h("span", { class: "ico", "aria-hidden": "true", text: ICONS[key] }), h("span", { class: "nrow" }, [h("span", { text: label }), box])]));
+      };
+      NOTIFY_TYPES.forEach(function (t) { ntile(t[0], t[1]); });
+      ntile("names", "Show item names");
+      inner.append(grid);
       var dated = state.items.filter(function (i) { return i.due != null; }).sort(function (a, b) { return a.due - b.due; });
-      if (!dated.length) inner.append(h("p", { class: "fine-print", text: "Add a date to an item, like “Amazon trial ends 3 Dec”, and you can choose a reminder for just that one here." }));
-      dated.forEach(function (it) {
-        var cap = dueLabel(it); cap = cap.charAt(0).toUpperCase() + cap.slice(1);
-        inner.append(toggleRow(it.text, remindOn(it), function (on) { it.remind = on; save(); }, cap + ". Reminds you a week, three days and one day before."));
-      });
+      if (dated.length) {
+        inner.append(h("h2", { class: "sec", text: "Item reminders" }));
+        var box = h("div", { class: "nitems" });
+        dated.forEach(function (it) {
+          var cap = dueLabel(it); cap = cap.charAt(0).toUpperCase() + cap.slice(1);
+          var tg = toggleRow(it.text, remindOn(it), function (on) { it.remind = on; save(); });
+          tg.querySelector("label span").append(h("small", { text: cap }));
+          box.append(tg);
+        });
+        inner.append(box);
+      }
       inner.append(h("p", { class: "fine-print", text: "Quiet hours: nothing between 9 pm and 8 am. At most one reminder a day, and about two a week." }));
     });
   }
@@ -2007,6 +2043,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
       { id: "workshopBtn", label: "Shredder workshop", value: "", open: openWorkshop },
       { id: "collectionBtn", label: "Collection", value: SKINS.filter(isUnlocked).length + " of " + SKINS.length, open: collectionSheet },
       { id: "importBtn", label: "Import a list", value: "", open: openImport },
+      { id: "setSwipe", label: "Swipe between screens", value: p.swipeNav ? "On" : "Off", noChev: true, open: function () { p.swipeNav = !p.swipeNav; save(); logEvent("swipe_setting", { on: p.swipeNav }); toast(p.swipeNav ? "Swipe left or right to change screen." : "Swipe is off.", true); renderYou(); var b = $("setSwipe"); if (b) b.focus({ preventScroll: true }); } },
       { id: "tile-sharing", label: "Sharing and testing", value: p.analytics ? "On" : "Off", open: sharingSheet },
       { id: "tile-data", label: "Your data", value: "", open: dataSheet },
       { id: "plusBtn", label: "Shedly Plus", value: p.plus ? "Preview on" : "Not open yet", open: plusSheet },
@@ -2014,10 +2051,9 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     ];
     var list = h("div", { class: "rows" });
     rows.forEach(function (r) {
-      list.append(h("button", { class: "rowbtn", type: "button", id: r.id, onclick: r.open }, [h("span", { text: r.label }), h("span", { class: "rv" }, [r.value ? h("em", { text: r.value }) : null, h("i", { class: "chev", "aria-hidden": "true" })])]));
+      list.append(h("button", { class: "rowbtn", type: "button", id: r.id, onclick: r.open }, [h("span", { text: r.label }), h("span", { class: "rv" }, [r.value ? h("em", { text: r.value }) : null, r.noChev ? null : h("i", { class: "chev", "aria-hidden": "true" })])]));
     });
     root.append(list);
-    root.append(h("div", { class: "swiperow" }, [toggleRow("Swipe between screens", !!p.swipeNav, function (on) { p.swipeNav = on; save(); logEvent("swipe_setting", { on: on }); toast(on ? "Swipe left or right to change screen." : "Swipe is off.", true); }, "Swipe left or right anywhere on Review, List, Shed or You to move to the next screen.", "setSwipe")]));
     root.append(installCard());
   }
 
@@ -3599,15 +3635,20 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     tourMode = mode;
     var root = $("onboard"); root.textContent = ""; root.hidden = false; setInert(true);
 
+    function tut(vis, scale, label, cls) { return h("div", { class: "gtile static" + (cls ? " " + cls : "") }, [h("div", { class: "stage tg " + (cls && cls.indexOf("l") >= 0 ? "l" : "y") }, [h("div", { class: "tin", style: "--s:" + scale }, [vis])]), h("span", { class: "tfoot", text: label })]); }
+    function tutSlide(title, tiles) { return h("section", { class: "slide" }, [h("div", { class: "slide-in" }, [h("h2", { text: title }), h("div", { class: "gtiles" }, tiles)])]); }
     var tutorial = [
-      slide("y", visualList(), "A to-do list that gets shorter.", "Every other app helps you add things. Shedly helps you let go of one. <strong>Once a week.</strong> That's the whole trick."),
-      slide("l", visualTyped(), "Type it like you'd say it.", "Add anything you've said yes to: tasks, meetings, subscriptions. Put a price on it and Shedly does the sums. <strong>Yes, even that one you forgot about.</strong>"),
-      slide("y", visualTicket(), "Once a week, one question.", "Is this still a yes? Shed it, or keep it with one line on why. We'll quote you next time. <strong>“Just in case” is allowed.</strong> It reads worse the second time."),
-      slide("y", visualShelf(), "Earn your shredder.", "Shedding unlocks new machines: at 3, 10, 25 things, and then streaks. Then make it yours with a nameplate, a light and a cut style. <strong>Brass is for the long haul.</strong>"),
-      slide("l", visualNudge(), "It notices things.", "Renewals coming up, what each use really costs, and a line when you've kept something again and again. <strong>Never a rule. Always your call.</strong>"),
-      slide("y", visualRemind(), "Hear about it before it ends.", "Turn on reminders in You, under Notifications. Pick the deadlines you want: a week, three days and one day before. <strong>Quiet after 9 pm, and never more than one a day.</strong>"),
-      slide("l", visualTotal(), "Watch the number go up.", "Every shed adds to your total, and to what you've freed up if it had a price. Miss a week and nothing explodes. <strong>Miss a month and we'll mention it.</strong>"),
-      slide("y", visualTabs(), "Four screens. One swipe.", "Review is your weekly question, List is everything you've said yes to, Shed is your total and your machines, You is settings. <strong>Switch on swiping in You and flick between them.</strong>")
+      tutSlide("How Shedly works", [
+        tut(visualList(), .42, "A to-do list that gets shorter."),
+        tut(visualTyped(), .5, "Type it like you'd say it.", "l"),
+        tut(visualTicket(), .5, "Once a week, one question."),
+        tut(visualTotal(), .45, "Watch the number go up.", "l")
+      ]),
+      tutSlide("Make it yours", [
+        tut(visualShelf(), .5, "Earn your shredder."),
+        tut(visualNudge(), .5, "It notices things.", "l"),
+        tut(visualTabs(), .62, "Four screens. One swipe.", "wide")
+      ])
     ];
     var slides = tutorial.slice(), introCount = 0;
 
@@ -3621,7 +3662,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
       fCur = h("select", { id: "obCur" });
       optionList(fCur, CURRENCIES, function (c) { return c + " · " + currencyName(c); }, currencyOf(detected) || "EUR");
       fCountry.addEventListener("change", function () { var c = currencyOf(fCountry.value); if (c) fCur.value = c; });
-      var fAn = h("input", { type: "checkbox", id: "obAnalytics", "aria-label": "Help test Shedly" }); fAn.checked = mode === "update" && !!state.profile.analytics;
+      var fAn = h("input", { type: "checkbox", id: "obAnalytics", "aria-label": "Help test Shedly" }); fAn.checked = true;
       var langSlide = slide("l opt", h("div", { class: "globe", "aria-hidden": "true", html: "\ud83c\udf0d" }), "Choose your language.", "", h("div", { class: "optctl" }, [langChips()]));
       var founder = slide("y short", visualReverse(), "A note from Liam.", "", h("div", { class: "note" }, [
         h("p", { text: "Hi, I'm Liam, the founder of Shedly." }),
@@ -3656,15 +3697,21 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
           Array.prototype.forEach.call(circs.children, function (c) { var on = c.id === "ob-circle-" + t.id; c.classList.toggle("on", on); c.setAttribute("aria-pressed", String(on)); });
         } }, [dot, h("span", { text: t.name })]));
       });
-      function optSlide(stage, visual, title, lede, ctl, fine) {
-        return slide(stage, visual, title, lede, h("div", { class: "optctl" }, [ctl, h("p", { class: "fine-print", text: fine })]));
-      }
       var optLook = slide("y opt", visualLook(), "Pick your look.", "Dark or light, calm or loud. <strong>Tap one and the app changes right now.</strong>", h("div", { class: "optctl" }, [circs]));
-      var optWx = optSlide("l opt", visualWeather(), "Weather in your sky.", "Rain, sun, snow and a real moon, matching what's outside. <strong>Totally optional.</strong>", tg("Show today's weather in the sky", fWx), "Asks for your approximate location once, then sends it rounded to about 10 km to Open-Meteo to look up the weather. Nothing else is sent.");
-      var optRem = optSlide("y opt", visualRemind(), "Hear about it before it ends.", "A quiet nudge a week, three days and a day before something ends. <strong>Quiet after 9 pm, never more than one a day.</strong>", tg("Remind me before things end", fRem), "Your phone will ask for permission. You choose which items remind you, in You \u2192 Notifications.");
-      var optSwipe = optSlide("l opt", visualSwipe(), "Tap, or just swipe.", "Flick left or right to go from Review to List, Shed and You. <strong>The tabs at the bottom still work either way.</strong>", tg("Swipe between screens", fSwipe), "Turn it off any time in You.");
-      var optData = optSlide("y opt", visualOwn(), "Your data.", "Your list stays on this phone. No account, no email. <strong>Help us test Shedly if you like.</strong>", tg("Share anonymous usage", fAn), "Records which screens and buttons you use, with all text hidden. Item names, prices and notes are never sent. Export or erase everything any time in You.");
-      var opts = [optLook, optWx, optRem, optSwipe, optData];
+      function optTile(vis, scale, label, box, cls) {
+        return h("label", { class: "gtile" + (cls ? " " + cls : "") }, [h("div", { class: "stage tg " + (cls && cls.indexOf("l") === 0 ? "l" : "y") }, [h("div", { class: "tin", style: "--s:" + scale }, [vis])]), h("span", { class: "tfoot", text: label }), box]);
+      }
+      var optAll = h("section", { class: "slide" }, [h("div", { class: "slide-in" }, [
+        h("h2", { text: "Switch on what you want." }),
+        h("div", { class: "gtiles" }, [
+          optTile(visualWeather(), .5, "Show today's weather", fWx, "l"),
+          optTile(visualRemind(), .42, "Remind me before things end", fRem, "y"),
+          optTile(visualSwipe(), .36, "Swipe between screens", fSwipe, "y"),
+          optTile(visualOwn(), .5, "Share anonymous usage", fAn, "l")
+        ]),
+        h("p", { class: "fine-print tilenote", text: "Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type." })
+      ])]);
+      var opts = [optLook, optAll];
       if (mode === "update") { slides = [langSlide, founder].concat(opts); introCount = slides.length; } else { slides = [langSlide, founder, setup].concat(opts, tutorial); introCount = 3 + opts.length; }
       fName.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); goTo(2); } });
     }

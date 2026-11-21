@@ -388,7 +388,9 @@ window.I18N = {
 "You shed ": "Soltaste ",
 " {0} days ago. Do you miss it?": " hace {0} días. ¿Lo echas de menos?",
 "You're one of the first people to try Shedly. <strong>Sharing anonymous usage is the fastest way to make it better.</strong> It shows us which screens help, which get in the way, and where people get stuck.": "Eres de las primeras personas en probar Shedly. <strong>Compartir uso anónimo es la forma más rápida de mejorarla.</strong> Nos muestra qué pantallas",
-"Dictation uses your phone's own speech service. On most phones that means your voice is sent to Apple or Google to be turned into text. Shedly never receives or keeps the audio.": "El dictado usa el servicio de voz de tu teléfono. En la mayoría de móviles tu voz se envía a Apple o Google para convertirla en texto. Shedly nunca r"
+"Dictation uses your phone's own speech service. On most phones that means your voice is sent to Apple or Google to be turned into text. Shedly never receives or keeps the audio.": "El dictado usa el servicio de voz de tu teléfono. En la mayoría de móviles tu voz se envía a Apple o Google para convertirla en texto. Shedly nunca r",
+"Switch on what you want.": "Activa lo que quieras.",
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "El tiempo usa tu ubicación una vez, redondeada a unos 10 km. Los datos de uso son anónimos y nunca incluyen lo que escribes."
 },
 "fr": {
 "Review": "Revoir",
@@ -779,7 +781,9 @@ window.I18N = {
 "You shed ": "Tu as lâché ",
 " {0} days ago. Do you miss it?": " il y a {0} jours. Il te manque ?",
 "You're one of the first people to try Shedly. <strong>Sharing anonymous usage is the fastest way to make it better.</strong> It shows us which screens help, which get in the way, and where people get stuck.": "Tu fais partie des premières personnes à essayer Shedly. <strong>Partager l'usage anonyme est le moyen le plus rapide de l'améliorer.</strong> Cela nous montre quels écrans",
-"Dictation uses your phone's own speech service. On most phones that means your voice is sent to Apple or Google to be turned into text. Shedly never receives or keeps the audio.": "La dictée utilise le service vocal de ton téléphone. Sur la plupart, ta voix est envoyée à Apple ou Google pour être transcrite. Shedly ne r"
+"Dictation uses your phone's own speech service. On most phones that means your voice is sent to Apple or Google to be turned into text. Shedly never receives or keeps the audio.": "La dictée utilise le service vocal de ton téléphone. Sur la plupart, ta voix est envoyée à Apple ou Google pour être transcrite. Shedly ne r",
+"Switch on what you want.": "Active ce que vous voulez.",
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "La météo utilise votre position une fois, arrondie à environ 10 km. Les données d'usage sont anonymes et n'incluent jamais ce que vous saisissez."
 },
 "de": {
 "Review": "Prüfen",
@@ -1170,7 +1174,9 @@ window.I18N = {
 "You shed ": "Du hast ",
 " {0} days ago. Do you miss it?": " vor {0} Tagen losgelassen. Fehlt es dir?",
 "You're one of the first people to try Shedly. <strong>Sharing anonymous usage is the fastest way to make it better.</strong> It shows us which screens help, which get in the way, and where people get stuck.": "Du gehörst zu den Ersten, die Shedly ausprobieren. <strong>Anonyme Nutzung zu teilen ist der schnellste Weg, es besser zu machen.</strong> Wir sehen, welche Bildschirme",
-"Dictation uses your phone's own speech service. On most phones that means your voice is sent to Apple or Google to be turned into text. Shedly never receives or keeps the audio.": "Diktieren nutzt den Sprachdienst deines Handys. Bei den meisten wird deine Stimme zur Umwandlung in Text an Apple oder Google gesendet. Shedly sp"
+"Dictation uses your phone's own speech service. On most phones that means your voice is sent to Apple or Google to be turned into text. Shedly never receives or keeps the audio.": "Diktieren nutzt den Sprachdienst deines Handys. Bei den meisten wird deine Stimme zur Umwandlung in Text an Apple oder Google gesendet. Shedly sp",
+"Switch on what you want.": "Schalte ein, was du willst.",
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Das Wetter nutzt deinen Standort einmal, auf etwa 10 km gerundet. Nutzungsdaten sind anonym und enthalten nie, was du eingibst."
 },
 "it": {
 "Review": "Rivedi",
@@ -1561,7 +1567,9 @@ window.I18N = {
 "You shed ": "Hai lasciato ",
 " {0} days ago. Do you miss it?": " {0} giorni fa. Ti manca?",
 "You're one of the first people to try Shedly. <strong>Sharing anonymous usage is the fastest way to make it better.</strong> It shows us which screens help, which get in the way, and where people get stuck.": "Sei una delle prime persone a provare Shedly. <strong>Condividere l'uso anonimo è il modo più veloce per migliorarla.</strong> Ci mostra quali schermate",
-"Dictation uses your phone's own speech service. On most phones that means your voice is sent to Apple or Google to be turned into text. Shedly never receives or keeps the audio.": "La dettatura usa il servizio vocale del tuo telefono. Sulla maggior parte, la tua voce viene inviata ad Apple o Google per trasformarla in testo. Shedly non r"
+"Dictation uses your phone's own speech service. On most phones that means your voice is sent to Apple or Google to be turned into text. Shedly never receives or keeps the audio.": "La dettatura usa il servizio vocale del tuo telefono. Sulla maggior parte, la tua voce viene inviata ad Apple o Google per trasformarla in testo. Shedly non r",
+"Switch on what you want.": "Attiva ciò che vuoi.",
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Il meteo usa la tua posizione una volta, arrotondata a circa 10 km. I dati d'uso sono anonimi e non includono mai ciò che scrivi."
 },
 "pt": {
 "Review": "Rever",
@@ -1952,7 +1960,9 @@ window.I18N = {
 "You shed ": "Soltaste ",
 " {0} days ago. Do you miss it?": " há {0} dias. Tens saudades?",
 "You're one of the first people to try Shedly. <strong>Sharing anonymous usage is the fastest way to make it better.</strong> It shows us which screens help, which get in the way, and where people get stuck.": "És das primeiras pessoas a experimentar o Shedly. <strong>Partilhar utilização anónima é a forma mais rápida de o melhorar.</strong> Mostra-nos que ecrãs",
-"Dictation uses your phone's own speech service. On most phones that means your voice is sent to Apple or Google to be turned into text. Shedly never receives or keeps the audio.": "O ditado usa o serviço de voz do teu telemóvel. Na maioria, a tua voz é enviada à Apple ou à Google para ser convertida em texto. O Shedly nunca r"
+"Dictation uses your phone's own speech service. On most phones that means your voice is sent to Apple or Google to be turned into text. Shedly never receives or keeps the audio.": "O ditado usa o serviço de voz do teu telemóvel. Na maioria, a tua voz é enviada à Apple ou à Google para ser convertida em texto. O Shedly nunca r",
+"Switch on what you want.": "Ative o que quiser.",
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "O tempo usa a sua localização uma vez, arredondada a cerca de 10 km. Os dados de utilização são anónimos e nunca incluem o que escreve."
 },
 "nl": {
 "Review": "Bekijken",
@@ -2343,7 +2353,9 @@ window.I18N = {
 "You shed ": "Je liet ",
 " {0} days ago. Do you miss it?": " {0} dagen geleden los. Mis je het?",
 "You're one of the first people to try Shedly. <strong>Sharing anonymous usage is the fastest way to make it better.</strong> It shows us which screens help, which get in the way, and where people get stuck.": "Je bent een van de eersten die Shedly uitprobeert. <strong>Anoniem gebruik delen is de snelste manier om het beter te maken.</strong> Het laat ons zien welke schermen",
-"Dictation uses your phone's own speech service. On most phones that means your voice is sent to Apple or Google to be turned into text. Shedly never receives or keeps the audio.": "Dicteren gebruikt de spraakdienst van je telefoon. Op de meeste telefoons wordt je stem naar Apple of Google gestuurd om tekst te maken. Shedly neemt nooit"
+"Dictation uses your phone's own speech service. On most phones that means your voice is sent to Apple or Google to be turned into text. Shedly never receives or keeps the audio.": "Dicteren gebruikt de spraakdienst van je telefoon. Op de meeste telefoons wordt je stem naar Apple of Google gestuurd om tekst te maken. Shedly neemt nooit",
+"Switch on what you want.": "Zet aan wat je wilt.",
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Het weer gebruikt je locatie één keer, afgerond op ongeveer 10 km. Gebruiksgegevens zijn anoniem en bevatten nooit wat je typt."
 },
 "pl": {
 "Review": "Przegląd",
@@ -2732,7 +2744,9 @@ window.I18N = {
 "Add {0} to my list": "Dodaj {0} do mojej listy",
 "Nothing selected": "Nic nie wybrano",
 "You shed ": "Puściłeś ",
-" {0} days ago. Do you miss it?": " {0} dni temu. Tęsknisz za tym?"
+" {0} days ago. Do you miss it?": " {0} dni temu. Tęsknisz za tym?",
+"Switch on what you want.": "Włącz, co chcesz.",
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Pogoda używa Twojej lokalizacji raz, zaokrąglonej do ok. 10 km. Dane o użyciu są anonimowe i nigdy nie zawierają tego, co wpisujesz."
 },
 "zh": {
 "Review": "回顾",
@@ -3121,7 +3135,9 @@ window.I18N = {
 "Add {0} to my list": "将 {0} 添加到我的清单",
 "Nothing selected": "未选择任何项",
 "You shed ": "你放手了 ",
-" {0} days ago. Do you miss it?": "{0} 天前。你想念它吗？"
+" {0} days ago. Do you miss it?": "{0} 天前。你想念它吗？",
+"Switch on what you want.": "开启你想要的功能。",
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "天气只会使用一次你的位置，并取整到约 10 公里。使用数据是匿名的，绝不包含你输入的内容。"
 },
 "tl": {
 "Review": "Suriin",
@@ -3510,7 +3526,9 @@ window.I18N = {
 "Add {0} to my list": "Idagdag ang {0} sa listahan ko",
 "Nothing selected": "Walang napili",
 "You shed ": "Nabitawan mo ang ",
-" {0} days ago. Do you miss it?": " {0} araw ang nakalipas. Na-miss mo ba ito?"
+" {0} days ago. Do you miss it?": " {0} araw ang nakalipas. Na-miss mo ba ito?",
+"Switch on what you want.": "I-on ang gusto mo.",
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Gagamitin ng panahon ang lokasyon mo nang isang beses, naka-round sa mga 10 km. Anonymous ang data ng paggamit at hindi kailanman kasama ang tina-type mo."
 },
 "ceb": {
 "Review": "Susiha",
@@ -3899,7 +3917,9 @@ window.I18N = {
 "Add {0} to my list": "Idugang ang {0} sa akong listahan",
 "Nothing selected": "Walay napili",
 "You shed ": "Nabuhi nimo ang ",
-" {0} days ago. Do you miss it?": " {0} ka adlaw ang milabay. Gimingaw ka ba niini?"
+" {0} days ago. Do you miss it?": " {0} ka adlaw ang milabay. Gimingaw ka ba niini?",
+"Switch on what you want.": "I-on ang gusto nimo.",
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Gamiton sa panahon ang imong lokasyon kausa, gi-round sa mga 10 km. Anonymous ang data sa paggamit ug dili gayod apil ang imong gi-type."
 },
 "ru": {
 "Review": "Обзор",
@@ -4288,7 +4308,9 @@ window.I18N = {
 "Add {0} to my list": "Добавить {0} в мой список",
 "Nothing selected": "Ничего не выбрано",
 "You shed ": "Вы отпустили ",
-" {0} days ago. Do you miss it?": " {0} дн. назад. Скучаете?"
+" {0} days ago. Do you miss it?": " {0} дн. назад. Скучаете?",
+"Switch on what you want.": "Включите то, что нужно.",
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Погода использует ваше местоположение один раз, округлённое до 10 км. Данные об использовании анонимны и никогда не включают то, что вы вводите."
 },
 "uk": {
 "Review": "Огляд",
@@ -4677,7 +4699,9 @@ window.I18N = {
 "Add {0} to my list": "Додати {0} до мого списку",
 "Nothing selected": "Нічого не обрано",
 "You shed ": "Ви відпустили ",
-" {0} days ago. Do you miss it?": " {0} дн. тому. Сумуєте?"
+" {0} days ago. Do you miss it?": " {0} дн. тому. Сумуєте?",
+"Switch on what you want.": "Увімкніть те, що потрібно.",
+"Weather uses your location once, rounded to about 10 km. Usage data is anonymous and never includes what you type.": "Погода використовує ваше місцезнаходження один раз, округлене до 10 км. Дані про використання анонімні й ніколи не містять того, що ви вводите."
 },
 "en-US": {
 "Customise the machine": "Customize the machine",
