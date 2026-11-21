@@ -943,7 +943,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.38";
+  var APP_VERSION = "0.39";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -3666,6 +3666,20 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     var nl = navigator.language || ""; if (nl.slice(0, 2).toLowerCase() === base.slice(0, 2) && LANG !== "tl" && LANG !== "ceb" && LANG !== "zh") return nl;
     return base;
   }
+  // Two short blips: rising when the microphone starts listening, falling when it stops.
+  function micChime(on) {
+    if (state.profile.sound === false) return;
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+      audioCtx = audioCtx || new AC(); if (audioCtx.state === "suspended") audioCtx.resume();
+      var ctx = audioCtx, t = ctx.currentTime + 0.01, notes = on ? [[587, 0], [880, 0.1]] : [[740, 0], [494, 0.1]];
+      notes.forEach(function (n) {
+        var o = ctx.createOscillator(), g = ctx.createGain(); o.type = on ? "sine" : "triangle"; o.frequency.value = n[0];
+        g.gain.setValueAtTime(0, t + n[1]); g.gain.linearRampToValueAtTime(0.16, t + n[1] + 0.012); g.gain.exponentialRampToValueAtTime(0.001, t + n[1] + 0.16);
+        o.connect(g); g.connect(ctx.destination); o.start(t + n[1]); o.stop(t + n[1] + 0.18);
+      });
+    } catch (e) {}
+  }
   function startDictation() {
     var mic = $("micBtn"), inp = $("newItem"); if (!SpeechRec || inp.disabled) return;
     var base = inp.value.trim() ? inp.value.trim() + " " : "";
@@ -3678,9 +3692,9 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     dictRec.onerror = function (e) {
       if (e && (e.error === "not-allowed" || e.error === "service-not-allowed")) toast("Microphone is off for Shedly. Turn it on in your phone or browser settings.", true);
     };
-    dictRec.onend = function () { mic.classList.remove("on"); mic.setAttribute("aria-pressed", "false"); dictRec = null; inp.focus(); };
+    dictRec.onend = function () { micChime(false); mic.classList.remove("on"); mic.setAttribute("aria-pressed", "false"); dictRec = null; inp.focus(); };
     mic.classList.add("on"); mic.setAttribute("aria-pressed", "true");
-    logEvent("dictation_used");
+    logEvent("dictation_used"); micChime(true);
     try { dictRec.start(); } catch (e) { mic.classList.remove("on"); mic.setAttribute("aria-pressed", "false"); dictRec = null; }
   }
   if (SpeechRec) {
