@@ -449,7 +449,17 @@ window.I18N = {
 "Free 1,000 a year to polish it.": "Ahorra 1.000 al año para pulirla.",
 "Shed 5 things on a Sunday. Good things take time.": "Elimina 5 cosas un domingo. Las cosas buenas tardan.",
 "Shed 5 things on a Sunday": "Elimina 5 cosas un domingo",
-"{0} of {1} Sunday sheds": "{0} de {1} eliminaciones en domingo"
+"{0} of {1} Sunday sheds": "{0} de {1} eliminaciones en domingo",
+"Back to the grid": "Volver a la cuadrícula",
+"Swipe or drag to meet them all.": "Desliza o arrastra para conocerlas todas.",
+"Bronze": "Bronce",
+"Silver": "Plata",
+"Gold": "Oro",
+"Level up: {0} at {1} weeks": "Sube de nivel: {0} a las {1} semanas",
+"Covers one missed week.": "Cubre una semana perdida.",
+"Covers {0} missed weeks.": "Cubre {0} semanas perdidas.",
+"Top tier. Nothing can stop you.": "Nivel máximo. Nada puede detenerte.",
+"{0} of {1} shields loaded": "{0} de {1} escudos cargados"
 },
 "fr": {
 "Review": "Revoir",
@@ -901,7 +911,17 @@ window.I18N = {
 "Free 1,000 a year to polish it.": "Libérez 1 000 par an pour la faire briller.",
 "Shed 5 things on a Sunday. Good things take time.": "Lâchez 5 choses un dimanche. Les bonnes choses prennent du temps.",
 "Shed 5 things on a Sunday": "Lâchez 5 choses un dimanche",
-"{0} of {1} Sunday sheds": "{0} sur {1} lâchers du dimanche"
+"{0} of {1} Sunday sheds": "{0} sur {1} lâchers du dimanche",
+"Back to the grid": "Retour à la grille",
+"Swipe or drag to meet them all.": "Glissez ou faites défiler pour toutes les rencontrer.",
+"Bronze": "Bronze",
+"Silver": "Argent",
+"Gold": "Or",
+"Level up: {0} at {1} weeks": "Niveau supérieur : {0} à {1} semaines",
+"Covers one missed week.": "Couvre une semaine manquée.",
+"Covers {0} missed weeks.": "Couvre {0} semaines manquées.",
+"Top tier. Nothing can stop you.": "Niveau maximal. Rien ne peut vous arrêter.",
+"{0} of {1} shields loaded": "{0} bouclier(s) sur {1} chargé(s)"
 },
 "de": {
 "Review": "Prüfen",
@@ -1353,7 +1373,17 @@ window.I18N = {
 "Free 1,000 a year to polish it.": "Gib 1.000 pro Jahr frei, um sie zu polieren.",
 "Shed 5 things on a Sunday. Good things take time.": "Lass 5 Dinge an einem Sonntag los. Gute Dinge brauchen Zeit.",
 "Shed 5 things on a Sunday": "Lass 5 Dinge an einem Sonntag los",
-"{0} of {1} Sunday sheds": "{0} von {1} Sonntags-Loslassen"
+"{0} of {1} Sunday sheds": "{0} von {1} Sonntags-Loslassen",
+"Back to the grid": "Zurück zum Raster",
+"Swipe or drag to meet them all.": "Wische oder ziehe, um alle kennenzulernen.",
+"Bronze": "Bronze",
+"Silver": "Silber",
+"Gold": "Gold",
+"Level up: {0} at {1} weeks": "Aufstieg: {0} nach {1} Wochen",
+"Covers one missed week.": "Deckt eine verpasste Woche ab.",
+"Covers {0} missed weeks.": "Deckt {0} verpasste Wochen ab.",
+"Top tier. Nothing can stop you.": "Höchste Stufe. Nichts hält dich auf.",
+"{0} of {1} shields loaded": "{0} von {1} Schilden geladen"
 },
 "it": {
 "Review": "Rivedi",
@@ -1805,7 +1835,17 @@ window.I18N = {
 "Free 1,000 a year to polish it.": "Libera 1.000 all'anno per lucidarla.",
 "Shed 5 things on a Sunday. Good things take time.": "Elimina 5 cose di domenica. Le cose buone richiedono tempo.",
 "Shed 5 things on a Sunday": "Elimina 5 cose di domenica",
-"{0} of {1} Sunday sheds": "{0} di {1} eliminazioni di domenica"
+"{0} of {1} Sunday sheds": "{0} di {1} eliminazioni di domenica",
+"Back to the grid": "Torna alla griglia",
+"Swipe or drag to meet them all.": "Scorri o trascina per conoscerle tutte.",
+"Bronze": "Bronzo",
+"Silver": "Argento",
+"Gold": "Oro",
+"Level up: {0} at {1} weeks": "Sali di livello: {0} a {1} settimane",
+"Covers one missed week.": "Copre una settimana saltata.",
+"Covers {0} missed weeks.": "Copre {0} settimane saltate.",
+"Top tier. Nothing can stop you.": "Livello massimo. Niente può fermarti.",
+"{0} of {1} shields loaded": "{0} di {1} scudi carichi"
 },
 "pt": {
 "Review": "Rever",
@@ -2257,7 +2297,17 @@ window.I18N = {
 "Free 1,000 a year to polish it.": "Liberte 1.000 por ano para a polir.",
 "Shed 5 things on a Sunday. Good things take time.": "Elimine 5 coisas num domingo. As coisas boas levam tempo.",
 "Shed 5 things on a Sunday": "Elimine 5 coisas num domingo",
-"{0} of {1} Sunday sheds": "{0} de {1} eliminações no domingo"
+"{0} of {1} Sunday sheds": "{0} de {1} eliminações no domingo",
+"Back to the grid": "Voltar à grelha",
+"Swipe or drag to meet them all.": "Deslize ou arraste para as conhecer todas.",
+"Bronze": "Bronze",
+"Silver": "Prata",
+"Gold": "Ouro",
+"Level up: {0} at {1} weeks": "Suba de nível: {0} às {1} semanas",
+"Covers one missed week.": "Cobre uma semana falhada.",
+"Covers {0} missed weeks.": "Cobre {0} semanas falhadas.",
+"Top tier. Nothing can stop you.": "Nível máximo. Nada o pode parar.",
+"{0} of {1} shields loaded": "{0} de {1} escudos carregados"
 },
 "nl": {
 "Review": "Bekijken",
@@ -2709,7 +2759,17 @@ window.I18N = {
 "Free 1,000 a year to polish it.": "Bevrijd 1.000 per jaar om hem te polijsten.",
 "Shed 5 things on a Sunday. Good things take time.": "Laat 5 dingen los op een zondag. Goede dingen duren even.",
 "Shed 5 things on a Sunday": "Laat 5 dingen los op een zondag",
-"{0} of {1} Sunday sheds": "{0} van {1} loslatingen op zondag"
+"{0} of {1} Sunday sheds": "{0} van {1} loslatingen op zondag",
+"Back to the grid": "Terug naar het raster",
+"Swipe or drag to meet them all.": "Veeg of sleep om ze allemaal te ontmoeten.",
+"Bronze": "Brons",
+"Silver": "Zilver",
+"Gold": "Goud",
+"Level up: {0} at {1} weeks": "Level up: {0} na {1} weken",
+"Covers one missed week.": "Dekt één gemiste week.",
+"Covers {0} missed weeks.": "Dekt {0} gemiste weken.",
+"Top tier. Nothing can stop you.": "Hoogste niveau. Niets houdt je tegen.",
+"{0} of {1} shields loaded": "{0} van {1} schilden geladen"
 },
 "pl": {
 "Review": "Przegląd",
@@ -3159,7 +3219,17 @@ window.I18N = {
 "Free 1,000 a year to polish it.": "Uwolnij 1000 rocznie, by ją wypolerować.",
 "Shed 5 things on a Sunday. Good things take time.": "Puść 5 rzeczy w niedzielę. Dobre rzeczy wymagają czasu.",
 "Shed 5 things on a Sunday": "Puść 5 rzeczy w niedzielę",
-"{0} of {1} Sunday sheds": "{0} z {1} puszczeń w niedzielę"
+"{0} of {1} Sunday sheds": "{0} z {1} puszczeń w niedzielę",
+"Back to the grid": "Wróć do siatki",
+"Swipe or drag to meet them all.": "Przesuń lub przeciągnij, by poznać wszystkie.",
+"Bronze": "Brąz",
+"Silver": "Srebro",
+"Gold": "Złoto",
+"Level up: {0} at {1} weeks": "Awans: {0} po {1} tygodniach",
+"Covers one missed week.": "Chroni jeden pominięty tydzień.",
+"Covers {0} missed weeks.": "Chroni {0} pominięte tygodnie.",
+"Top tier. Nothing can stop you.": "Najwyższy poziom. Nic cię nie powstrzyma.",
+"{0} of {1} shields loaded": "{0} z {1} tarcz naładowanych"
 },
 "zh": {
 "Review": "回顾",
@@ -3609,7 +3679,17 @@ window.I18N = {
 "Free 1,000 a year to polish it.": "每年节省 1,000，把它擦亮。",
 "Shed 5 things on a Sunday. Good things take time.": "周日放手 5 件事。好东西需要时间。",
 "Shed 5 things on a Sunday": "周日放手 5 件事",
-"{0} of {1} Sunday sheds": "周日已放手 {0}/{1}"
+"{0} of {1} Sunday sheds": "周日已放手 {0}/{1}",
+"Back to the grid": "返回网格",
+"Swipe or drag to meet them all.": "滑动或拖动，认识全部碎纸机。",
+"Bronze": "青铜",
+"Silver": "白银",
+"Gold": "黄金",
+"Level up: {0} at {1} weeks": "升级：{1} 周达到{0}",
+"Covers one missed week.": "可挽回一周的漏签。",
+"Covers {0} missed weeks.": "可挽回 {0} 周的漏签。",
+"Top tier. Nothing can stop you.": "最高等级。没有什么能拦住你。",
+"{0} of {1} shields loaded": "已装填 {0}/{1} 个护盾"
 },
 "tl": {
 "Review": "Suriin",
@@ -4059,7 +4139,17 @@ window.I18N = {
 "Free 1,000 a year to polish it.": "Magpalaya ng 1,000 kada taon para mapakintab ito.",
 "Shed 5 things on a Sunday. Good things take time.": "Bitawan ang 5 bagay tuwing Linggo. Mabagal ang mabubuting bagay.",
 "Shed 5 things on a Sunday": "Bitawan ang 5 bagay tuwing Linggo",
-"{0} of {1} Sunday sheds": "{0} sa {1} nabitawan tuwing Linggo"
+"{0} of {1} Sunday sheds": "{0} sa {1} nabitawan tuwing Linggo",
+"Back to the grid": "Bumalik sa grid",
+"Swipe or drag to meet them all.": "Mag-swipe o i-drag para makilala silang lahat.",
+"Bronze": "Tanso",
+"Silver": "Pilak",
+"Gold": "Ginto",
+"Level up: {0} at {1} weeks": "Mag-level up: {0} sa {1} linggo",
+"Covers one missed week.": "Sasaklaw ang isang nalaktawang linggo.",
+"Covers {0} missed weeks.": "Sasaklaw ang {0} nalaktawang linggo.",
+"Top tier. Nothing can stop you.": "Pinakamataas na antas. Walang makakapigil sa iyo.",
+"{0} of {1} shields loaded": "{0} sa {1} panangga ang nakahanda"
 },
 "ceb": {
 "Review": "Susiha",
@@ -4509,7 +4599,17 @@ window.I18N = {
 "Free 1,000 a year to polish it.": "Pahawa-a ang 1,000 matag tuig aron pasinawon kini.",
 "Shed 5 things on a Sunday. Good things take time.": "Buhii ang 5 ka butang sa Domingo. Hinay ang maayo.",
 "Shed 5 things on a Sunday": "Buhii ang 5 ka butang sa Domingo",
-"{0} of {1} Sunday sheds": "{0} sa {1} nabuhi sa Domingo"
+"{0} of {1} Sunday sheds": "{0} sa {1} nabuhi sa Domingo",
+"Back to the grid": "Balik sa grid",
+"Swipe or drag to meet them all.": "Mag-swipe o i-drag aron mailhan silang tanan.",
+"Bronze": "Bronse",
+"Silver": "Plata",
+"Gold": "Bulawan",
+"Level up: {0} at {1} weeks": "Mag-level up: {0} sa {1} ka semana",
+"Covers one missed week.": "Mahibalo sa usa ka nalaktawan nga semana.",
+"Covers {0} missed weeks.": "Mahibalo sa {0} ka nalaktawan nga semana.",
+"Top tier. Nothing can stop you.": "Pinakataas nga lebel. Walay makapugong nimo.",
+"{0} of {1} shields loaded": "{0} sa {1} ka taming ang andam"
 },
 "ru": {
 "Review": "Обзор",
@@ -4959,7 +5059,17 @@ window.I18N = {
 "Free 1,000 a year to polish it.": "Освободите 1000 в год, чтобы его отполировать.",
 "Shed 5 things on a Sunday. Good things take time.": "Отпустите 5 дел в воскресенье. Хорошее требует времени.",
 "Shed 5 things on a Sunday": "Отпустите 5 дел в воскресенье",
-"{0} of {1} Sunday sheds": "{0} из {1} отпусканий в воскресенье"
+"{0} of {1} Sunday sheds": "{0} из {1} отпусканий в воскресенье",
+"Back to the grid": "Назад к сетке",
+"Swipe or drag to meet them all.": "Смахните или перетащите, чтобы познакомиться со всеми.",
+"Bronze": "Бронза",
+"Silver": "Серебро",
+"Gold": "Золото",
+"Level up: {0} at {1} weeks": "Новый уровень: {0} через {1} нед.",
+"Covers one missed week.": "Прикрывает одну пропущенную неделю.",
+"Covers {0} missed weeks.": "Прикрывает пропущенных недель: {0}.",
+"Top tier. Nothing can stop you.": "Высший уровень. Вас не остановить.",
+"{0} of {1} shields loaded": "Заряжено щитов: {0} из {1}"
 },
 "uk": {
 "Review": "Огляд",
@@ -5409,7 +5519,17 @@ window.I18N = {
 "Free 1,000 a year to polish it.": "Звільніть 1000 на рік, щоб його відполірувати.",
 "Shed 5 things on a Sunday. Good things take time.": "Відпустіть 5 справ у неділю. Добре вимагає часу.",
 "Shed 5 things on a Sunday": "Відпустіть 5 справ у неділю",
-"{0} of {1} Sunday sheds": "{0} із {1} відпускань у неділю"
+"{0} of {1} Sunday sheds": "{0} із {1} відпускань у неділю",
+"Back to the grid": "Назад до сітки",
+"Swipe or drag to meet them all.": "Змахніть або перетягніть, щоб познайомитися з усіма.",
+"Bronze": "Бронза",
+"Silver": "Срібло",
+"Gold": "Золото",
+"Level up: {0} at {1} weeks": "Новий рівень: {0} через {1} тиж.",
+"Covers one missed week.": "Прикриває один пропущений тиждень.",
+"Covers {0} missed weeks.": "Прикриває пропущених тижнів: {0}.",
+"Top tier. Nothing can stop you.": "Найвищий рівень. Вас не зупинити.",
+"{0} of {1} shields loaded": "Заряджено щитів: {0} із {1}"
 },
 "en-US": {
 "Customise the machine": "Customize the machine",

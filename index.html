@@ -193,6 +193,24 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 @media (prefers-reduced-motion:reduce){.live .sigsvg path,.live .sigsvg circle{animation:none}}
 .note .sig{margin-top:2px}
 .optctl{margin-top:16px}
+.gridslide{position:relative}
+.gdetail{position:absolute;inset:0;z-index:6;background:var(--paper);padding:12px 22px 24px;overflow-y:auto;animation:gpop .32s cubic-bezier(.2,.9,.3,1.1) both}
+.gdetail .slide-in{padding-bottom:8px}
+@keyframes gpop{from{opacity:0;transform:scale(.94) translateY(10px)}to{opacity:1;transform:none}}
+.gback{position:sticky;top:0;z-index:3;display:inline-flex;align-items:center;gap:10px;margin:0 0 12px;background:var(--hl);color:#0A0F1F;border:0;border-radius:999px;padding:12px 20px 12px 14px;font-weight:900;font-size:15px;letter-spacing:-.01em;transform:rotate(-2deg);box-shadow:0 6px 0 rgba(0,0,0,.28),0 12px 24px rgba(0,0,0,.25);transition:transform .15s}
+.gback i{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#0A0F1F;color:var(--hl);font-style:normal;font-size:16px;animation:backnudge 1.4s ease-in-out infinite}
+.gback:hover,.gback:focus-visible{transform:rotate(1deg) scale(1.05)}
+.gback:active{transform:translateY(4px) rotate(-2deg);box-shadow:0 2px 0 rgba(0,0,0,.28)}
+@keyframes backnudge{0%,100%{transform:translateX(0)}50%{transform:translateX(-4px)}}
+.gtile{cursor:pointer}
+.hand{position:absolute;right:14px;bottom:36px;font-size:34px;line-height:1;z-index:4;pointer-events:none;transform-origin:50% 80%;filter:drop-shadow(0 4px 6px rgba(0,0,0,.45));opacity:0}
+.hand:after{content:"";position:absolute;left:4px;top:-6px;width:26px;height:26px;border-radius:50%;border:3px solid var(--hl);opacity:0}
+.gridslide.live:not(.touched) .hand{animation:handtap 2.2s ease-in-out 1s infinite}
+.gridslide.live:not(.touched) .hand:after{animation:handring 2.2s ease-out 1s infinite}
+.gridslide.touched .hand{display:none}
+@keyframes handtap{0%{opacity:0;transform:translate(22px,26px) scale(1)}15%{opacity:1}40%{transform:translate(0,0) scale(1)}52%{transform:translate(0,3px) scale(.88)}64%{transform:translate(0,0) scale(1)}85%{opacity:1}100%{opacity:0;transform:translate(0,0) scale(1)}}
+@keyframes handring{0%,48%{opacity:0;transform:scale(.4)}52%{opacity:.9;transform:scale(.6)}80%,100%{opacity:0;transform:scale(1.8)}}
+@media (prefers-reduced-motion:reduce){.gridslide.live:not(.touched) .hand{animation:none;opacity:1}.gback i,.gdetail{animation:none}}
 .gtiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
 .gtile{position:relative;display:flex;flex-direction:column;border:2px solid var(--line);border-radius:20px;background:var(--surface);overflow:hidden;color:var(--ink);cursor:pointer;margin:0;text-align:left}
 .gtile.wide{grid-column:1/-1}
@@ -801,7 +819,13 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
 .sc.here{background:var(--hl);color:#263044;border-color:var(--hl)}
 .sc.nx{border-color:var(--card)}
 .sc-face{position:relative;height:118px;border-radius:18px;background:rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;margin-bottom:4px}
-.sc.lk .sc-m{filter:blur(4px);opacity:.55}
+.sc.lk .sc-m{filter:blur(6px);opacity:.5}
+.sc.lk .sc-name{filter:blur(3.5px);user-select:none}
+.sc.lk .sc-face:after{content:"\1F512";position:absolute;font-size:26px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
+.shelf2{cursor:grab;-webkit-mask-image:linear-gradient(90deg,#000 0,#000 90%,transparent 100%);mask-image:linear-gradient(90deg,#000 0,#000 90%,transparent 100%);user-select:none}
+.shelf2.drag{cursor:grabbing;scroll-snap-type:none}
+.shelf2 .sc{user-select:none;-webkit-user-drag:none}
+.shelf-hint{margin:0;font-size:12px;color:var(--muted);text-align:center}
 .sc-bub{position:absolute;top:-12px;right:-8px;background:var(--ink);color:var(--paper);font-size:11px;font-weight:800;border-radius:12px 12px 12px 2px;padding:6px 9px;max-width:140px;line-height:1.2;box-shadow:0 4px 10px rgba(0,0,0,.25)}
 .sc-tag{font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
 .sc.here .sc-tag{color:#4A3A12}
@@ -820,6 +844,22 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
 .nxb .bar i{display:block;height:100%;background:var(--hl)}
 .nxb small{font-size:12px;opacity:.85}
 .nc-btn{margin-top:10px;background:var(--hl);color:#0A0F1F;border:0;border-radius:999px;padding:9px 16px;font-weight:800;font-size:14px}
+.shieldcard{margin:14px 0;padding:16px;border-radius:20px;background:var(--card,rgba(127,127,127,.08));box-shadow:inset 0 0 0 1px var(--line);--c1:#8a8f98;--c2:#555b66;--glow:transparent}
+.shieldcard.t1{--c1:#e2a46e;--c2:#8a4f26;--glow:rgba(226,164,110,.35)}.shieldcard.t2{--c1:#eef3f8;--c2:#7d8a99;--glow:rgba(200,215,230,.4)}.shieldcard.t3{--c1:#ffe08a;--c2:#c8851a;--glow:rgba(255,205,80,.5)}
+.sh-top{display:flex;gap:18px;align-items:center}.sh-stage{flex:none;width:92px;height:104px;perspective:520px;position:relative;display:grid;place-items:center}
+.sh-stage:before{content:"";position:absolute;inset:6px;border-radius:50%;background:radial-gradient(circle,var(--glow),transparent 68%);animation:shpulse 3.2s ease-in-out infinite}
+.sh-spin{position:relative;width:78px;height:78px;transform-style:preserve-3d;animation:shspin 9s linear infinite}
+.sh-l{position:absolute;inset:0;width:100%;height:100%;fill:var(--c2);stroke:var(--c1);stroke-width:.7;stroke-linejoin:round}.sh-l .sh-f,.sh-f{fill:var(--c1)}
+.shieldcard.t0 .sh-spin{opacity:.35;filter:grayscale(1)}.shieldcard.t0 .sh-spin{animation-duration:14s}
+.sh-glint{position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.55) 50%,transparent 60%);background-size:260% 100%;mix-blend-mode:overlay;border-radius:50%;animation:shglint 4.5s ease-in-out infinite}
+.shieldcard.t0 .sh-glint{display:none}
+.sh-info{min-width:0;flex:1}.sh-info b{display:block;font-size:18px}.sh-info small{display:block;font-size:13px;color:var(--muted);margin-top:2px}
+.sh-pips{display:flex;gap:7px;margin-top:10px}.sh-pips i{width:22px;height:8px;border-radius:5px;background:rgba(127,127,127,.28)}.sh-pips i.on{background:linear-gradient(90deg,var(--c1),var(--c2));box-shadow:0 0 10px var(--glow)}
+.sh-foot{margin-top:14px}.sh-bar{height:8px;border-radius:5px;background:rgba(127,127,127,.2);overflow:hidden}.sh-bar i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,#e2a46e,#ffe08a);position:relative;overflow:hidden}
+.sh-bar i:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);transform:translateX(-100%);animation:shbar 2.6s ease-in-out infinite}
+.sh-up{display:block;margin-top:7px;font-size:13px;font-weight:600}
+@keyframes shspin{to{transform:rotateY(360deg)}}@keyframes shpulse{50%{opacity:.45;transform:scale(.9)}}@keyframes shglint{0%,55%{background-position:140% 0}100%{background-position:-60% 0}}@keyframes shbar{to{transform:translateX(100%)}}
+@media (prefers-reduced-motion:reduce){.sh-spin{animation:none;transform:rotateY(-24deg)}.sh-stage:before,.sh-glint,.sh-bar i:after{animation:none}}
 .shieldrow{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
 .shieldrow .ic{flex:none;width:42px;height:42px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--hl);color:var(--hl);display:grid;place-items:center}
 .shieldrow .ic svg{width:22px;height:22px}
@@ -890,7 +930,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.30";
+  var APP_VERSION = "0.31";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -1189,14 +1229,16 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   function streakInfo() {
     var weeks = {}, min = null; state.removed.forEach(function (r) { var w = weekOf(r.at); weeks[w] = 1; if (min === null || w < min) min = w; });
     var cur = weekOf(now()), run = 0, best = 0, shield = 0, used = 0;
-    if (min === null) return { run: 0, best: 0, shield: 0, used: 0 };
+    function capFor(r) { return r >= 12 ? 3 : r >= 8 ? 2 : 1; }
+    function out() { return { run: run, best: best, shield: shield, used: used, tier: run >= 12 ? 3 : run >= 8 ? 2 : run >= 4 ? 1 : 0, cap: run >= 4 ? capFor(run) : 1 }; }
+    if (min === null) return out();
     for (var w = min; w <= cur; w++) {
-      if (weeks[w]) { run++; if (run > best) best = run; if (run % 4 === 0 && shield < 1) shield++; }
+      if (weeks[w]) { run++; if (run > best) best = run; if (run % 4 === 0 && shield < capFor(run)) shield++; }
       else if (w === cur) { /* this week is still open */ }
       else if (shield > 0) { shield--; used++; }
       else run = 0;
     }
-    return { run: run, best: best, shield: shield, used: used };
+    return out();
   }
   function streak() { return streakInfo().run; }
   // monthly amounts freed, kept per currency (we never guess exchange rates)
@@ -1773,6 +1815,25 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     var n = state.removed.length;
     return n === 0 ? T("Feed me something.") : streak() >= 2 ? T("We're on a roll.") : T("Still going.");
   }
+  var TIERS = ["", "Bronze", "Silver", "Gold"];
+  function shieldCard() {
+    var si = streakInfo(), t = si.tier, nxt = t < 3 ? [4, 8, 12][t] : 0;
+    var layers = [];
+    for (var k = -5; k <= 5; k++) layers.push('<svg class="sh-l" style="transform:translateZ(' + (k * 1.6) + 'px)" viewBox="0 0 24 24"><path d="M12 2.2L20 5.4V11.5C20 16.7 16.6 20.1 12 21.8C7.4 20.1 4 16.7 4 11.5V5.4Z"' + (k === 5 ? ' class="sh-f"' : '') + '/></svg>');
+    var pips = []; for (var p = 0; p < si.cap; p++) pips.push(h("i", { class: p < si.shield ? "on" : "" }));
+    var from = [0, 4, 8][t > 2 ? 2 : t], span = nxt ? nxt - from : 1, pct = nxt ? Math.min(100, Math.round((si.run - from) / span * 100)) : 100;
+    var title = t ? TIERS[t] : "Streak shield";
+    var line = !t ? "Earn one with a 4-week streak. It saves a missed week." : (si.cap > 1 ? T("Covers {0} missed weeks.").replace("{0}", si.cap) : T("Covers one missed week."));
+    var kids = [
+      h("div", { class: "sh-stage" }, [h("div", { class: "sh-spin", html: layers.join("") }), h("span", { class: "sh-glint" })]),
+      h("div", { class: "sh-info" }, [
+        h("b", { text: title }), h("small", { text: line }),
+        h("div", { class: "sh-pips", "aria-label": T("{0} of {1} shields loaded").replace("{0}", si.shield).replace("{1}", si.cap) }, pips)
+      ])
+    ];
+    var foot = nxt ? [h("div", { class: "sh-bar" }, [h("i", { style: "width:" + pct + "%" })]), h("small", { class: "sh-up", text: T("Level up: {0} at {1} weeks").replace("{0}", T(TIERS[t + 1])).replace("{1}", nxt) })] : [h("small", { class: "sh-up", text: "Top tier. Nothing can stop you." })];
+    return h("div", { class: "shieldcard t" + t, id: "shieldRow" }, [h("div", { class: "sh-top" }, kids), h("div", { class: "sh-foot" }, foot)]);
+  }
   function shelfEl() {
     var P = state.profile, cur = currentSkin(), ns = nextSkin();
     var wrap = h("div", { class: "shelf2", id: "shelf", role: "list", "aria-label": "Your shredders" });
@@ -1793,7 +1854,14 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
         P.shr.skin = d.id; logEvent("skin_selected", { id: d.id }); save(); render();
       } }, [face].concat(body)));
     });
-    return wrap;
+    // mouse users can click and drag the shelf; touch uses native swipe
+    var sx = 0, sl = 0, down = false, moved = false;
+    wrap.addEventListener("pointerdown", function (e) { if (e.pointerType !== "mouse" || e.button !== 0) return; down = true; moved = false; sx = e.clientX; sl = wrap.scrollLeft; wrap.classList.add("drag"); wrap.setPointerCapture(e.pointerId); });
+    wrap.addEventListener("pointermove", function (e) { if (!down) return; var dx = e.clientX - sx; if (Math.abs(dx) > 4) moved = true; wrap.scrollLeft = sl - dx; });
+    var end = function () { down = false; wrap.classList.remove("drag"); };
+    wrap.addEventListener("pointerup", end); wrap.addEventListener("pointercancel", end);
+    wrap.addEventListener("click", function (e) { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
+    return h("div", {}, [wrap, h("p", { class: "shelf-hint", text: T("Swipe or drag to meet them all.") })]);
   }
   function nextBlock(ns) {
     var p = ns.p;
@@ -1815,11 +1883,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     var ns = nextSkin();
     root.append(shelfEl());
     if (ns) root.append(nextBlock(ns)); else root.append(h("p", { class: "freed", text: "Every machine unlocked." }));
-    var si = streakInfo();
-    root.append(h("div", { class: "shieldrow", id: "shieldRow" }, [h("span", { class: "ic", html: SHIELD_SVG }), h("div", {}, [
-      h("b", { text: si.shield ? "Streak shield ready" : "Streak shield" }),
-      h("small", { text: si.shield ? "One missed week won't break your streak." : "Earn one with a 4-week streak. It saves a missed week." })
-    ])]));
+    root.append(shieldCard());
     root.append(h("button", { class: "rig", id: "rigBtn", type: "button", onclick: collectionSheet }, [h("div", {}, [h("b", { text: "Collection" }), h("small", { text: own + " of " + SKINS.length + " machines. Tap to see them all." })])]));
     var rg = regretStats();
     if (rg.asked >= 3) root.append(h("p", { class: "freed", id: "noRegrets" }, [h("mark", { text: Math.round(rg.no / rg.asked * 100) + "% no regrets" }), " (" + rg.no + " of " + rg.asked + " things you were asked about)"]));
@@ -3700,20 +3764,60 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     tourMode = mode;
     var root = $("onboard"); root.textContent = ""; root.hidden = false; setInert(true);
 
-    function tut(vis, scale, label, cap, cls) { return h("div", { class: "gtile static" + (cls ? " " + cls : "") }, [h("div", { class: "stage tg " + (cls && cls.indexOf("l") >= 0 ? "l" : "y") }, [h("div", { class: "tin", style: "--s:" + scale }, [vis])]), h("span", { class: "tfoot" }, [label, h("small", { text: cap })])]); }
-    function tutSlide(title, tiles) { return h("section", { class: "slide" }, [h("div", { class: "slide-in" }, [h("h2", { text: title }), h("div", { class: "gtiles" }, tiles)])]); }
+    // A grid slide: tapping a tile opens the full-size card it used to be, with a funky way back.
+    function openDetail(slideEl, def, ctl) {
+      var inner = slideEl.querySelector(".slide-in");
+      var sec = slide(def.stage + (def.opt ? " opt" : ""), def.vis(), T(def.title), def.lede, ctl || null);
+      var panel = h("div", { class: "gdetail", role: "dialog", "aria-label": T(def.title) }, [sec.firstChild]);
+      var back = h("button", { class: "gback", type: "button", id: "gBack" }, [h("i", { "aria-hidden": "true", text: "\u2190" }), h("span", { text: T("Back to the grid") })]);
+      panel.insertBefore(back, panel.firstChild);
+      function close() { panel.remove(); slideEl.classList.remove("detail"); track && (track.style.overflowX = ""); inner.focus && inner.focus({ preventScroll: true }); }
+      back.addEventListener("click", close);
+      panel._close = close;
+      slideEl.scrollTop = 0; slideEl.classList.add("detail", "touched"); if (track) track.style.overflowX = "hidden";
+      slideEl.append(panel); back.focus({ preventScroll: true });
+      return panel;
+    }
+    var track = null;
+    function gridSlide(title, defs, hint) {
+      var tiles = h("div", { class: "gtiles" });
+      var sec = h("section", { class: "slide gridslide" }, [h("div", { class: "slide-in" }, [h("h2", { text: title }), tiles])]);
+      defs.forEach(function (d, i) {
+        var tile = h("div", { class: "gtile" + (d.cls ? " " + d.cls : ""), role: "button", tabindex: "0", "aria-label": T(d.label) }, [
+          h("div", { class: "stage tg " + d.stage }, [h("div", { class: "tin", style: "--s:" + d.scale }, [d.vis()])]),
+          h("span", { class: "tfoot" }, [T(d.label), h("small", { text: d.cap })])
+        ]);
+        if (d.box) tile.append(d.box);
+        var open = function (e) {
+          if (e && e.target && e.target.tagName === "INPUT") return;
+          var ctl = null;
+          if (d.box) {
+            var proxy = h("input", { type: "checkbox", "aria-label": T(d.label) }); proxy.checked = d.box.checked;
+            proxy.addEventListener("change", function () { d.box.checked = proxy.checked; });
+            ctl = h("div", { class: "optctl" }, [h("label", { class: "toggle" }, [h("span", { text: T(d.label) }), proxy])]);
+            if (d.fine) ctl.append(h("p", { class: "fine-print", text: d.fine }));
+          }
+          openDetail(sec, d, ctl);
+        };
+        tile.addEventListener("click", open);
+        tile.addEventListener("keydown", function (e) { if ((e.key === "Enter" || e.key === " ") && e.target === tile) { e.preventDefault(); open(); } });
+        tiles.append(tile);
+        if (i === 0 && hint !== false) tile.append(h("span", { class: "hand", "aria-hidden": "true", html: "\ud83d\udc46" }));
+      });
+      return sec;
+    }
+    var TUT = [
+      { vis: visualList, scale: .42, stage: "y", label: "A to-do list that gets shorter.", cap: T("Once a week, let go of one thing."), title: "A to-do list that gets shorter.", lede: "Every other app helps you add things. Shedly helps you let go of one. <strong>Once a week.</strong> That's the whole trick." },
+      { vis: visualTyped, scale: .5, stage: "l", label: "Type it like you'd say it.", cap: T("Add tasks, meetings or subscriptions, with a price if it has one."), title: "Type it like you'd say it.", lede: "Add anything you've said yes to: tasks, meetings, subscriptions. Put a price on it and Shedly does the sums. <strong>Yes, even that one you forgot about.</strong>" },
+      { vis: visualTicket, scale: .5, stage: "y", label: "Once a week, one question.", cap: T("Is this still a yes? Shed it, or keep it and say why."), title: "Once a week, one question.", lede: "Is this still a yes? Shed it, or keep it with one line on why. We'll quote you next time. <strong>\u201cJust in case\u201d is allowed.</strong> It reads worse the second time." },
+      { vis: visualTotal, scale: .45, stage: "l", label: "Watch the number go up.", cap: T("Every shed adds to your total and to what you've freed up."), title: "Watch the number go up.", lede: "Every shed adds to your total, and to what you've freed up if it had a price. Miss a week and nothing explodes. <strong>Miss a month and we'll mention it.</strong>" },
+      { vis: visualShelf, scale: .5, stage: "y", label: "Earn your shredder.", cap: T("Shed more to unlock new machines."), title: "Earn your shredder.", lede: "Shedding unlocks new machines: at 3, 10, 25 things, and then streaks. Then make it yours with a nameplate, a light and a cut style. <strong>Brass is for the long haul.</strong>" },
+      { vis: visualNudge, scale: .5, stage: "l", label: "It notices things.", cap: T("Gentle nudges about renewals and things you keep keeping."), title: "It notices things.", lede: "Renewals coming up, what each use really costs, and a line when you've kept something again and again. <strong>Never a rule. Always your call.</strong>" },
+      { vis: visualTabs, scale: .62, stage: "y", cls: "wide", label: "Four screens. One swipe.", cap: T("Review, List, Shed and You. Swipe between them."), title: "Four screens. One swipe.", lede: "Review is your weekly question, List is everything you've said yes to, Shed is your total and your machines, You is settings. <strong>Switch on swiping in You and flick between them.</strong>" }
+    ];
     var tutorial = [
-      tutSlide("How Shedly works", [
-        tut(visualList(), .42, T("A to-do list that gets shorter."), T("Once a week, let go of one thing.")),
-        tut(visualTyped(), .5, T("Type it like you'd say it."), T("Add tasks, meetings or subscriptions, with a price if it has one."), "l"),
-        tut(visualTicket(), .5, T("Once a week, one question."), T("Is this still a yes? Shed it, or keep it and say why.")),
-        tut(visualTotal(), .45, T("Watch the number go up."), T("Every shed adds to your total and to what you've freed up."), "l")
-      ]),
-      tutSlide("Make it yours", [
-        tut(visualShelf(), .5, T("Earn your shredder."), T("Shed more to unlock new machines.")),
-        tut(visualNudge(), .5, T("It notices things."), T("Gentle nudges about renewals and things you keep keeping."), "l"),
-        tut(visualTabs(), .62, T("Four screens. One swipe."), T("Review, List, Shed and You. Swipe between them."), "wide")
-      ])
+      gridSlide(T("How Shedly works"), [TUT[0], TUT[1], TUT[2], TUT[3]]),
+      gridSlide(T("Make it yours"), [TUT[4], TUT[5], TUT[6]])
     ];
     var slides = tutorial.slice(), introCount = 0;
 
@@ -3763,24 +3867,19 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
         } }, [dot, h("span", { text: t.name })]));
       });
       var optLook = slide("y opt", visualLook(), "Pick your look.", "Dark or light, calm or loud. <strong>Tap one and the app changes right now.</strong>", h("div", { class: "optctl" }, [circs]));
-      function optTile(vis, scale, label, cap, box, cls) {
-        return h("label", { class: "gtile" + (cls ? " " + cls : "") }, [h("div", { class: "stage tg " + (cls && cls.indexOf("l") === 0 ? "l" : "y") }, [h("div", { class: "tin", style: "--s:" + scale }, [vis])]), h("span", { class: "tfoot" }, [T(label), h("small", { text: cap })]), box]);
-      }
-      var optAll = h("section", { class: "slide" }, [h("div", { class: "slide-in" }, [
-        h("h2", { text: "Switch on what you want." }),
-        h("div", { class: "gtiles" }, [
-          optTile(visualWeather(), .5, "Show today's weather", "Rain, sun and a real moon in your sky.", fWx, "l"),
-          optTile(visualRemind(), .42, "Remind me before things end", "A quiet nudge before something ends.", fRem, "y"),
-          optTile(visualSwipe(), .36, "Swipe between screens", "Flick left or right to change screen.", fSwipe, "y"),
-          optTile(visualOwn(), .5, "Share anonymous usage", "Anonymous. Never what you type.", fAn, "l")
-        ])
-      ])]);
+      var optDefs = [
+        { vis: visualWeather, scale: .5, stage: "l", opt: 1, label: "Show today's weather", cap: T("Rain, sun and a real moon in your sky."), box: fWx, title: "Weather in your sky.", lede: "Rain, sun, snow and a real moon, matching what's outside. <strong>Totally optional.</strong>", fine: T("Asks for your approximate location once, then sends it rounded to about 10 km to Open-Meteo to look up the weather. Nothing else is sent.") },
+        { vis: visualRemind, scale: .42, stage: "y", opt: 1, label: "Remind me before things end", cap: T("A quiet nudge before something ends."), box: fRem, title: "Hear about it before it ends.", lede: "A quiet nudge a week, three days and a day before something ends. <strong>Quiet after 9 pm, never more than one a day.</strong>", fine: T("Your phone will ask for permission. You choose which items remind you, in You \u2192 Notifications.") },
+        { vis: visualSwipe, scale: .36, stage: "l", opt: 1, label: "Swipe between screens", cap: T("Flick left or right to change screen."), box: fSwipe, title: "Tap, or just swipe.", lede: "Flick left or right to go from Review to List, Shed and You. <strong>The tabs at the bottom still work either way.</strong>", fine: T("Turn it off any time in You.") },
+        { vis: visualOwn, scale: .5, stage: "y", opt: 1, label: "Share anonymous usage", cap: T("Anonymous. Never what you type."), box: fAn, title: "Your data.", lede: "Your list stays on this phone. No account, no email. <strong>Help us test Shedly if you like.</strong>", fine: T("Records which screens and buttons you use, with all text hidden. Item names, prices and notes are never sent. Export or erase everything any time in You.") }
+      ];
+      var optAll = gridSlide(T("Switch on what you want."), optDefs);
       var opts = [optLook, optAll];
       if (mode === "update") { slides = [langSlide, founder].concat(opts); introCount = slides.length; } else { slides = [langSlide, founder, setup].concat(opts, tutorial); introCount = 3 + opts.length; }
       fName.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); goTo(2); } });
     }
 
-    var track = h("div", { class: "track", id: "tourTrack" }, slides);
+    track = h("div", { class: "track", id: "tourTrack" }, slides);
     var skip = h("button", { type: "button", id: "tourSkip", text: mode === "first" ? "Skip the tour" : "Close", onclick: function () { logEvent("tour_skipped", { at_step: idx }); if (mode === "first") finish(); else closeTour(); } });
     var top = h("div", { class: "tour-top" }, [h("span", { class: "brand", html: '<svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#3347E8"/><rect x="12" y="15" width="40" height="8" rx="4" fill="#fff"/><rect x="12" y="28" width="30" height="8" rx="4" fill="#fff"/><rect x="12" y="41" width="18" height="8" rx="4" fill="#F5DF7B"/></svg>shedly' }), skip]);
     var dots = h("div", { class: "dots" + (slides.length > 9 ? " many" : "") });
@@ -3832,7 +3931,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     root._keys = function (e) {
       if (e.key === "ArrowRight" && idx < slides.length - 1 && document.activeElement.tagName !== "INPUT" && document.activeElement.tagName !== "SELECT") goTo(idx + 1);
       else if (e.key === "ArrowLeft" && idx > 0 && document.activeElement.tagName !== "INPUT" && document.activeElement.tagName !== "SELECT") goTo(idx - 1);
-      else if (e.key === "Escape" && mode === "replay") closeTour();
+      else if (e.key === "Escape") { var op = root.querySelector(".gdetail"); if (op) op._close(); else if (mode === "replay") closeTour(); }
     };
     document.addEventListener("keydown", root._keys);
     root._cleanup = function () { window.removeEventListener("resize", tourResize); };
