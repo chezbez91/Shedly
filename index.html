@@ -795,6 +795,30 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
 .nc-t b{display:block;font-family:var(--display);font-weight:800;font-size:26px;letter-spacing:-.035em;line-height:1.1}
 .nc-t .bar{height:7px;border-radius:4px;background:rgba(255,255,255,.28);margin:8px 0 4px;overflow:hidden}
 .nc-t .bar i{display:block;height:100%;background:var(--hl)}
+.shelf2{display:flex;gap:12px;margin:18px -20px 0;padding:6px 20px 14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.shelf2::-webkit-scrollbar{display:none}
+.sc{flex:none;width:186px;scroll-snap-align:start;display:flex;flex-direction:column;gap:6px;text-align:left;color:var(--ink);background:var(--surface);border:2px solid var(--line);border-radius:26px;padding:12px 12px 14px;position:relative;font:inherit;cursor:pointer}
+.sc.here{background:var(--hl);color:#263044;border-color:var(--hl)}
+.sc.nx{border-color:var(--card)}
+.sc-face{position:relative;height:118px;border-radius:18px;background:rgba(0,0,0,.18);display:flex;align-items:center;justify-content:center;margin-bottom:4px}
+.sc.lk .sc-m{filter:blur(4px);opacity:.55}
+.sc-bub{position:absolute;top:-12px;right:-8px;background:var(--ink);color:var(--paper);font-size:11px;font-weight:800;border-radius:12px 12px 12px 2px;padding:6px 9px;max-width:140px;line-height:1.2;box-shadow:0 4px 10px rgba(0,0,0,.25)}
+.sc-tag{font-size:10px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.sc.here .sc-tag{color:#4A3A12}
+.sc.nx .sc-tag{color:var(--card)}
+.sc-name{font-family:var(--display);font-weight:900;font-size:19px;letter-spacing:-.02em;line-height:1.1}
+.sc-q{font-size:12.5px;line-height:1.35;color:var(--muted);font-style:italic}
+.sc.here .sc-q{color:#4A3A12}
+.sc.lk .sc-q{font-style:normal}
+.sc-stats{display:flex;flex-wrap:wrap;gap:2px 10px;font-size:11px;color:var(--muted);margin-top:2px}
+.sc-stats b{color:var(--ink);font-weight:800}
+.sc.here .sc-stats,.sc.here .sc-stats b{color:#4A3A12}
+.nxb{margin:16px 0 0;padding:16px 18px;border-radius:24px;background:var(--card);color:#fff}
+.nxb b{display:block;font-family:var(--display);font-weight:900;font-size:24px;letter-spacing:-.03em;line-height:1.1}
+.nxb .nxb-t{display:block;font-size:14px;margin-top:4px;opacity:.9}
+.nxb .bar{height:7px;border-radius:4px;background:rgba(255,255,255,.28);margin:12px 0 6px;overflow:hidden}
+.nxb .bar i{display:block;height:100%;background:var(--hl)}
+.nxb small{font-size:12px;opacity:.85}
 .nc-btn{margin-top:10px;background:var(--hl);color:#0A0F1F;border:0;border-radius:999px;padding:9px 16px;font-weight:800;font-size:14px}
 .shieldrow{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
 .shieldrow .ic{flex:none;width:42px;height:42px;border-radius:50%;box-shadow:inset 0 0 0 2px var(--hl);color:var(--hl);display:grid;place-items:center}
@@ -866,7 +890,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.28";
+  var APP_VERSION = "0.29";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -1196,7 +1220,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
       head: [["#FFFFFF", 0], ["#F1EFEA", 16], ["#E0DDD5", 58], ["#CAC6BC", 100]], base: ["#D3CFC5", "#A5A196"], rim: "rgba(255,255,255,.95)", plate: "rgba(38,48,68,.55)", slot: "#252A36", glass: "rgba(255,255,255,.32)" },
     { id: "cobalt", name: "Cobalt", note: "The app's own blue.", at: { k: "shed", n: 10 }, led: "#FFE066",
       head: [["#7388FF", 0], ["#4C60F3", 16], ["#3347E8", 56], ["#2332B6", 100]], base: ["#2B3AC4", "#141C74"], rim: "rgba(255,255,255,.5)", plate: "rgba(255,255,255,.7)", slot: "#0A0F3D", glass: "rgba(190,200,255,.4)" },
-    { id: "brass", name: "Brass", note: "Brushed, a little heavy, built to last.", at: { k: "shed", n: 25 }, led: "#FFD27A",
+    { id: "brass", name: "Brass", note: "Brushed, a little heavy, built to last.", at: { k: "sub", n: 3 }, led: "#FFD27A",
       tex: "repeating-linear-gradient(90deg,rgba(255,255,255,.09) 0 1px,rgba(0,0,0,.06) 1px 3px)",
       head: [["#EBD398", 0], ["#CDAA5E", 16], ["#AA843C", 58], ["#7B5D24", 100]], base: ["#8D6C2C", "#4C3711"], rim: "rgba(255,244,205,.7)", plate: "rgba(52,32,4,.62)", slot: "#1A1206", glass: "rgba(255,230,170,.34)" },
     { id: "blueprint", name: "Blueprint", note: "Drafting-table blue with the grid showing.", at: { k: "shed", n: 50 }, led: "#7DD3FC",
@@ -1212,6 +1236,18 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     { id: "chrome", name: "Chrome", note: "Polished steel. You earned the shine.", at: { k: "freed", n: 1000 }, led: "#7DD3FC",
       head: [["#FAFBFD", 0], ["#C2C8D4", 9], ["#EEF1F6", 22], ["#8F99AB", 48], ["#D9DEE8", 62], ["#7C879B", 100]], base: ["#A5AEBE", "#5F6A7E"], rim: "rgba(255,255,255,1)", plate: "rgba(30,40,60,.6)", slot: "#161B27", glass: "rgba(255,255,255,.4)" }
   ];
+  var SKIN_TEXT = {
+    graphite: { q: "The one you started with. Never once complained.", mood: "Calm", app: "Steady", tease: "" },
+    porcelain: { q: "Clean lines, clinical stare. Judges your spelling, quietly.", mood: "Stern", app: "Light", tease: "Shed 3 things to meet it." },
+    cobalt: { q: "Lives for Monday piles. Gets loud about it.", mood: "Keen", app: "Hungry", tease: "Shed 10 things. It's already warming up." },
+    brass: { q: "Built to last. Has never met a subscription it liked.", mood: "Gruff", app: "Heavy", tease: "Shed 3 subscriptions to wake it up." },
+    blueprint: { q: "Only comes out for a proper plan.", mood: "Methodical", app: "Precise", tease: "Shed 50 things. It only trusts a plan." },
+    obsidian: { q: "Knows exactly what you're avoiding.", mood: "Watchful", app: "Selective", tease: "Shed 100 things. It has been watching." },
+    ember: { q: "Runs warm and hates being rushed.", mood: "Fiery", app: "Eager", tease: "Keep a 4-week streak to light it." },
+    verdigris: { q: "Weathered, patient, a little smug about it.", mood: "Patient", app: "Slow", tease: "Keep an 8-week streak. Good things take time." },
+    chrome: { q: "Polished steel. You earned the shine.", mood: "Dazzling", app: "Grand", tease: "Free 1,000 a year to polish it." }
+  };
+  SKINS.forEach(function (d) { var t = SKIN_TEXT[d.id]; d.q = t.q; d.mood = t.mood; d.app = t.app; d.tease = t.tease; });
   var THEMES = [
     { id: "night", name: "Night", at: null, sw: ["#0A0F1F", "#F2F4FA", "#FFE45C"], note: "Navy and yellow" },
     { id: "white", name: "White", at: null, sw: ["#FFFFFF", "#111827", "#2F45FF"], note: "Plain white" },
@@ -1229,16 +1265,16 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
 
   function longestStreak() { return streakInfo().best; }
   function freedYearMax() { var t = freedByCur(), m = 0; Object.keys(t).forEach(function (c) { if (t[c] * 12 > m) m = t[c] * 12; }); return m; }
-  function metric(k) { return k === "shed" ? state.removed.length : k === "streak" ? Math.max(streak(), longestStreak()) : freedYearMax(); }
+  function metric(k) { return k === "sub" ? state.removed.filter(function (r) { return r.cat === "Subscription"; }).length : k === "shed" ? state.removed.length : k === "streak" ? Math.max(streak(), longestStreak()) : freedYearMax(); }
   function metCond(at) { return !at || metric(at.k) >= at.n; }
   function isUnlocked(def) { return !def.at || state.profile.unlocked.indexOf(def.id) >= 0 || metCond(def.at); }
   function reqText(at) {
     if (!at) return "";
-    return at.k === "shed" ? "Shed " + at.n + " things" : at.k === "streak" ? at.n + " weeks in a row" : "Free " + at.n.toLocaleString("en") + " a year";
+    return at.k === "shed" ? "Shed " + at.n + " things" : at.k === "sub" ? "Shed " + at.n + " subscriptions" : at.k === "streak" ? at.n + " weeks in a row" : "Free " + at.n.toLocaleString("en") + " a year";
   }
   function progressOf(at) {
     var c = Math.min(metric(at.k), at.n), v = at.k === "freed" ? Math.floor(c) : c;
-    return { cur: v, target: at.n, frac: c / at.n, text: at.k === "shed" ? v + " of " + at.n + " shed" : at.k === "streak" ? v + " of " + at.n + " weeks" : v.toLocaleString("en") + " of " + at.n.toLocaleString("en") + " a year" };
+    return { cur: v, target: at.n, frac: c / at.n, text: at.k === "shed" ? v + " of " + at.n + " shed" : at.k === "sub" ? v + " of " + at.n + " subscriptions shed" : at.k === "streak" ? v + " of " + at.n + " weeks" : v.toLocaleString("en") + " of " + at.n.toLocaleString("en") + " a year" };
   }
   function checkUnlocks() {
     var fresh = [];
@@ -1733,6 +1769,41 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
       inner.append(grid, h("button", { class: "pill ghost", type: "button", id: "customizeBtn", text: "Customise the machine", onclick: function () { close(); setTimeout(openWorkshop, 50); } }));
     });
   }
+  function shedBubble() {
+    var n = state.removed.length;
+    return n === 0 ? T("Feed me something.") : streak() >= 2 ? T("We're on a roll.") : T("Still going.");
+  }
+  function shelfEl() {
+    var P = state.profile, cur = currentSkin(), ns = nextSkin();
+    var wrap = h("div", { class: "shelf2", id: "shelf", role: "list", "aria-label": "Your shredders" });
+    SKINS.forEach(function (d) {
+      var open = isUnlocked(d), inUse = open && cur.id === d.id, isNext = !!ns && ns.def.id === d.id;
+      var label = inUse ? T("In use") : open ? T("Owned") : isNext ? T("Next") : T("Locked");
+      var mm = h("div", { class: "sc-m" }); mm.append(buildMachine({ sk: d, shr: P.shr, Wm: 112, HEAD: 52, stat: true, mini: true }).m);
+      var face = h("div", { class: "sc-face" }, [mm]);
+      if (inUse) face.append(h("span", { class: "sc-bub", text: shedBubble() }));
+      var body = [h("span", { class: "sc-tag", text: label }), h("b", { class: "sc-name", text: d.name })];
+      if (open) {
+        body.push(h("span", { class: "sc-q", text: T(d.q) }));
+        body.push(h("span", { class: "sc-stats" }, [h("span", {}, [T("Mood") + " ", h("b", { text: T(d.mood) })]), h("span", {}, [T("Appetite") + " ", h("b", { text: T(d.app) })])]));
+      } else body.push(h("span", { class: "sc-q", text: T(d.tease) }));
+      wrap.append(h("button", { class: "sc" + (inUse ? " here" : "") + (open ? "" : " lk") + (isNext ? " nx" : ""), type: "button", id: "shelf-" + d.id, "aria-label": d.name + ", " + label, onclick: function () {
+        if (!open) { toast(d.name + ": " + reqText(d.at) + ".", true); return; }
+        if (inUse) return;
+        P.shr.skin = d.id; logEvent("skin_selected", { id: d.id }); save(); render();
+      } }, [face].concat(body)));
+    });
+    return wrap;
+  }
+  function nextBlock(ns) {
+    var p = ns.p;
+    return h("div", { class: "nxb", id: "nextCard" }, [
+      h("b", { text: T("{0} is next.").replace("{0}", ns.def.name) }),
+      h("span", { class: "nxb-t", text: T(ns.def.tease) }),
+      h("div", { class: "bar" }, [h("i", { style: "width:" + Math.round(p.frac * 100) + "%" })]),
+      h("small", { text: T(p.text) })
+    ]);
+  }
   function renderProgress() {
     var root = $("view-progress"); root.textContent = "";
     var n = state.removed.length, yr = freedText(12), own = SKINS.filter(isUnlocked).length;
@@ -1742,15 +1813,8 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     var st = function (k, v) { return h("div", {}, [h("dd", { text: v }), h("dt", { text: k })]); };
     root.append(h("dl", { class: "hubstats" }, [st("things shed", String(n)), st("week streak", String(streak())), st("machines", own + "/" + SKINS.length)]));
     var ns = nextSkin();
-    if (ns) {
-      var mm = h("div", { class: "m" }); mm.append(buildMachine({ sk: ns.def, shr: state.profile.shr, Wm: 92, HEAD: 42, stat: true, mini: true }).m);
-      root.append(h("div", { class: "nextcard", id: "nextCard" }, [mm, h("div", { class: "nc-t" }, [
-        h("small", { text: "Next unlock" }), h("b", { text: ns.def.name }),
-        h("div", { class: "bar" }, [h("i", { style: "width:" + Math.round(ns.p.frac * 100) + "%" })]),
-        h("small", { text: ns.p.text }),
-        h("button", { class: "nc-btn", type: "button", id: "ncReview", text: "Review now", onclick: function () { go("review"); } })
-      ])]));
-    } else root.append(h("p", { class: "freed", text: "Every machine unlocked." }));
+    root.append(shelfEl());
+    if (ns) root.append(nextBlock(ns)); else root.append(h("p", { class: "freed", text: "Every machine unlocked." }));
     var si = streakInfo();
     root.append(h("div", { class: "shieldrow", id: "shieldRow" }, [h("span", { class: "ic", html: SHIELD_SVG }), h("div", {}, [
       h("b", { text: si.shield ? "Streak shield ready" : "Streak shield" }),
