@@ -111,11 +111,58 @@ function localParts(nowMs, tzMin) {
   const d = new Date(nowMs + tzMin * 60000);
   const y = d.getUTCFullYear(), m = d.getUTCMonth() + 1, day = d.getUTCDate();
   const date = y + "-" + String(m).padStart(2, "0") + "-" + String(day).padStart(2, "0");
-  return { date, hour: d.getUTCHours(), dow: d.getUTCDay(), dom: day, ms: Date.UTC(y, m - 1, day) };
+  return { date, hour: d.getUTCHours(), dow: d.getUTCDay(), dom: day, ms: Date.UTC(y, m - 1, day), nowMs };
 }
 function daysUntil(localMs, dateStr) {
   const [y, m, d] = dateStr.split("-").map(Number);
   return Math.round((Date.UTC(y, m - 1, d) - localMs) / 86400000);
+}
+
+
+// ---------- cheeky comeback nudges (Duolingo-style, never mean) ----------
+// Ladder: day 2, 5 and 7 of not opening, then weekly (14, 21, 28), then monthly.
+const NUDGE_STAGES = [2, 5, 7, 14, 21, 28];
+function nudgeStage(idle) {
+  const i = NUDGE_STAGES.indexOf(idle);
+  if (i >= 0) return i;
+  if (idle > 28 && (idle - 28) % 30 === 0) return 6 + Math.floor((idle - 28) / 30) - 1;
+  return -1;
+}
+const AWAY = [
+  ["Your list misses you. It would never say so, so we are.", "It has been two days. The shredder is getting dusty.", "Two days. Your to-do list has started leaving the light on."],
+  ["Five days. Your to-do list has told people you left.", "The shredder asked about you. We said you were busy. We lied.", "Five days without a shed. Your list is getting comfortable. Do not let it."],
+  ["A whole week. Somewhere an unwanted subscription just renewed and it is laughing.", "One week. Your list now has seniority.", "Seven days. The paper is starting to talk. Mostly about you."],
+  ["Still there? The shredder has started naming the paper.", "Two weeks. Your list is older than some sourdough starters.", "Hello? It is us, the shredder. It is fine. Just one tiny shed?"],
+  ["Three weeks. We are not mad. The shredder is just very, very quiet.", "Your list has grown a little. It would love a haircut.", "Three weeks. One shed and we will pretend this never happened."],
+  ["A month, nearly. Your list has stopped asking about you. We have not.", "Four weeks. The shredder is now just a very expensive paperweight.", "Almost a month. One shed. Thirty seconds. We will wait."],
+  ["It has been a month. We are not angry. We are just a notification, mildly disappointed.", "A month later: your list says hi. The shredder says hi. We say hi.", "Last notification, probably. (It will not be.)"]
+];
+const IDLE_SHED = [
+  ["You opened Shedly and shredded nothing. Bold.", "Two days without a shed. The shredder is stretching.", "Your list is not going to shorten itself. We checked."],
+  ["Five days, zero sheds. Your list thinks it lives here now.", "The shredder is on its fifth day of doing absolutely nothing.", "Five days. Something on that list is a no. You know which one."],
+  ["A week without shedding. One tiny thing. The shredder believes in you.", "Seven days of keeping everything. Impressive, and slightly alarming.", "A week. Your list has gone from a list to a lifestyle."],
+  ["Two weeks of no sheds. The paper is getting nervous.", "Your list keeps saying yes. Is it still a yes?", "Fourteen days without shedding. Shred one thing and feel the lightness."],
+  ["Three weeks. Your list has become a long-term relationship.", "Still keeping everything? Even that one? Really?", "Three weeks, no sheds. One tiny goodbye would do wonders."],
+  ["Four weeks without a shed. The shredder wants to talk.", "A month of keeping it all. Bold strategy.", "One thing. Pick one thing. Let it go."],
+  ["A month and counting. Your list would like a word with you.", "Shed something small. We will not even tell the paper.", "Thirty days of yes. Surely something is a no by now."]
+];
+function pickMsg(pool, stage, seed) {
+  const g = pool[Math.min(stage, pool.length - 1)];
+  return g[Math.abs(seed) % g.length];
+}
+function daysBetween(a, b) { return Math.floor((b - a) / 86400000); }
+function nudgeFor(sub, nowMs, seed) {
+  const lastOpen = Number(sub.lastOpen) || 0;
+  if (!lastOpen) return null;
+  const idle = daysBetween(lastOpen, nowMs);
+  const st = nudgeStage(idle);
+  if (st >= 0) return { mark: "open" + idle, body: pickMsg(AWAY, st, seed + st) };
+  const lastShed = Number(sub.lastShed) || Number(sub.since) || 0;
+  if (lastShed) {
+    const si = daysBetween(lastShed, nowMs), ss = nudgeStage(si);
+    if (ss >= 0 && idle < 2) return { mark: "shed" + si, body: pickMsg(IDLE_SHED, ss, seed + ss) };
+  }
+  return null;
 }
 
 // ---------- which message, if any, is due for one subscriber right now ----------
@@ -147,6 +194,11 @@ function candidates(sub, p) {
 
   if (pr.stale && p.dom === 1 && p.hour >= 10 && p.hour < 12 && (sub.staleCount || 0) > 0 && sent.stale !== p.date.slice(0, 7))
     out.push({ key: "stale", mark: p.date.slice(0, 7), prio: 3, msg: { title: "Shedly", body: "Some items have gone a month untouched.", tag: "stale" } });
+
+  if (pr.nudge && p.hour >= 17 && p.hour < 21) {
+    const n = nudgeFor(sub, p.nowMs, sub.seed || 0);
+    if (n && sent.nudge !== n.mark) out.push({ key: "nudge", mark: n.mark, prio: 4, msg: { title: "Shedly", body: n.body, tag: "nudge" } });
+  }
 
   return out;
 }
@@ -194,7 +246,11 @@ async function subscribe(body, env, headers) {
     endpoint: s.endpoint,
     keys: { p256dh: String(s.keys.p256dh), auth: String(s.keys.auth) },
     tz: clampInt(body.tz, -840, 840, 0),
-    prefs: { weekly: !!pr.weekly, deadline: !!pr.deadline, stale: !!pr.stale, streak: !!pr.streak, names: !!pr.names },
+    prefs: { weekly: !!pr.weekly, deadline: !!pr.deadline, stale: !!pr.stale, streak: !!pr.streak, names: !!pr.names, nudge: !!pr.nudge },
+    lastOpen: clampInt(body.lastOpen, 0, Date.now() + 86400000, Date.now()),
+    lastShed: clampInt(body.lastShed, 0, Date.now() + 86400000, 0) || null,
+    since: clampInt(body.since, 0, Date.now() + 86400000, 0) || null,
+    seed: old.seed != null ? old.seed : Math.floor(Math.random() * 1000),
     streak: clampInt(body.streak, 0, 9999, 0),
     shedThisWeek: !!body.shedThisWeek,
     staleCount: clampInt(body.staleCount, 0, 9999, 0),
@@ -212,6 +268,24 @@ async function subscribe(body, env, headers) {
   };
   await env.SHEDLY.put(id, JSON.stringify(record));
   return json({ ok: true }, 200, headers);
+}
+
+// Developer test: sends up to 5 sample nudges right now to a device that is already subscribed.
+async function sendTest(body, env, headers) {
+  const ep = body.endpoint;
+  if (!ep) return json({ error: "no endpoint" }, 400, headers);
+  const sub = await env.SHEDLY.get(await idFor(ep), "json");
+  if (!sub) return json({ error: "not subscribed" }, 404, headers);
+  const n = clampInt(body.count, 1, 5, 5), round = clampInt(body.round, 1, 99, 1);
+  const all = AWAY.concat(IDLE_SHED).reduce(function (a, g) { return a.concat(g); }, []);
+  let sent = 0;
+  for (let i = 0; i < n; i++) {
+    const msg = { title: "Shedly test " + round + "." + (i + 1), body: all[Math.floor(Math.random() * all.length)], tag: "test-" + Date.now() + "-" + i };
+    const st = await sendPush(sub, msg, env);
+    if (st === 404 || st === 410) { await env.SHEDLY.delete(await idFor(ep)); return json({ error: "gone", sent }, 410, headers); }
+    if (st >= 200 && st < 300) sent++;
+  }
+  return json({ ok: true, sent }, 200, headers);
 }
 
 async function unsubscribe(body, env, headers) {
@@ -234,6 +308,7 @@ export default {
     try { body = await request.json(); } catch (e) { return json({ error: "bad json" }, 400, headers); }
     if (url.pathname === "/subscribe") return subscribe(body, env, headers);
     if (url.pathname === "/unsubscribe") return unsubscribe(body, env, headers);
+    if (url.pathname === "/test") return sendTest(body, env, headers);
     return json({ error: "not found" }, 404, headers);
   },
   async scheduled(event, env, ctx) {
@@ -242,4 +317,4 @@ export default {
 };
 
 // Exported for local tests only.
-export { encryptPayload, vapidAuthorization, candidates, localParts, daysUntil };
+export { encryptPayload, vapidAuthorization, candidates, localParts, daysUntil, nudgeStage, nudgeFor };
