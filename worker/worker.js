@@ -281,7 +281,14 @@ async function sendTest(body, env, headers) {
   let sent = 0;
   for (let i = 0; i < n; i++) {
     const msg = { title: "Shedly test " + round + "." + (i + 1), body: all[Math.floor(Math.random() * all.length)], tag: "test-" + Date.now() + "-" + i };
-    const st = await sendPush(sub, msg, env);
+    let st;
+    try { st = await sendPush(sub, msg, env); }
+    catch (e) {
+      const chk = function (v) { try { b64uToBytes(String(v)); return "ok len=" + String(v).length; } catch (er) { return "BAD len=" + String(v).length + " badchars=" + JSON.stringify(Array.from(String(v)).filter(function (c) { return !/[A-Za-z0-9_\-+\/=\s]/.test(c); }).map(function (c) { return c.charCodeAt(0); }).slice(0, 5)); } };
+      const detail = { message: String(e && e.message).slice(0, 120), vapidPublic: chk(env.VAPID_PUBLIC), vapidPrivate: chk(env.VAPID_PRIVATE), p256dh: chk(sub.keys && sub.keys.p256dh), auth: chk(sub.keys && sub.keys.auth), endpointHost: (function () { try { return new URL(sub.endpoint).host; } catch (er) { return "bad"; } })() };
+      console.log("TEST_DIAG " + JSON.stringify(detail));
+      return json({ error: "push failed", detail }, 500, headers);
+    }
     if (st === 404 || st === 410) { await env.SHEDLY.delete(await idFor(ep)); return json({ error: "gone", sent }, 410, headers); }
     if (st >= 200 && st < 300) sent++;
   }
