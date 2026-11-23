@@ -680,9 +680,6 @@ dl.facts dd{margin:0;font-family:var(--display);font-weight:800;font-size:26px;l
 @keyframes dlheart{0%,45%{transform:translate(40px,30px) scale(0);opacity:0}55%{opacity:1;transform:translate(40px,26px) scale(1.2)}100%{transform:translate(46px,-6px) scale(.8);opacity:0}}
 .dl-h2{--x:0}
 @media (prefers-reduced-motion:reduce){.dl-sh,.dl-dp,.dl-h{animation:none}.dl-sh{transform:translateX(3px) rotate(5deg)}.dl-dp{transform:translateX(-2px) rotate(-5deg)}.dl-h1{transform:translate(40px,22px) scale(1);opacity:1}}
-.tbtn{width:36px;height:36px;border-radius:50%;border:1.5px dashed var(--muted);background:none;color:var(--muted);font-family:var(--display);font-weight:800;font-size:16px;padding:0;display:grid;place-items:center;position:relative}
-.tbtn[hidden]{display:none}.tbtn.run{border-style:solid;border-color:var(--hl);color:var(--hl);animation:tpulse 1.2s ease-in-out infinite}.tbtn small{position:absolute;bottom:-14px;font-size:10px;font-weight:600;font-family:var(--body);white-space:nowrap}
-@keyframes tpulse{50%{box-shadow:0 0 0 6px rgba(255,228,92,.18)}}
 .hdr-r{display:flex;align-items:center;gap:10px}
 .how{width:36px;height:36px;padding:0;justify-content:center;font-family:var(--display);font-weight:800;font-size:17px;color:var(--ink)}
 .streak-chip{font-size:14px;font-weight:700;padding:6px 12px;border-radius:999px;background:var(--ink);color:var(--on-ink);white-space:nowrap}
@@ -917,7 +914,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     <div class="hdr-r"><span class="streak-chip" id="streakChip" hidden></span><span class="dumpling" id="dumplingLove" hidden role="img" aria-label="A shrimp kissing a dumpling"><svg viewBox="0 0 80 54" aria-hidden="true">
 <g class="dl-sh"><path d="M11 40C9 28 19 20 29 24C36 27 37 36 31 42C25 47 13 47 11 40Z" fill="#FF8A75"/><path d="M12 38L2 31Q5 38 2 45Z" fill="#FF6F5C"/><path d="M17 27Q15 36 18 44M23 25Q21 35 23 45" stroke="#E8644F" stroke-width="1.1" fill="none" stroke-linecap="round"/><path d="M28 24Q31 16 37 15M24 22Q24 14 30 11" stroke="#FF6F5C" stroke-width="1.3" fill="none" stroke-linecap="round"/><circle cx="29" cy="31" r="1.7" fill="#3A2230"/><circle cx="29.5" cy="30.4" r=".5" fill="#fff"/><circle cx="32" cy="37" r="2.3" fill="#FF5D8F" opacity=".5"/><path d="M33 42Q35 43 35 40" stroke="#E8644F" stroke-width="1.2" fill="none" stroke-linecap="round"/></g>
 <g class="dl-dp"><path d="M43 46C42 31 50 23 60 23C70 23 78 31 77 46Z" fill="#FFF6E8" stroke="#E5CBA8" stroke-width="1.2" stroke-linejoin="round"/><path d="M50 26Q53 29 52 33M56 24Q58 28 57 31M63 24Q62 28 64 31M70 26Q67 29 69 33" stroke="#E5CBA8" stroke-width="1.1" fill="none" stroke-linecap="round"/><circle cx="54" cy="38" r="1.6" fill="#3A2230"/><circle cx="66" cy="38" r="1.6" fill="#3A2230"/><circle cx="50" cy="42" r="2.5" fill="#FF8FB0" opacity=".6"/><circle cx="70" cy="42" r="2.5" fill="#FF8FB0" opacity=".6"/><path d="M57.500 42Q60 44.500 62.500 42" stroke="#3A2230" stroke-width="1.2" fill="none" stroke-linecap="round"/></g>
-<path class="dl-h dl-h1" d="M0 4C-6-1-3-6 0-3C3-6 6-1 0 4Z" fill="#FF4D86"/><path class="dl-h dl-h2" d="M0 4C-6-1-3-6 0-3C3-6 6-1 0 4Z" fill="#FF8FB0"/><path class="dl-h dl-h3" d="M0 4C-6-1-3-6 0-3C3-6 6-1 0 4Z" fill="#FF3D7F"/></svg></span><button class="tbtn" id="testBtn" type="button" hidden aria-label="Send test notifications">T</button><button class="how" id="howBtn" type="button" aria-label="How it works" title="How it works">?</button></div>
+<path class="dl-h dl-h1" d="M0 4C-6-1-3-6 0-3C3-6 6-1 0 4Z" fill="#FF4D86"/><path class="dl-h dl-h2" d="M0 4C-6-1-3-6 0-3C3-6 6-1 0 4Z" fill="#FF8FB0"/><path class="dl-h dl-h3" d="M0 4C-6-1-3-6 0-3C3-6 6-1 0 4Z" fill="#FF3D7F"/></svg></span><button class="how" id="howBtn" type="button" aria-label="How it works" title="How it works">?</button></div>
   </header>
 
   <main>
@@ -958,7 +955,7 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
   "use strict";
 
   var KEY = "shedly.v1";
-  var APP_VERSION = "0.42";
+  var APP_VERSION = "0.43";
   var REMIND_URL = "https://shedly-push.liam-787.workers.dev";
   var VAPID_PUBLIC = "BNAusEL6Wb-zJDcrV5LQXYEuUCGrhu5tTGEUWkPMhjzKfKS1Sz9xBO1Q5o90qd3p5KTKzF89X48Ul9lTMiyYBmQ";
   var FREE_LIMIT = 15;
@@ -1980,18 +1977,10 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     ["nudge", "Cheeky nudges", "If you haven't opened Shedly, or shed anything, for a while. Slightly guilt-trippy."]
   ];
   function remindOn(it) { return it.remind === undefined ? it.due != null : !!it.remind; }
-  // Developer test: five notifications a minute for five minutes (needs reminders on and the app kept open).
-  function isTester() {
-    try {
-      var q = /[?&]tester=(\d)/.exec(location.search); if (q) localStorage.setItem("shedly.tester", q[1]);
-      if (localStorage.getItem("shedly.tester") === "1") return true; if (localStorage.getItem("shedly.tester") === "0") return false;
-    } catch (e) {}
-    return /^liam$/i.test((state.profile.name || "").trim());
-  }
+  // Hidden developer test: double-tap the devil icon in Notifications. Five notifications a minute for five minutes (needs reminders on and the app kept open).
   var testRun = null;
   function stopPushTest(msg) {
     if (testRun) { clearInterval(testRun.timer); testRun = null; }
-    var b = $("testBtn"); if (b) { b.classList.remove("run"); b.textContent = "T"; }
     if (msg) toast(msg, true);
   }
   function runPushTest() {
@@ -1999,11 +1988,10 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     if (!state.profile.remindOn || !pushSupported()) { toast("Turn reminders on first (You → Notifications), then try again."); return; }
     navigator.serviceWorker.ready.then(function (reg) { return reg.pushManager.getSubscription(); }).then(function (sub) {
       if (!sub) { toast("No push subscription yet. Turn reminders off and on again."); return; }
-      var round = 0, TOTAL = 5, b = $("testBtn");
+      var round = 0, TOTAL = 5;
       testRun = {};
       function fire() {
         round++;
-        if (b) { b.classList.add("run"); b.textContent = ""; b.append("T", h("small", { text: round + "/" + TOTAL })); }
         fetch(REMIND_URL + "/test", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ endpoint: sub.endpoint, count: 5, round: round }) })
           .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { toast(r.ok ? "Test " + round + " of " + TOTAL + ": " + (j.sent || 0) + " sent." : "Test failed: " + (j.error || r.status), true); if (!r.ok) stopPushTest(); }); })
           .catch(function () { toast("Test couldn't reach the server.", true); stopPushTest(); });
@@ -2157,7 +2145,12 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
       var ntile = function (key, label, note) {
         var box = h("input", { type: "checkbox", "aria-label": label }); box.checked = !!state.profile.notify[key];
         box.addEventListener("change", function () { state.profile.notify[key] = box.checked; save(); });
-        grid.append(h("label", { class: "ntile" }, [h("span", { class: "ico", "aria-hidden": "true", text: ICONS[key] }), h("span", { class: "nrow" }, [h("span", { text: label }), box]), h("small", { text: note })]));
+        var ico = h("span", { class: "ico", "aria-hidden": "true", text: ICONS[key] });
+        if (key === "nudge") {
+          var lastTap = 0;
+          ico.addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); var t = Date.now(); if (t - lastTap < 450) { lastTap = 0; runPushTest(); } else lastTap = t; });
+        }
+        grid.append(h("label", { class: "ntile" }, [ico, h("span", { class: "nrow" }, [h("span", { text: label }), box]), h("small", { text: note })]));
       };
       NOTIFY_TYPES.forEach(function (t) { ntile(t[0], t[1], t[2]); });
       ntile("names", "Show item names", "Show the item's name on your lock screen.");
@@ -3819,7 +3812,6 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     if (current === "review") renderReview(); else if (current === "list") renderList(); else if (current === "you") renderYou(); else renderProgress();
     updateBadge();
     var hb = $("howBtn"); if (hb) hb.style.visibility = (current === "review" || current === "you") ? "" : "hidden";
-    var tb = $("testBtn"); if (tb) tb.hidden = !(isTester() && (current === "review" || current === "you"));
     var dlv = $("dumplingLove"); if (dlv) dlv.hidden = !((current === "review" || current === "you") && /^dumpling$/i.test((state.profile.name || "").replace(/[^A-Za-z]/g, "")));
     if (current !== "review") $("quoteSlot").textContent = "";
     var chip = $("streakChip"), sn = streak();
@@ -4186,7 +4178,6 @@ h1.hello.big{font-size:clamp(30px,min(11.5vw,5.8dvh),54px);line-height:.98}
     var how = $("howBtn"); if (how) how.focus({ preventScroll: true });
   }
   $("howBtn").addEventListener("click", function () { openTour("replay"); });
-  $("testBtn").addEventListener("click", runPushTest);
 
   function translateStatic() {
     if (LANG === "en-GB" && !window.__missT) return;
