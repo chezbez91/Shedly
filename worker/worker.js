@@ -54,7 +54,13 @@ async function hkdf(salt, ikm, info, length) {
 }
 
 // ---------- VAPID: sign a short-lived JWT with the app's private key ----------
+// The saved secrets came with stray quotes, a name and a comma around the key, so keep only the key itself.
+function cleanKey(v, min) {
+  const m = String(v || "").match(new RegExp("[A-Za-z0-9_-]{" + min + ",}"));
+  return m ? m[0] : String(v || "").trim();
+}
 async function vapidAuthorization(endpoint, env) {
+  const VPUB = cleanKey(env.VAPID_PUBLIC, 80), VPRIV = cleanKey(env.VAPID_PRIVATE, 40);
   const aud = new URL(endpoint).origin;
   const header = bytesToB64u(te.encode(JSON.stringify({ typ: "JWT", alg: "ES256" })));
   const claims = bytesToB64u(te.encode(JSON.stringify({
@@ -62,13 +68,13 @@ async function vapidAuthorization(endpoint, env) {
     exp: Math.floor(Date.now() / 1000) + 12 * 3600,
     sub: env.VAPID_SUBJECT || "https://chezbez91.github.io/Shedly/"
   })));
-  const pub = b64uToBytes(env.VAPID_PUBLIC);
+  const pub = b64uToBytes(VPUB);
   const key = await crypto.subtle.importKey("jwk", {
-    kty: "EC", crv: "P-256", d: env.VAPID_PRIVATE,
+    kty: "EC", crv: "P-256", d: VPRIV,
     x: bytesToB64u(pub.slice(1, 33)), y: bytesToB64u(pub.slice(33, 65)), ext: true
   }, { name: "ECDSA", namedCurve: "P-256" }, false, ["sign"]);
   const sig = await crypto.subtle.sign({ name: "ECDSA", hash: "SHA-256" }, key, te.encode(header + "." + claims));
-  return "vapid t=" + header + "." + claims + "." + bytesToB64u(sig) + ", k=" + env.VAPID_PUBLIC;
+  return "vapid t=" + header + "." + claims + "." + bytesToB64u(sig) + ", k=" + VPUB;
 }
 
 // ---------- Web Push payload encryption (RFC 8291, aes128gcm) ----------
